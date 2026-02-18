@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <title>Jazztabueno Lab (Social Pro)</title>
+    <title>Jazztabueno Lab (Full Moderador)</title>
     <link rel="icon" type="image/png" href="logo.png">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     
@@ -83,12 +83,11 @@
         .info { padding: 20px; }
         .ep-title { margin: 8px 0 4px 0; font-size: 19px; font-weight: 800; color: #ffffff; display:flex; justify-content:space-between; align-items:start; gap:10px; }
         
-        /* ESTILOS SOCIALES NUEVOS */
+        /* ESTILOS SOCIALES */
         .btn-like { background:none; border:none; cursor:pointer; font-size:18px; color:#555; transition:0.2s; display:flex; flex-direction:column; align-items:center; line-height:1; }
         .btn-like.liked { color: var(--red); transform: scale(1.1); animation: pop 0.3s ease; }
         .like-count { font-size: 9px; margin-top: 3px; font-weight: 800; color: #888; }
         .liked .like-count { color: var(--red); }
-        
         @keyframes pop { 0%{transform:scale(1)} 50%{transform:scale(1.4)} 100%{transform:scale(1.1)} }
 
         .btn-list { background: #1a1a1a !important; border: 1.5px solid #333 !important; color: #ffffff !important; padding: 12px !important; border-radius: 12px !important; font-size: 11px !important; font-weight: 800 !important; width: 100% !important; cursor: pointer; margin-top:12px; }
@@ -100,12 +99,14 @@
         .c-btn { width:100%; background:#333; color:white; border:none; padding:10px; border-radius:8px; font-weight:bold; cursor:pointer; font-size:11px; }
         .c-list { margin-top:15px; max-height:200px; overflow-y:auto; }
         .c-item { margin-bottom:12px; border-bottom:1px solid #1a1a1a; padding-bottom:8px; }
-        .c-user { font-weight:800; color:var(--gold); font-size:11px; margin-bottom:2px; display:flex; justify-content:space-between; }
+        .c-user { font-weight:800; color:var(--gold); font-size:11px; margin-bottom:2px; display:flex; justify-content:space-between; align-items:center; }
         .c-msg { font-size:12px; color:#ddd; line-height:1.3; }
         .c-reply { margin-top:6px; padding:8px; background:#111; border-left:2px solid var(--gold); border-radius:0 6px 6px 0; }
         .c-reply-head { font-size:9px; font-weight:900; color:var(--gold); margin-bottom:2px; }
         .c-reply-msg { font-size:11px; color:#fff; font-style:italic; }
-        .btn-admin-reply { background:transparent; border:1px solid #444; color:#888; font-size:9px; padding:2px 6px; border-radius:4px; cursor:pointer; }
+        
+        .btn-admin-reply { background:transparent; border:1px solid #444; color:#888; font-size:9px; padding:2px 6px; border-radius:4px; cursor:pointer; margin-left:5px; }
+        .btn-admin-del { background:transparent; border:none; color:#ff4444; font-size:10px; cursor:pointer; margin-left:5px; }
 
         #global-player { position: fixed; bottom: 0; left: 0; width: 100%; background: #080808; border-top: 3px solid var(--gold); padding: 15px 20px; display: none; z-index: 1000; }
         .p-vinyl { width: 55px; height: 55px; border-radius: 50%; border: 2.3px solid var(--gold); background-size: cover; animation: rot 4s linear infinite; animation-play-state: paused; }
@@ -252,27 +253,19 @@
     window.setHashtagFilter = (tag) => { hashtagFiltro = tag; render(); window.scrollTo({top:0, behavior:'smooth'}); };
     window.clearHashtag = () => { hashtagFiltro = ''; render(); };
     
-    // --- LÓGICA DE LIKES ---
     window.doLike = async (id, el) => {
-        if(localStorage.getItem('liked_' + id)) return; // Ya votó
-        
-        // Efecto visual inmediato
+        if(localStorage.getItem('liked_' + id)) return; 
         el.classList.add('liked');
         let countSpan = el.querySelector('.like-count');
         let current = parseInt(countSpan.innerText || "0");
         const newCount = current + 1;
-        
-        // CAMBIA EL EMOJI A ROJO Y ACTUALIZA EL NÚMERO
         el.innerHTML = `❤️ <span class="like-count">${newCount}</span>`;
-        
         localStorage.setItem('liked_' + id, 'true');
-        
         try {
             await updateDoc(doc(db, "radio_programas", id), { likes: increment(1) });
         } catch(e) { console.log("Error like", e); }
     };
 
-    // --- LÓGICA DE COMENTARIOS ---
     window.toggleComments = (id) => {
         const section = document.getElementById(`comments-${id}`);
         if(section.style.display === 'block') {
@@ -285,7 +278,6 @@
 
     window.cargarComentarios = (id) => {
         const listDiv = document.getElementById(`clist-${id}`);
-        // Escucha en tiempo real solo cuando se abre
         onSnapshot(query(collection(db, "radio_programas", id, "comentarios"), orderBy("fecha", "asc")), (snap) => {
             listDiv.innerHTML = "";
             if(snap.empty) { listDiv.innerHTML = "<div style='color:#666; font-size:11px; text-align:center;'>Sé el primero en comentar.</div>"; return; }
@@ -300,19 +292,21 @@
                     replyHtml = `<div class="c-reply"><div class="c-reply-head">🎙️ Respuesta de Tico:</div><div class="c-reply-msg">${c.respuesta}</div></div>`;
                 }
 
-                let adminBtn = "";
-                if(isAdmin && !c.respuesta) {
-                    adminBtn = `<button class="btn-admin-reply" onclick="window.responderCom('${id}', '${d.id}')">↩️ RESPONDER</button>`;
+                let adminTools = "";
+                if(isAdmin) {
+                    // BOTÓN DE RESPONDER Y BOTÓN DE BORRAR (SOLO ADMIN)
+                    adminTools = `<div style="display:flex; align-items:center;">`;
+                    if(!c.respuesta) adminTools += `<button class="btn-admin-reply" onclick="window.responderCom('${id}', '${d.id}')">↩️ RESPONDER</button>`;
+                    adminTools += `<button class="btn-admin-del" onclick="window.borrarComentario('${id}', '${d.id}')">🗑️</button></div>`;
                 }
 
                 div.innerHTML = `
-                    <div class="c-user"><span>${c.usuario}</span> ${adminBtn}</div>
+                    <div class="c-user"><span>${c.usuario}</span> ${adminTools}</div>
                     <div class="c-msg">${c.mensaje}</div>
                     ${replyHtml}
                 `;
                 listDiv.appendChild(div);
             });
-            // Auto scroll al final
             listDiv.scrollTop = listDiv.scrollHeight;
         });
     };
@@ -331,7 +325,7 @@
                 mensaje: msgIn.value,
                 fecha: new Date().getTime()
             });
-            msgIn.value = ""; // Limpiar mensaje, dejar nombre
+            msgIn.value = ""; 
         } catch(e) { alert("Error al enviar"); }
         btn.disabled = false; btn.innerText = "ENVIAR";
     };
@@ -340,10 +334,17 @@
         const resp = prompt("Escribe tu respuesta como Director:");
         if(resp) {
             try {
-                await updateDoc(doc(db, "radio_programas", progId, "comentarios", comId), {
-                    respuesta: resp
-                });
+                await updateDoc(doc(db, "radio_programas", progId, "comentarios", comId), { respuesta: resp });
             } catch(e) { alert("Error al responder"); }
+        }
+    };
+
+    // FUNCIÓN NUEVA: BORRAR COMENTARIO
+    window.borrarComentario = async (progId, comId) => {
+        if(confirm("¿Borrar este comentario permanentemente?")) {
+            try {
+                await deleteDoc(doc(db, "radio_programas", progId, "comentarios", comId));
+            } catch(e) { alert("Error al borrar"); }
         }
     };
     
@@ -464,7 +465,6 @@
             const isPlaying = idActual === p.id && !media.paused;
             const vistas = p.reproducciones || 0;
             const likes = p.likes || 0;
-            // SI EL USUARIO YA LE DIO LIKE, SALE ROJO, SI NO, SALE BLANCO
             const userLiked = localStorage.getItem('liked_' + p.id) ? 'liked' : '';
             const heartIcon = userLiked ? '❤️' : '🤍';
 
