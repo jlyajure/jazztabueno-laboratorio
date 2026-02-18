@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <title>Jazztabueno Lab (Full Moderador)</title>
+    <title>Jazztabueno Lab (Final Social)</title>
     <link rel="icon" type="image/png" href="logo.png">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     
@@ -289,7 +289,7 @@
                 
                 let replyHtml = "";
                 if(c.respuesta) {
-                    replyHtml = `<div class="c-reply"><div class="c-reply-head">🎙️ Respuesta de Tico:</div><div class="c-reply-msg">${c.respuesta}</div></div>`;
+                    replyHtml = `<div class="c-reply"><div class="c-reply-head">🎙️ JTP OFICIAL:</div><div class="c-reply-msg">${c.respuesta}</div></div>`;
                 }
 
                 let adminTools = "";
@@ -331,7 +331,7 @@
     };
 
     window.responderCom = async (progId, comId) => {
-        const resp = prompt("Escribe tu respuesta como Director:");
+        const resp = prompt("Escribe tu respuesta oficial:");
         if(resp) {
             try {
                 await updateDoc(doc(db, "radio_programas", progId, "comentarios", comId), { respuesta: resp });
