@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <title>Jazztabueno Lab (Pruebas)</title>
+    <title>Jazztabueno Lab (Social)</title>
     <link rel="icon" type="image/png" href="logo.png">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     
@@ -53,7 +53,7 @@
     <script src="https://www.gstatic.com/cv/js/sender/v1/cast_sender.js?loadCastFramework=1"></script>
 
     <style>
-        :root { --gold: #a68a44; --bg: #050505; --card: #121212; }
+        :root { --gold: #a68a44; --bg: #050505; --card: #121212; --red: #ff4444; }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none; }
         body { margin: 0; background: var(--bg); color: #ffffff; font-family: 'Plus Jakarta Sans', sans-serif; min-height: 100vh; overflow-x: hidden; }
         
@@ -81,9 +81,28 @@
         .btn-play svg { width: 28px !important; height: 28px !important; fill: black !important; }
         
         .info { padding: 20px; }
-        .ep-title { margin: 8px 0 4px 0; font-size: 19px; font-weight: 800; color: #ffffff; }
+        .ep-title { margin: 8px 0 4px 0; font-size: 19px; font-weight: 800; color: #ffffff; display:flex; justify-content:space-between; align-items:start; gap:10px; }
+        
+        /* ESTILOS SOCIALES NUEVOS */
+        .btn-like { background:none; border:none; cursor:pointer; font-size:18px; color:#555; transition:0.2s; display:flex; flex-direction:column; align-items:center; line-height:1; }
+        .btn-like.liked { color: var(--red); transform: scale(1.1); }
+        .like-count { font-size: 9px; margin-top: 3px; font-weight: 800; }
+
         .btn-list { background: #1a1a1a !important; border: 1.5px solid #333 !important; color: #ffffff !important; padding: 12px !important; border-radius: 12px !important; font-size: 11px !important; font-weight: 800 !important; width: 100% !important; cursor: pointer; margin-top:12px; }
         .list-box { display: none; margin-top: 15px; padding: 20px; background: #080808; border-radius: 15px; border: 1px solid #222; font-size: 14px; white-space: pre-wrap; }
+
+        /* ESTILOS DE COMENTARIOS */
+        .comments-section { display:none; margin-top:15px; background:#080808; border-radius:15px; padding:15px; border:1px solid #222; }
+        .c-input { width:100%; background:#1a1a1a; border:1px solid #333; color:white; padding:10px; border-radius:8px; margin-bottom:8px; font-family:inherit; font-size:12px; }
+        .c-btn { width:100%; background:#333; color:white; border:none; padding:10px; border-radius:8px; font-weight:bold; cursor:pointer; font-size:11px; }
+        .c-list { margin-top:15px; max-height:200px; overflow-y:auto; }
+        .c-item { margin-bottom:12px; border-bottom:1px solid #1a1a1a; padding-bottom:8px; }
+        .c-user { font-weight:800; color:var(--gold); font-size:11px; margin-bottom:2px; display:flex; justify-content:space-between; }
+        .c-msg { font-size:12px; color:#ddd; line-height:1.3; }
+        .c-reply { margin-top:6px; padding:8px; background:#111; border-left:2px solid var(--gold); border-radius:0 6px 6px 0; }
+        .c-reply-head { font-size:9px; font-weight:900; color:var(--gold); margin-bottom:2px; }
+        .c-reply-msg { font-size:11px; color:#fff; font-style:italic; }
+        .btn-admin-reply { background:transparent; border:1px solid #444; color:#888; font-size:9px; padding:2px 6px; border-radius:4px; cursor:pointer; }
 
         #global-player { position: fixed; bottom: 0; left: 0; width: 100%; background: #080808; border-top: 3px solid var(--gold); padding: 15px 20px; display: none; z-index: 1000; }
         .p-vinyl { width: 55px; height: 55px; border-radius: 50%; border: 2.3px solid var(--gold); background-size: cover; animation: rot 4s linear infinite; animation-play-state: paused; }
@@ -114,7 +133,7 @@
     <header>
         <div style="display:flex; align-items:center; gap:12px;">
             <img src="logo.png" width="35" height="35" id="admin-trigger" onerror="this.src='https://i.postimg.cc/zVD4mstP/Jazztabueno-(2).png'">
-            <div class="brand-title">Estudio B<br>Laboratorio</div>
+            <div class="brand-title">Estudio B<br>Laboratorio Social</div>
         </div>
         <button onclick="window.doLogout()" class="btn-salir">SALIR</button>
     </header>
@@ -177,7 +196,7 @@
 
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { initializeFirestore, collection, query, orderBy, onSnapshot, addDoc, deleteDoc, doc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    import { initializeFirestore, collection, query, orderBy, onSnapshot, addDoc, deleteDoc, doc, updateDoc, increment, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
     import { getAnalytics, logEvent } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js";
 
     const firebaseConfig = {
@@ -229,6 +248,98 @@
 
     window.setHashtagFilter = (tag) => { hashtagFiltro = tag; render(); window.scrollTo({top:0, behavior:'smooth'}); };
     window.clearHashtag = () => { hashtagFiltro = ''; render(); };
+    
+    // --- LÓGICA DE LIKES ---
+    window.doLike = async (id, el) => {
+        if(localStorage.getItem('liked_' + id)) return; // Ya votó
+        
+        // Efecto visual inmediato
+        el.classList.add('liked');
+        let countSpan = el.querySelector('.like-count');
+        let current = parseInt(countSpan.innerText || "0");
+        countSpan.innerText = current + 1;
+        
+        localStorage.setItem('liked_' + id, 'true');
+        
+        try {
+            await updateDoc(doc(db, "radio_programas", id), { likes: increment(1) });
+        } catch(e) { console.log("Error like", e); }
+    };
+
+    // --- LÓGICA DE COMENTARIOS ---
+    window.toggleComments = (id) => {
+        const section = document.getElementById(`comments-${id}`);
+        if(section.style.display === 'block') {
+            section.style.display = 'none';
+        } else {
+            section.style.display = 'block';
+            window.cargarComentarios(id);
+        }
+    };
+
+    window.cargarComentarios = (id) => {
+        const listDiv = document.getElementById(`clist-${id}`);
+        // Escucha en tiempo real solo cuando se abre
+        onSnapshot(query(collection(db, "radio_programas", id, "comentarios"), orderBy("fecha", "asc")), (snap) => {
+            listDiv.innerHTML = "";
+            if(snap.empty) { listDiv.innerHTML = "<div style='color:#666; font-size:11px; text-align:center;'>Sé el primero en comentar.</div>"; return; }
+            
+            snap.forEach(d => {
+                const c = d.data();
+                const div = document.createElement('div');
+                div.className = 'c-item';
+                
+                let replyHtml = "";
+                if(c.respuesta) {
+                    replyHtml = `<div class="c-reply"><div class="c-reply-head">🎙️ Respuesta de Tico:</div><div class="c-reply-msg">${c.respuesta}</div></div>`;
+                }
+
+                let adminBtn = "";
+                if(isAdmin && !c.respuesta) {
+                    adminBtn = `<button class="btn-admin-reply" onclick="window.responderCom('${id}', '${d.id}')">↩️ RESPONDER</button>`;
+                }
+
+                div.innerHTML = `
+                    <div class="c-user"><span>${c.usuario}</span> ${adminBtn}</div>
+                    <div class="c-msg">${c.mensaje}</div>
+                    ${replyHtml}
+                `;
+                listDiv.appendChild(div);
+            });
+            // Auto scroll al final
+            listDiv.scrollTop = listDiv.scrollHeight;
+        });
+    };
+
+    window.enviarComentario = async (id) => {
+        const userIn = document.getElementById(`cuser-${id}`);
+        const msgIn = document.getElementById(`cmsg-${id}`);
+        const btn = document.getElementById(`cbtn-${id}`);
+        
+        if(!userIn.value || !msgIn.value) return alert("Escribe nombre y mensaje");
+        
+        btn.disabled = true; btn.innerText = "...";
+        try {
+            await addDoc(collection(db, "radio_programas", id, "comentarios"), {
+                usuario: userIn.value,
+                mensaje: msgIn.value,
+                fecha: new Date().getTime()
+            });
+            msgIn.value = ""; // Limpiar mensaje, dejar nombre
+        } catch(e) { alert("Error al enviar"); }
+        btn.disabled = false; btn.innerText = "ENVIAR";
+    };
+
+    window.responderCom = async (progId, comId) => {
+        const resp = prompt("Escribe tu respuesta como Director:");
+        if(resp) {
+            try {
+                await updateDoc(doc(db, "radio_programas", progId, "comentarios", comId), {
+                    respuesta: resp
+                });
+            } catch(e) { alert("Error al responder"); }
+        }
+    };
     
     window.playItem = async (id, url, tit, img) => {
         if(idActual === id) { 
@@ -287,7 +398,7 @@
             fecha: new Date().getTime() 
         };
         
-        if(!id) data.reproducciones = 0;
+        if(!id) { data.reproducciones = 0; data.likes = 0; }
 
         if(id) await updateDoc(doc(db, "radio_programas", id), data); 
         else await addDoc(collection(db, "radio_programas"), data);
@@ -346,6 +457,8 @@
         list.forEach(p => {
             const isPlaying = idActual === p.id && !media.paused;
             const vistas = p.reproducciones || 0;
+            const likes = p.likes || 0;
+            const userLiked = localStorage.getItem('liked_' + p.id) ? 'liked' : '';
 
             const arrayTags = (p.tags || "").split(' ').filter(t => t.trim().startsWith('#'));
             let htmlTags = "";
@@ -368,12 +481,32 @@
                         <span style="color:var(--gold); font-size:9px; font-weight:900; text-transform:uppercase;">${p.programa}</span>
                         <div class="contador-oyentes">🎧 <span>${vistas}</span></div>
                     </div>
-                    <h3 class="ep-title">${p.titulo}</h3>
+                    
+                    <div style="display:flex; justify-content:space-between; align-items:start; margin-top:8px;">
+                         <h3 class="ep-title" style="margin:0;">${p.titulo}</h3>
+                         <button class="btn-like ${userLiked}" onclick="window.doLike('${p.id}', this)">
+                            ❤️ <span class="like-count">${likes}</span>
+                         </button>
+                    </div>
                     
                     ${htmlTags}
 
-                    <button class="btn-list" onclick="window.toggleList('${p.id}')">📋 VER PROGRAMACIÓN</button>
+                    <div style="display:flex; gap:10px;">
+                        <button class="btn-list" style="flex:1" onclick="window.toggleList('${p.id}')">📋 INFO</button>
+                        <button class="btn-list" style="flex:1" onclick="window.toggleComments('${p.id}')">💬 CHAT</button>
+                    </div>
+                    
                     <div id="list-${p.id}" class="list-box">${p.playlist || "Próximamente."}</div>
+                    
+                    <div id="comments-${p.id}" class="comments-section">
+                        <div id="clist-${p.id}" class="c-list"></div>
+                        <div style="margin-top:10px; padding-top:10px; border-top:1px solid #222;">
+                            <input type="text" id="cuser-${p.id}" class="c-input" placeholder="Tu Nombre">
+                            <textarea id="cmsg-${p.id}" class="c-input" placeholder="Tu Mensaje..."></textarea>
+                            <button id="cbtn-${p.id}" class="c-btn" onclick="window.enviarComentario('${p.id}')">ENVIAR</button>
+                        </div>
+                    </div>
+
                     ${isAdmin ? `<div style="display:flex; gap:10px; margin-top:20px; border-top:1px solid #222; padding-top:20px;">
                         <button onclick="window.prepEdit('${p.id}')" style="flex:1; background:transparent; border:1px solid var(--gold); color:var(--gold); padding:10px; border-radius:10px; font-weight:800;">🖋️ EDITAR</button>
                         <button onclick="window.doDel('${p.id}')" style="flex:1; background:transparent; border:1px solid #f44; color:#f44; padding:10px; border-radius:10px; font-weight:800;">🗑️ BORRAR</button>
