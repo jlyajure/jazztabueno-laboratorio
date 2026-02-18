@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <title>Jazztabueno Lab (Social)</title>
+    <title>Jazztabueno Lab (Social Pro)</title>
     <link rel="icon" type="image/png" href="logo.png">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     
@@ -85,8 +85,11 @@
         
         /* ESTILOS SOCIALES NUEVOS */
         .btn-like { background:none; border:none; cursor:pointer; font-size:18px; color:#555; transition:0.2s; display:flex; flex-direction:column; align-items:center; line-height:1; }
-        .btn-like.liked { color: var(--red); transform: scale(1.1); }
-        .like-count { font-size: 9px; margin-top: 3px; font-weight: 800; }
+        .btn-like.liked { color: var(--red); transform: scale(1.1); animation: pop 0.3s ease; }
+        .like-count { font-size: 9px; margin-top: 3px; font-weight: 800; color: #888; }
+        .liked .like-count { color: var(--red); }
+        
+        @keyframes pop { 0%{transform:scale(1)} 50%{transform:scale(1.4)} 100%{transform:scale(1.1)} }
 
         .btn-list { background: #1a1a1a !important; border: 1.5px solid #333 !important; color: #ffffff !important; padding: 12px !important; border-radius: 12px !important; font-size: 11px !important; font-weight: 800 !important; width: 100% !important; cursor: pointer; margin-top:12px; }
         .list-box { display: none; margin-top: 15px; padding: 20px; background: #080808; border-radius: 15px; border: 1px solid #222; font-size: 14px; white-space: pre-wrap; }
@@ -257,7 +260,10 @@
         el.classList.add('liked');
         let countSpan = el.querySelector('.like-count');
         let current = parseInt(countSpan.innerText || "0");
-        countSpan.innerText = current + 1;
+        const newCount = current + 1;
+        
+        // CAMBIA EL EMOJI A ROJO Y ACTUALIZA EL NÚMERO
+        el.innerHTML = `❤️ <span class="like-count">${newCount}</span>`;
         
         localStorage.setItem('liked_' + id, 'true');
         
@@ -458,7 +464,9 @@
             const isPlaying = idActual === p.id && !media.paused;
             const vistas = p.reproducciones || 0;
             const likes = p.likes || 0;
+            // SI EL USUARIO YA LE DIO LIKE, SALE ROJO, SI NO, SALE BLANCO
             const userLiked = localStorage.getItem('liked_' + p.id) ? 'liked' : '';
+            const heartIcon = userLiked ? '❤️' : '🤍';
 
             const arrayTags = (p.tags || "").split(' ').filter(t => t.trim().startsWith('#'));
             let htmlTags = "";
@@ -485,7 +493,7 @@
                     <div style="display:flex; justify-content:space-between; align-items:start; margin-top:8px;">
                          <h3 class="ep-title" style="margin:0;">${p.titulo}</h3>
                          <button class="btn-like ${userLiked}" onclick="window.doLike('${p.id}', this)">
-                            ❤️ <span class="like-count">${likes}</span>
+                            ${heartIcon} <span class="like-count">${likes}</span>
                          </button>
                     </div>
                     
