@@ -3,133 +3,122 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LABORATORIO - MOTOR JTBP</title>
+    <title>LABORATORIO - JTBP FIX</title>
     <style>
-        body { 
-            background: #121212; color: #00ff00; font-family: monospace; 
-            padding: 20px; text-align: center; margin: 0;
-        }
-        h2 { color: #FFD700; }
-        .track-list { 
-            margin: 20px 0; display: flex; flex-direction: column; gap: 10px; align-items: center; 
-        }
-        button { 
-            background: #333; color: white; border: 1px solid #00ff00; 
-            padding: 15px; width: 90%; max-width: 400px; cursor: pointer; 
-            border-radius: 5px; font-size: 16px; transition: 0.3s;
-        }
-        button.active { 
-            background: #00ff00; color: #000; font-weight: bold; transform: scale(1.05);
-        }
-        audio { 
-            width: 90%; max-width: 400px; margin-top: 20px; outline: none;
-        }
-        .console { 
-            background: #000; border: 1px solid #444; padding: 10px; margin-top: 20px; 
-            max-width: 400px; margin-left: auto; margin-right: auto; text-align: left; 
-            font-size: 12px; height: 150px; overflow-y: auto; border-radius: 5px; color: #aaa;
-        }
-        .console span { color: #FFD700; }
+        body { background: #111; color: white; font-family: sans-serif; text-align: center; padding: 20px; }
+        .card { background: #222; border: 2px solid #a68a44; padding: 20px; border-radius: 15px; max-width: 300px; margin: 20px auto; }
+        .btn-play { background: #a68a44; color: black; border: none; padding: 15px 30px; font-weight: bold; border-radius: 10px; cursor: pointer; font-size: 16px; margin-bottom: 20px; width: 100%; }
+        
+        /* ESTILO DEL CORAZÓN */
+        .btn-like { background: none; border: none; cursor: pointer; font-size: 30px; color: #555; transition: 0.3s; }
+        .btn-like.liked { color: #ff4444; transform: scale(1.2); }
+        .like-count { font-size: 16px; color: #888; display: block; margin-top: 5px; font-weight: bold; }
+        .liked .like-count { color: #ff4444; }
+        
+        #log { background: #000; color: #0f0; font-family: monospace; padding: 10px; text-align: left; font-size: 12px; height: 150px; overflow-y: auto; border: 1px solid #444; margin-top: 20px; }
     </style>
 </head>
 <body>
-    <h2>🔧 BANCO DE PRUEBAS: JTBP</h2>
-    <p>Probando: Piloto Automático y Memoria</p>
-    
-    <audio id="miAudio" controls></audio>
-    
-    <div class="track-list" id="playlist">
-        </div>
 
-    <div class="console" id="log">
-        <span>[SISTEMA]</span> Motor de audio encendido...<br>
+    <h2 style="color: #a68a44;">🧪 LABORATORIO AISLADO</h2>
+    <p>Prueba de Audio y Corazón</p>
+
+    <div class="card">
+        <h3 id="tiempo-pantalla">00:00</h3>
+        <button class="btn-play" id="btn-play" onclick="arrancarAudio()">▶️ REPRODUCIR</button>
+        <audio id="mi-audio" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" crossorigin="anonymous"></audio>
+
+        <hr style="border-color: #333; margin: 20px 0;">
+
+        <button class="btn-like" id="btn-corazon" onclick="darLike()">
+            ❤️ <span class="like-count" id="contador-likes">100</span>
+        </button>
     </div>
 
-    <script>
-        // 1. CANCIONES DE PRUEBA (Para no gastar su base de datos)
-        const pistas = [
-            { id: "pista_001", titulo: "Audio de Prueba 1", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" },
-            { id: "pista_002", titulo: "Audio de Prueba 2", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" },
-            { id: "pista_003", titulo: "Audio de Prueba 3", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3" }
-        ];
+    <div id="log"><span>[SISTEMA INICIADO]</span><br></div>
 
-        let pistaActual = 0;
-        const reproductor = document.getElementById('miAudio');
+    <script>
+        const audio = document.getElementById('mi-audio');
+        const btnCorazon = document.getElementById('btn-corazon');
+        const contador = document.getElementById('contador-likes');
         const logBox = document.getElementById('log');
 
-        // Función para escribir en la consolita verde
-        function log(msg) { 
-            logBox.innerHTML += `> ${msg}<br>`; 
-            logBox.scrollTop = logBox.scrollHeight; 
+        function log(msg) { logBox.innerHTML += `> ${msg}<br>`; logBox.scrollTop = logBox.scrollHeight; }
+
+        // ==========================================
+        // 1. PRUEBA DEL CORAZÓN (LIKES)
+        // ==========================================
+        
+        // Al cargar la página, verificamos si ya había dado like en el pasado
+        let estadoLike = localStorage.getItem('lab_like_test');
+        if(estadoLike === 'true') {
+            btnCorazon.classList.add('liked');
+            contador.innerText = "101"; // Simulamos que ya sumó en la DB
+            log("❤️ Corazón recuperado de la memoria (Rojo).");
+        } else {
+            log("🤍 Corazón virgen (Blanco).");
         }
 
-        // Crear los botones en pantalla
-        const playlistDiv = document.getElementById('playlist');
-        pistas.forEach((p, index) => {
-            let btn = document.createElement('button');
-            btn.id = `btn-${index}`;
-            btn.innerText = `▶️ ${p.titulo}`;
-            btn.onclick = () => cargarPista(index, true);
-            playlistDiv.appendChild(btn);
-        });
+        function darLike() {
+            // Verificamos el candado ANTES de sumar
+            if(localStorage.getItem('lab_like_test') === 'true') {
+                log("⚠️ Intento bloqueado: Ya le diste like antes.");
+                alert("¡Ya le diste like a esto! El candado funciona.");
+                return; // Corta la función aquí, no suma nada.
+            }
 
-        // 2. FUNCIÓN PRINCIPAL: CARGAR EL AUDIO
-        function cargarPista(index, reproducir = false) {
-            pistaActual = index;
-            reproductor.src = pistas[index].url;
-            
-            // Pintar el botón activo
-            document.querySelectorAll('button').forEach(b => b.classList.remove('active'));
-            document.getElementById(`btn-${index}`).classList.add('active');
-
-            log(`Cargando: <span>${pistas[index].titulo}</span>`);
-
-            // 🔥 MAGIA 1: BUSCAR MEMORIA GUARDADA
-            let memoria = localStorage.getItem(`jtbp_memoria_${pistas[index].id}`);
-            
-            // El reproductor necesita cargar un poco antes de saltar al minuto exacto
-            reproductor.onloadedmetadata = () => {
-                if (memoria && parseFloat(memoria) > 0) {
-                    reproductor.currentTime = parseFloat(memoria);
-                    let min = Math.floor(memoria / 60);
-                    let seg = Math.floor(memoria % 60);
-                    log(`⏱️ Memoria encontrada: Saltando al minuto <span>${min}:${seg}</span>`);
-                } else {
-                    log(`⏱️ Pista nueva. Iniciando desde el segundo 0.`);
-                }
-                if(reproducir) reproductor.play();
-            };
+            // Si pasa el candado, suma y se pone rojo
+            localStorage.setItem('lab_like_test', 'true');
+            btnCorazon.classList.add('liked');
+            contador.innerText = "101"; // Simula la suma en DB
+            log("✅ Like registrado y guardado en memoria.");
         }
 
-        // 🔥 MAGIA 2: GUARDAR LA MEMORIA MIENTRAS SUENA
-        // Esto se ejecuta cada vez que el reloj del audio avanza
-        reproductor.addEventListener('timeupdate', () => {
-            if (reproductor.currentTime > 0) {
-                // Guardar en el disco duro del celular
-                localStorage.setItem(`jtbp_memoria_${pistas[pistaActual].id}`, reproductor.currentTime);
+        // ==========================================
+        // 2. PRUEBA DE AUDIO (MEMORIA DE MINUTO)
+        // ==========================================
+        
+        function arrancarAudio() {
+            if(!audio.paused) {
+                audio.pause();
+                document.getElementById('btn-play').innerText = "▶️ REPRODUCIR";
+                log("⏸️ Audio Pausado.");
+                return;
             }
-        });
 
-        // 🔥 MAGIA 3: PILOTO AUTOMÁTICO (SIGUIENTE CANCIÓN)
-        reproductor.addEventListener('ended', () => {
-            log(`✅ Pista terminada.`);
+            document.getElementById('btn-play').innerText = "⏳ CARGANDO...";
             
-            // Borrar la memoria porque ya escuchó todo el podcast
-            localStorage.removeItem(`jtbp_memoria_${pistas[pistaActual].id}`);
+            // Le damos play PRIMERO, y cuando el celular responda, hacemos el salto
+            let promesa = audio.play();
             
-            let siguiente = pistaActual + 1;
-            
-            // Si hay más pistas, arranca la siguiente
-            if (siguiente < pistas.length) {
-                log(`🔄 Piloto Automático: Arrancando la siguiente...`);
-                cargarPista(siguiente, true);
-            } else {
-                log(`🏁 Fin de la lista de reproducción.`);
+            if (promesa !== undefined) {
+                promesa.then(_ => {
+                    document.getElementById('btn-play').innerText = "⏸️ PAUSAR";
+                    log("▶️ Reproduciendo...");
+                    
+                    // Rescatar memoria DESPUÉS de que el audio ya arrancó seguro
+                    let memoria = localStorage.getItem('lab_audio_time');
+                    if(memoria && parseFloat(memoria) > 5) {
+                        audio.currentTime = parseFloat(memoria);
+                        log(`⏱️ Salto forzado al segundo: ${Math.floor(memoria)}`);
+                    }
+                }).catch(error => {
+                    log("❌ Error al reproducir: " + error);
+                });
             }
-        });
+        }
 
-        // Al abrir la página, cargar la primera pista (sin darle Play automático por políticas de navegadores)
-        cargarPista(0, false);
+        // Guardar la memoria cada vez que avanza el reloj
+        audio.ontimeupdate = () => {
+            let m = Math.floor(audio.currentTime / 60);
+            let s = Math.floor(audio.currentTime % 60);
+            document.getElementById('tiempo-pantalla').innerText = `${m}:${s < 10 ? '0':''}${s}`;
+            
+            if(audio.currentTime > 5) {
+                localStorage.setItem('lab_audio_time', audio.currentTime);
+            }
+        };
+
     </script>
 </body>
 </html>
