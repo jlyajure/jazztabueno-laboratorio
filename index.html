@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LABORATORIO - JTBP FIX</title>
+    <title>LABORATORIO - JTBP FIX V2</title>
     <style>
         body { background: #111; color: white; font-family: sans-serif; text-align: center; padding: 20px; }
         .card { background: #222; border: 2px solid #a68a44; padding: 20px; border-radius: 15px; max-width: 300px; margin: 20px auto; }
@@ -16,17 +16,19 @@
         .liked .like-count { color: #ff4444; }
         
         #log { background: #000; color: #0f0; font-family: monospace; padding: 10px; text-align: left; font-size: 12px; height: 150px; overflow-y: auto; border: 1px solid #444; margin-top: 20px; }
+        .btn-reset { background: #ff4444; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; margin-bottom: 15px; }
     </style>
 </head>
 <body>
 
-    <h2 style="color: #a68a44;">🧪 LABORATORIO AISLADO</h2>
-    <p>Prueba de Audio y Corazón</p>
+    <h2 style="color: #a68a44;">🧪 LABORATORIO AISLADO V2</h2>
+    
+    <button class="btn-reset" onclick="reiniciarTodo()">🧹 BORRAR MEMORIA DE PRUEBA</button>
 
     <div class="card">
         <h3 id="tiempo-pantalla">00:00</h3>
         <button class="btn-play" id="btn-play" onclick="arrancarAudio()">▶️ REPRODUCIR</button>
-        <audio id="mi-audio" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" crossorigin="anonymous"></audio>
+        <audio id="mi-audio" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
 
         <hr style="border-color: #333; margin: 20px 0;">
 
@@ -46,38 +48,41 @@
         function log(msg) { logBox.innerHTML += `> ${msg}<br>`; logBox.scrollTop = logBox.scrollHeight; }
 
         // ==========================================
+        // BOTÓN PARA LIMPIAR EL CELULAR Y REPETIR PRUEBA
+        // ==========================================
+        function reiniciarTodo() {
+            localStorage.removeItem('lab_like_test');
+            localStorage.removeItem('lab_audio_time');
+            log("🧹 Memoria borrada. Recargando en 2 segundos...");
+            setTimeout(() => { location.reload(); }, 2000);
+        }
+
+        // ==========================================
         // 1. PRUEBA DEL CORAZÓN (LIKES)
         // ==========================================
-        
-        // Al cargar la página, verificamos si ya había dado like en el pasado
         let estadoLike = localStorage.getItem('lab_like_test');
         if(estadoLike === 'true') {
             btnCorazon.classList.add('liked');
-            contador.innerText = "101"; // Simulamos que ya sumó en la DB
-            log("❤️ Corazón recuperado de la memoria (Rojo).");
+            contador.innerText = "101"; 
+            log("❤️ Memoria encontrada: Ya habías dado like (Rojo).");
         } else {
-            log("🤍 Corazón virgen (Blanco).");
+            log("🤍 Memoria vacía: Corazón virgen (Blanco).");
         }
 
         function darLike() {
-            // Verificamos el candado ANTES de sumar
             if(localStorage.getItem('lab_like_test') === 'true') {
-                log("⚠️ Intento bloqueado: Ya le diste like antes.");
-                alert("¡Ya le diste like a esto! El candado funciona.");
-                return; // Corta la función aquí, no suma nada.
+                log("⚠️ Intento bloqueado: El candado funciona.");
+                return; 
             }
-
-            // Si pasa el candado, suma y se pone rojo
             localStorage.setItem('lab_like_test', 'true');
             btnCorazon.classList.add('liked');
-            contador.innerText = "101"; // Simula la suma en DB
+            contador.innerText = "101"; 
             log("✅ Like registrado y guardado en memoria.");
         }
 
         // ==========================================
         // 2. PRUEBA DE AUDIO (MEMORIA DE MINUTO)
         // ==========================================
-        
         function arrancarAudio() {
             if(!audio.paused) {
                 audio.pause();
@@ -88,7 +93,6 @@
 
             document.getElementById('btn-play').innerText = "⏳ CARGANDO...";
             
-            // Le damos play PRIMERO, y cuando el celular responda, hacemos el salto
             let promesa = audio.play();
             
             if (promesa !== undefined) {
@@ -96,7 +100,6 @@
                     document.getElementById('btn-play').innerText = "⏸️ PAUSAR";
                     log("▶️ Reproduciendo...");
                     
-                    // Rescatar memoria DESPUÉS de que el audio ya arrancó seguro
                     let memoria = localStorage.getItem('lab_audio_time');
                     if(memoria && parseFloat(memoria) > 5) {
                         audio.currentTime = parseFloat(memoria);
@@ -108,7 +111,6 @@
             }
         }
 
-        // Guardar la memoria cada vez que avanza el reloj
         audio.ontimeupdate = () => {
             let m = Math.floor(audio.currentTime / 60);
             let s = Math.floor(audio.currentTime % 60);
@@ -118,7 +120,6 @@
                 localStorage.setItem('lab_audio_time', audio.currentTime);
             }
         };
-
     </script>
 </body>
 </html>
