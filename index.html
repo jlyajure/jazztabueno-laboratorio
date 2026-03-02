@@ -20,51 +20,64 @@
             background: #111;
             padding: 30px;
             border-radius: 20px;
-            border: 2px solid #a68a44; /* Borde dorado JTBP */
+            border: 2px solid #a68a44;
             text-align: center;
             box-shadow: 0 0 30px rgba(166, 138, 68, 0.2);
+            width: 350px;
         }
         canvas {
             background-color: #000;
             border-radius: 10px;
             margin-top: 20px;
             border: 1px solid #333;
+            width: 100%;
         }
-        button {
+        .btn-cargar {
+            display: inline-block;
             background-color: #a68a44;
             color: black;
-            border: none;
-            padding: 15px 30px;
-            font-size: 16px;
+            padding: 12px 25px;
+            font-size: 14px;
             font-weight: bold;
             border-radius: 10px;
             cursor: pointer;
             margin-top: 20px;
             transition: 0.3s;
         }
-        button:hover {
+        .btn-cargar:hover {
             transform: scale(1.05);
             box-shadow: 0 0 15px #a68a44;
+        }
+        input[type="file"] {
+            display: none;
+        }
+        audio {
+            margin-top: 20px;
+            width: 100%;
+            height: 35px;
+            outline: none;
         }
     </style>
 </head>
 <body>
 
     <div class="pantalla-laboratorio">
-        <h2 style="color: #a68a44; margin-top: 0;">🧪 Laboratorio: Barras Rítmicas</h2>
-        <p style="font-size: 14px; color: #888;">Presione Play para ver cómo reacciona el código al sonido.</p>
+        <h2 style="color: #a68a44; margin-top: 0;">🧪 Laboratorio JTBP (Plan C)</h2>
+        <p style="font-size: 13px; color: #888;">Carga cualquier canción MP3 que tengas en tu PC para ver la magia de las barras.</p>
         
-        <canvas id="visualizador" width="300" height="150"></canvas>
-        <br>
+        <canvas id="visualizador" width="300" height="120"></canvas>
         
-        <audio id="audio-prueba" crossorigin="anonymous" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
+        <label class="btn-cargar">
+            <input type="file" id="input-audio" accept="audio/*">
+            📂 SELECCIONAR MP3
+        </label>
         
-        <button id="btn-play">▶️ REPRODUCIR Y VER MAGIA</button>
+        <audio id="reproductor" controls style="display:none;"></audio>
     </div>
 
     <script>
-        const btnPlay = document.getElementById('btn-play');
-        const audio = document.getElementById('audio-prueba');
+        const inputAudio = document.getElementById('input-audio');
+        const reproductor = document.getElementById('reproductor');
         const canvas = document.getElementById('visualizador');
         const ctx = canvas.getContext('2d');
 
@@ -73,28 +86,32 @@
         let source;
         let estaRodando = false;
 
-        btnPlay.addEventListener('click', () => {
-            // El navegador exige que el AudioContext se inicie con un clic del usuario
+        // Cuando el Jefe selecciona una canción de su PC
+        inputAudio.addEventListener('change', function(e) {
+            const archivo = e.target.files[0];
+            if (!archivo) return;
+
+            // Creamos un link interno para reproducir la canción sin internet
+            const url = URL.createObjectURL(archivo);
+            reproductor.src = url;
+            reproductor.style.display = 'block';
+            reproductor.play();
+
+            // Encendemos el motor de audio solo la primera vez
             if (!audioContext) {
                 audioContext = new (window.AudioContext || window.webkitAudioContext)();
                 analyser = audioContext.createAnalyser();
-                source = audioContext.createMediaElementSource(audio);
+                source = audioContext.createMediaElementSource(reproductor);
                 
                 source.connect(analyser);
                 analyser.connect(audioContext.destination);
                 
-                analyser.fftSize = 256; // Cantidad de barras
+                analyser.fftSize = 128; // Define el número de barritas
             }
 
-            if (audio.paused) {
-                audio.play();
-                btnPlay.innerText = "⏸️ PAUSAR";
-                if (!estaRodando) {
-                    animarBarras();
-                }
-            } else {
-                audio.pause();
-                btnPlay.innerText = "▶️ REPRODUCIR Y VER MAGIA";
+            // Arrancamos la pintura
+            if (!estaRodando) {
+                animarBarras();
             }
         });
 
@@ -105,28 +122,28 @@
             const bufferLength = analyser.frequencyBinCount;
             const dataArray = new Uint8Array(bufferLength);
             
-            // Leemos las frecuencias de la música en este milisegundo
+            // Leemos el volumen exacto de la música
             analyser.getByteFrequencyData(dataArray);
 
-            // Limpiamos la pantalla negra
+            // Pintamos el fondo negro del cuadro
             ctx.fillStyle = '#000000';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-            const barWidth = (canvas.width / bufferLength) * 2.5;
+            const barWidth = (canvas.width / bufferLength) * 2;
             let barHeight;
             let x = 0;
 
-            // Dibujamos cada barrita dorada
+            // Dibujamos las barras una por una
             for (let i = 0; i < bufferLength; i++) {
-                barHeight = dataArray[i] / 1.5; // Ajustamos la altura
+                barHeight = dataArray[i]; // Altura según el ritmo
 
-                // Color dorado estilo JTBP
+                // Nuestro color oficial: Dorado JTBP
                 ctx.fillStyle = '#a68a44';
                 
-                // Dibujamos el rectángulo (x, y, ancho, alto)
-                ctx.fillRect(x, canvas.height - barHeight, barWidth, barHeight);
+                // Dibujamos el rectángulo de la barra
+                ctx.fillRect(x, canvas.height - (barHeight / 2), barWidth, barHeight / 2);
 
-                x += barWidth + 2; // Espacio entre barras
+                x += barWidth + 1; // Espacio entre barras
             }
         }
     </script>
