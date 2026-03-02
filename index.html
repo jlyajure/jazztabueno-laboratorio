@@ -3,123 +3,133 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LABORATORIO - JTBP FIX V2</title>
+    <title>Laboratorio JTBP - Visualizador</title>
     <style>
-        body { background: #111; color: white; font-family: sans-serif; text-align: center; padding: 20px; }
-        .card { background: #222; border: 2px solid #a68a44; padding: 20px; border-radius: 15px; max-width: 300px; margin: 20px auto; }
-        .btn-play { background: #a68a44; color: black; border: none; padding: 15px 30px; font-weight: bold; border-radius: 10px; cursor: pointer; font-size: 16px; margin-bottom: 20px; width: 100%; }
-        
-        /* ESTILO DEL CORAZÓN */
-        .btn-like { background: none; border: none; cursor: pointer; font-size: 30px; color: #555; transition: 0.3s; }
-        .btn-like.liked { color: #ff4444; transform: scale(1.2); }
-        .like-count { font-size: 16px; color: #888; display: block; margin-top: 5px; font-weight: bold; }
-        .liked .like-count { color: #ff4444; }
-        
-        #log { background: #000; color: #0f0; font-family: monospace; padding: 10px; text-align: left; font-size: 12px; height: 150px; overflow-y: auto; border: 1px solid #444; margin-top: 20px; }
-        .btn-reset { background: #ff4444; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; margin-bottom: 15px; }
+        body {
+            background-color: #050505;
+            color: #ffffff;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .pantalla-laboratorio {
+            background: #111;
+            padding: 30px;
+            border-radius: 20px;
+            border: 2px solid #a68a44; /* Borde dorado JTBP */
+            text-align: center;
+            box-shadow: 0 0 30px rgba(166, 138, 68, 0.2);
+        }
+        canvas {
+            background-color: #000;
+            border-radius: 10px;
+            margin-top: 20px;
+            border: 1px solid #333;
+        }
+        button {
+            background-color: #a68a44;
+            color: black;
+            border: none;
+            padding: 15px 30px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: 0.3s;
+        }
+        button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px #a68a44;
+        }
     </style>
 </head>
 <body>
 
-    <h2 style="color: #a68a44;">🧪 LABORATORIO AISLADO V2</h2>
-    
-    <button class="btn-reset" onclick="reiniciarTodo()">🧹 BORRAR MEMORIA DE PRUEBA</button>
-
-    <div class="card">
-        <h3 id="tiempo-pantalla">00:00</h3>
-        <button class="btn-play" id="btn-play" onclick="arrancarAudio()">▶️ REPRODUCIR</button>
-        <audio id="mi-audio" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
-
-        <hr style="border-color: #333; margin: 20px 0;">
-
-        <button class="btn-like" id="btn-corazon" onclick="darLike()">
-            ❤️ <span class="like-count" id="contador-likes">100</span>
-        </button>
+    <div class="pantalla-laboratorio">
+        <h2 style="color: #a68a44; margin-top: 0;">🧪 Laboratorio: Barras Rítmicas</h2>
+        <p style="font-size: 14px; color: #888;">Presione Play para ver cómo reacciona el código al sonido.</p>
+        
+        <canvas id="visualizador" width="300" height="150"></canvas>
+        <br>
+        
+        <audio id="audio-prueba" crossorigin="anonymous" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
+        
+        <button id="btn-play">▶️ REPRODUCIR Y VER MAGIA</button>
     </div>
 
-    <div id="log"><span>[SISTEMA INICIADO]</span><br></div>
-
     <script>
-        const audio = document.getElementById('mi-audio');
-        const btnCorazon = document.getElementById('btn-corazon');
-        const contador = document.getElementById('contador-likes');
-        const logBox = document.getElementById('log');
+        const btnPlay = document.getElementById('btn-play');
+        const audio = document.getElementById('audio-prueba');
+        const canvas = document.getElementById('visualizador');
+        const ctx = canvas.getContext('2d');
 
-        function log(msg) { logBox.innerHTML += `> ${msg}<br>`; logBox.scrollTop = logBox.scrollHeight; }
+        let audioContext;
+        let analyser;
+        let source;
+        let estaRodando = false;
 
-        // ==========================================
-        // BOTÓN PARA LIMPIAR EL CELULAR Y REPETIR PRUEBA
-        // ==========================================
-        function reiniciarTodo() {
-            localStorage.removeItem('lab_like_test');
-            localStorage.removeItem('lab_audio_time');
-            log("🧹 Memoria borrada. Recargando en 2 segundos...");
-            setTimeout(() => { location.reload(); }, 2000);
-        }
-
-        // ==========================================
-        // 1. PRUEBA DEL CORAZÓN (LIKES)
-        // ==========================================
-        let estadoLike = localStorage.getItem('lab_like_test');
-        if(estadoLike === 'true') {
-            btnCorazon.classList.add('liked');
-            contador.innerText = "101"; 
-            log("❤️ Memoria encontrada: Ya habías dado like (Rojo).");
-        } else {
-            log("🤍 Memoria vacía: Corazón virgen (Blanco).");
-        }
-
-        function darLike() {
-            if(localStorage.getItem('lab_like_test') === 'true') {
-                log("⚠️ Intento bloqueado: El candado funciona.");
-                return; 
+        btnPlay.addEventListener('click', () => {
+            // El navegador exige que el AudioContext se inicie con un clic del usuario
+            if (!audioContext) {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                analyser = audioContext.createAnalyser();
+                source = audioContext.createMediaElementSource(audio);
+                
+                source.connect(analyser);
+                analyser.connect(audioContext.destination);
+                
+                analyser.fftSize = 256; // Cantidad de barras
             }
-            localStorage.setItem('lab_like_test', 'true');
-            btnCorazon.classList.add('liked');
-            contador.innerText = "101"; 
-            log("✅ Like registrado y guardado en memoria.");
-        }
 
-        // ==========================================
-        // 2. PRUEBA DE AUDIO (MEMORIA DE MINUTO)
-        // ==========================================
-        function arrancarAudio() {
-            if(!audio.paused) {
+            if (audio.paused) {
+                audio.play();
+                btnPlay.innerText = "⏸️ PAUSAR";
+                if (!estaRodando) {
+                    animarBarras();
+                }
+            } else {
                 audio.pause();
-                document.getElementById('btn-play').innerText = "▶️ REPRODUCIR";
-                log("⏸️ Audio Pausado.");
-                return;
+                btnPlay.innerText = "▶️ REPRODUCIR Y VER MAGIA";
             }
+        });
 
-            document.getElementById('btn-play').innerText = "⏳ CARGANDO...";
+        function animarBarras() {
+            estaRodando = true;
+            requestAnimationFrame(animarBarras);
+
+            const bufferLength = analyser.frequencyBinCount;
+            const dataArray = new Uint8Array(bufferLength);
             
-            let promesa = audio.play();
-            
-            if (promesa !== undefined) {
-                promesa.then(_ => {
-                    document.getElementById('btn-play').innerText = "⏸️ PAUSAR";
-                    log("▶️ Reproduciendo...");
-                    
-                    let memoria = localStorage.getItem('lab_audio_time');
-                    if(memoria && parseFloat(memoria) > 5) {
-                        audio.currentTime = parseFloat(memoria);
-                        log(`⏱️ Salto forzado al segundo: ${Math.floor(memoria)}`);
-                    }
-                }).catch(error => {
-                    log("❌ Error al reproducir: " + error);
-                });
+            // Leemos las frecuencias de la música en este milisegundo
+            analyser.getByteFrequencyData(dataArray);
+
+            // Limpiamos la pantalla negra
+            ctx.fillStyle = '#000000';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            const barWidth = (canvas.width / bufferLength) * 2.5;
+            let barHeight;
+            let x = 0;
+
+            // Dibujamos cada barrita dorada
+            for (let i = 0; i < bufferLength; i++) {
+                barHeight = dataArray[i] / 1.5; // Ajustamos la altura
+
+                // Color dorado estilo JTBP
+                ctx.fillStyle = '#a68a44';
+                
+                // Dibujamos el rectángulo (x, y, ancho, alto)
+                ctx.fillRect(x, canvas.height - barHeight, barWidth, barHeight);
+
+                x += barWidth + 2; // Espacio entre barras
             }
         }
-
-        audio.ontimeupdate = () => {
-            let m = Math.floor(audio.currentTime / 60);
-            let s = Math.floor(audio.currentTime % 60);
-            document.getElementById('tiempo-pantalla').innerText = `${m}:${s < 10 ? '0':''}${s}`;
-            
-            if(audio.currentTime > 5) {
-                localStorage.setItem('lab_audio_time', audio.currentTime);
-            }
-        };
     </script>
+
 </body>
 </html>
