@@ -13,7 +13,7 @@
         /* BARRA DE HISTORIAS (CIRCULITOS) */
         .stories-bar { display: flex; gap: 15px; margin-bottom: 30px; }
         .story-circle { 
-            width: 70px; height: 70px; border-radius: 50%; 
+            width: 75px; height: 75px; border-radius: 50%; 
             border: 3px solid #ff007f; cursor: pointer; overflow: hidden; 
             background-color: #222;
         }
@@ -46,20 +46,28 @@
 <body>
 
     <h3 style="color: #ff007f;">JAZZTABUENO</h3>
-    <p style="color: #666; font-size: 0.8em; margin-bottom: 25px;">LABORATORIO DE DISEÑO</p>
+    <p style="color: #666; font-size: 0.8em; margin-bottom: 25px;">SALA DE MÁQUINAS - JTBP</p>
 
     <div class="stories-bar">
-        <div class="story-circle" onclick="openStory('JTB', 'jazz.jpg')"><img src="jazz.jpg"></div>
-        <div class="story-circle" onclick="openStory('Salsa Brava', 'salsa.jpg')"><img src="salsa.jpg"></div>
-        <div class="story-circle" onclick="openStory('Studio 79', 's79.jpg')"><img src="s79.jpg"></div>
-        <div class="story-circle" onclick="openStory('Old School', 'rock.jpg')"><img src="rock.jpg"></div>
+        <div class="story-circle" onclick="openStory('JTB', 'Jazztabueno (2).jpg')">
+            <img src="Jazztabueno (2).jpg">
+        </div>
+        <div class="story-circle" onclick="openStory('Salsa Brava', 'Salsa Brava.jpg')">
+            <img src="Salsa Brava.jpg">
+        </div>
+        <div class="story-circle" onclick="openStory('Studio 79', 'S79.jpg')">
+            <img src="S79.jpg">
+        </div>
+        <div class="story-circle" onclick="openStory('Old School', 'Old School Radio.jpg')">
+            <img src="Old School Radio.jpg">
+        </div>
     </div>
 
     <div class="main-menu">
-        <div class="program-card" onclick="alert('Abriendo Radio JTB...')"><img src="jazz.jpg"></div>
-        <div class="program-card" onclick="alert('Abriendo Radio Salsa...')"><img src="salsa.jpg"></div>
-        <div class="program-card" onclick="alert('Abriendo Radio S79...')"><img src="s79.jpg"></div>
-        <div class="program-card" onclick="alert('Abriendo Radio Rock...')"><img src="rock.jpg"></div>
+        <div class="program-card"><img src="Jazztabueno (2).jpg"></div>
+        <div class="program-card"><img src="Salsa Brava.jpg"></div>
+        <div class="program-card"><img src="S79.jpg"></div>
+        <div class="program-card"><img src="Old School Radio.jpg"></div>
     </div>
 
     <div class="story-viewer" id="storyViewer">
