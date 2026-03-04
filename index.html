@@ -3,34 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>App JTBP - Laboratorio Pro</title>
+    <title>App JTBP - Laboratorio de Tico</title>
     <style>
-        /* --- ESTILOS DE LA SALA DE MÁQUINAS --- */
         body { 
-            font-family: 'Segoe UI', sans-serif; 
-            background-color: #050505; 
-            color: white; 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            padding: 20px;
-            margin: 0;
+            font-family: 'Segoe UI', sans-serif; background-color: #050505; color: white; 
+            display: flex; flex-direction: column; align-items: center; padding: 20px; margin: 0;
         }
 
         h3 { color: #ff007f; margin-bottom: 5px; letter-spacing: 2px; text-transform: uppercase; }
         .sub-header { color: #666; font-size: 0.7em; margin-bottom: 30px; text-transform: uppercase; }
 
-        /* --- BARRA DE HISTORIAS (CÍRCULOS) --- */
+        /* BARRA DE HISTORIAS */
         .stories-bar { display: flex; gap: 15px; margin-bottom: 40px; }
         .story-circle { 
             width: 75px; height: 75px; border-radius: 50%; border: 3px solid #ff007f; 
             cursor: pointer; overflow: hidden; background-color: #000; position: relative; 
-            transition: transform 0.2s;
         }
-        .story-circle:active { transform: scale(0.9); }
         .story-circle img { width: 100%; height: 100%; object-fit: contain; }
         
-        /* Efecto Neón para el VIVO */
+        /* ESTILO EN VIVO (Verde Neón) */
         .story-circle.live { border-color: #00ff00; box-shadow: 0 0 15px #00ff00; }
         .live-badge { 
             position: absolute; bottom: 2px; left: 50%; transform: translateX(-50%); 
@@ -38,49 +29,40 @@
             padding: 1px 4px; border-radius: 4px; z-index: 10; 
         }
 
-        /* --- MENÚ PRINCIPAL (CUADRADOS) --- */
+        /* MENÚ PRINCIPAL */
         .main-menu { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; width: 100%; max-width: 380px; }
         .program-card { 
             background-color: #121212; border-radius: 25px; aspect-ratio: 1 / 1; 
             overflow: hidden; border: 1px solid #222; display: flex; 
-            align-items: center; justify-content: center; padding: 15px; box-sizing: border-box; 
+            align-items: center; justify-content: center; padding: 15px; 
         }
         .program-card img { width: 100%; height: 100%; object-fit: contain; }
 
-        /* --- VISOR DE HISTORIAS --- */
+        /* VISOR DE HISTORIAS */
         .story-viewer { 
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
             background-color: rgba(0, 0, 0, 0.98); z-index: 1000; 
             justify-content: center; align-items: center; flex-direction: column; 
         }
         .close-btn { position: absolute; top: 20px; right: 30px; color: white; font-size: 40px; cursor: pointer; }
-        
         .progress-container { width: 90%; height: 4px; background: #333; position: absolute; top: 20px; border-radius: 2px; }
-        .progress-bar { height: 100%; background: #ff007f; width: 0%; border-radius: 2px; }
-
+        .progress-bar { height: 100%; background: #ff007f; width: 0%; }
         .promo-image { width: 85%; max-width: 400px; border-radius: 25px; box-shadow: 0 0 40px rgba(255, 0, 127, 0.4); }
-        .promo-title { margin-top: 20px; font-weight: bold; color: #ff007f; letter-spacing: 1px; }
     </style>
 </head>
 <body>
 
     <h3>JAZZTABUENO</h3>
-    <div class="sub-header">Sala de Máquinas - JTBP</div>
+    <div class="sub-header">Sala de Máquinas - Edición Final</div>
 
     <div class="stories-bar">
         <div class="story-circle live" onclick="openStory('Jazz Ta Bueno', './jazztabueno.jpg')">
             <img src="./jazztabueno.jpg">
             <div class="live-badge">VIVO</div>
         </div>
-        <div class="story-circle" onclick="openStory('Studio 79', './studio79.jpg')">
-            <img src="./studio79.jpg">
-        </div>
-        <div class="story-circle" onclick="openStory('Salsa Brava', './salsabrava.jpg')">
-            <img src="./salsabrava.jpg">
-        </div>
-        <div class="story-circle" onclick="openStory('Old School Rock', './oldschoolradio.jpg')">
-            <img src="./oldschoolradio.jpg">
-        </div>
+        <div class="story-circle" onclick="openStory('Studio 79', './studio79.jpg')"><img src="./studio79.jpg"></div>
+        <div class="story-circle" onclick="openStory('Salsa Brava', './salsabrava.jpg')"><img src="./salsabrava.jpg"></div>
+        <div class="story-circle" onclick="openStory('Old School Rock', './oldschoolradio.jpg')"><img src="./oldschoolradio.jpg"></div>
     </div>
 
     <div class="main-menu">
@@ -94,38 +76,24 @@
         <div class="progress-container"><div class="progress-bar" id="progressBar"></div></div>
         <span class="close-btn" onclick="closeStory()">&times;</span>
         <img id="storyImageLarge" class="promo-image" src="">
-        <div id="storyTitle" class="promo-title"></div>
     </div>
 
     <script>
         let progressInterval;
-
         function openStory(name, imgSource) {
             const viewer = document.getElementById('storyViewer');
             const img = document.getElementById('storyImageLarge');
-            const title = document.getElementById('storyTitle');
             const bar = document.getElementById('progressBar');
-
             img.src = imgSource;
-            title.innerText = "PROGRAMA: " + name;
             viewer.style.display = 'flex';
-
-            // Animación de la barrita (4 segundos)
             let width = 0;
             bar.style.width = '0%';
-            
             clearInterval(progressInterval);
             progressInterval = setInterval(() => {
-                if (width >= 100) {
-                    clearInterval(progressInterval);
-                    closeStory();
-                } else {
-                    width++;
-                    bar.style.width = width + '%';
-                }
+                if (width >= 100) { clearInterval(progressInterval); closeStory(); }
+                else { width++; bar.style.width = width + '%'; }
             }, 40); 
         }
-
         function closeStory() {
             document.getElementById('storyViewer').style.display = 'none';
             clearInterval(progressInterval);
