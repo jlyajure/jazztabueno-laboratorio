@@ -17,11 +17,10 @@
             border: 3px solid #ff007f;
             cursor: pointer; overflow: hidden; 
             transition: transform 0.2s;
-            background-color: #222; /* Fondo por si tarda en cargar la imagen */
+            background-color: #222; 
         }
         .story-circle:hover { transform: scale(1.1); }
         
-        /* Asegura que la imagen llene el círculo perfectamente */
         .story-circle img { width: 100%; height: 100%; object-fit: cover; }
 
         .story-viewer {
@@ -38,7 +37,6 @@
         
         .promo-content { width: 320px; text-align: center;}
         
-        /* Estilo para la imagen principal de la historia */
         .promo-image { width: 100%; border-radius: 15px; box-shadow: 0 0 20px rgba(255, 0, 127, 0.5); }
     </style>
 </head>
@@ -75,27 +73,19 @@
     <script>
         let storyTimeout;
 
-        // Ahora la función recibe el nombre del programa Y el archivo de la imagen
         function openStory(programName, imageFileName) {
             const viewer = document.getElementById('storyViewer');
             const title = document.getElementById('storyTitle');
             const imageLarge = document.getElementById('storyImageLarge');
             const progressFill = document.getElementById('progressFill');
 
-            // 1. Cambiar texto e imagen
             title.innerText = "¡Al Aire: " + programName + "!";
-            imageLarge.src = imageFileName; // Esto carga la imagen en grande
+            imageLarge.src = imageFileName; 
 
-            // 2. Mostrar la pantalla negra
             viewer.style.display = 'flex';
-            
-            // 3. Iniciar la animación
             setTimeout(() => { progressFill.style.width = '100%'; }, 50);
 
-            // 4. Cerrar a los 4 segundos
-            storyTimeout = setTimeout(() => {
-                closeStory();
-            }, 4000);
+            storyTimeout = setTimeout(() => { closeStory(); }, 4000);
         }
 
         function closeStory() {
