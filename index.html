@@ -5,38 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Laboratorio Pro - JTBP</title>
     <style>
-        body { 
-            font-family: sans-serif; background-color: #050505; color: white; 
-            display: flex; flex-direction: column; align-items: center; padding: 20px;
-        }
-
-        /* BARRA DE HISTORIAS (CIRCULITOS) */
+        body { font-family: sans-serif; background-color: #050505; color: white; display: flex; flex-direction: column; align-items: center; padding: 20px; }
         .stories-bar { display: flex; gap: 15px; margin-bottom: 30px; }
-        .story-circle { 
-            width: 75px; height: 75px; border-radius: 50%; 
-            border: 3px solid #ff007f; cursor: pointer; overflow: hidden; 
-            background-color: #222;
-        }
+        .story-circle { width: 75px; height: 75px; border-radius: 50%; border: 3px solid #ff007f; cursor: pointer; overflow: hidden; background-color: #222; }
         .story-circle img { width: 100%; height: 100%; object-fit: cover; }
-
-        /* MENÚ DE PROGRAMAS (CUADRADOS) */
-        .main-menu { 
-            display: grid; grid-template-columns: 1fr 1fr; gap: 20px; 
-            width: 100%; max-width: 350px; 
-        }
-        .program-card { 
-            background-color: #1a1a1a; border-radius: 20px; 
-            aspect-ratio: 1 / 1; overflow: hidden; cursor: pointer;
-            border: 1px solid #333;
-        }
+        .main-menu { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; width: 100%; max-width: 350px; }
+        .program-card { background-color: #1a1a1a; border-radius: 20px; aspect-ratio: 1 / 1; overflow: hidden; cursor: pointer; border: 1px solid #333; }
         .program-card img { width: 100%; height: 100%; object-fit: cover; }
-
-        /* VISOR DE HISTORIAS */
-        .story-viewer {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-color: rgba(0, 0, 0, 0.98); z-index: 1000; 
-            justify-content: center; align-items: center; flex-direction: column;
-        }
+        .story-viewer { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.98); z-index: 1000; justify-content: center; align-items: center; flex-direction: column; }
         .close-btn { position: absolute; top: 20px; right: 30px; color: white; font-size: 40px; cursor: pointer; }
         .progress-bar { width: 90%; height: 4px; background: #333; position: absolute; top: 15px; border-radius: 2px; }
         .progress-fill { height: 100%; background: white; width: 0%; transition: width 4s linear; }
@@ -45,22 +21,14 @@
 </head>
 <body>
 
-    <h3 style="color: #ff007f; margin-bottom: 5px;">JAZZTABUENO</h3>
+    <h3 style="color: #ff007f;">JAZZTABUENO</h3>
     <p style="color: #666; font-size: 0.8em; margin-bottom: 25px;">SALA DE MÁQUINAS - JTBP</p>
 
     <div class="stories-bar">
-        <div class="story-circle" onclick="openStory('JTB', 'Jazztabueno (2).jpg')">
-            <img src="Jazztabueno (2).jpg">
-        </div>
-        <div class="story-circle" onclick="openStory('Salsa Brava', 'Salsa Brava.jpg')">
-            <img src="Salsa Brava.jpg">
-        </div>
-        <div class="story-circle" onclick="openStory('Studio 79', 'S79.jpg')">
-            <img src="S79.jpg">
-        </div>
-        <div class="story-circle" onclick="openStory('Old School', 'Old School Radio.jpg')">
-            <img src="Old School Radio.jpg">
-        </div>
+        <div class="story-circle" onclick="openStory('JTB', 'Jazztabueno (2).jpg')"><img src="Jazztabueno (2).jpg"></div>
+        <div class="story-circle" onclick="openStory('Salsa Brava', 'Salsa Brava.jpg')"><img src="Salsa Brava.jpg"></div>
+        <div class="story-circle" onclick="openStory('Studio 79', 'S79.jpg')"><img src="S79.jpg"></div>
+        <div class="story-circle" onclick="openStory('Old School', 'Old School Radio.jpg')"><img src="Old School Radio.jpg"></div>
     </div>
 
     <div class="main-menu">
