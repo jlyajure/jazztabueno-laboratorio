@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>App JTBP - Laboratorio Pro Final</title>
+    <title>App JTBP - Edición Final</title>
     <style>
-        /* --- ESTILOS GENERALES --- */
         body { 
             font-family: 'Segoe UI', sans-serif; 
             background-color: #050505; 
@@ -36,7 +35,7 @@
             overflow: hidden; 
             background-color: #000;
             transition: transform 0.2s;
-            position: relative; /* Para que el badge de "VIVO" se pegue aquí */
+            position: relative;
         }
         .story-circle:hover { transform: scale(1.1); }
         .story-circle img { 
@@ -45,7 +44,7 @@
             object-fit: contain; 
         }
 
-        /* Distintivo para la estación que está EN VIVO */
+        /* Estilo para el distintivo EN VIVO (Verde Neón) */
         .story-circle.live { border-color: #00ff00; box-shadow: 0 0 10px #00ff00; }
         .live-badge {
             position: absolute;
@@ -58,6 +57,7 @@
             font-weight: bold;
             padding: 1px 4px;
             border-radius: 4px;
+            z-index: 10;
         }
 
         /* --- MENÚ PRINCIPAL (CUADRADOS) --- */
@@ -81,7 +81,6 @@
             padding: 15px; 
             box-sizing: border-box;
         }
-        .program-card:hover { border-color: #ff007f; }
         .program-card img { 
             width: 100%; 
             height: 100%; 
@@ -143,23 +142,16 @@
 
     <script>
         let storyTimeout;
-
         function openStory(name, img) {
             const viewer = document.getElementById('storyViewer');
             const progress = document.getElementById('progressFill');
             document.getElementById('storyTitle').innerText = "PROMO: " + name;
             document.getElementById('storyImageLarge').src = img;
-            
             viewer.style.display = 'flex';
-            
-            // Reinicia y arranca la barrita
             progress.style.width = '0%';
             setTimeout(() => { progress.style.width = '100%'; }, 50);
-
-            // Cierra automático a los 4 segundos
             storyTimeout = setTimeout(() => { closeStory(); }, 4000);
         }
-
         function closeStory() {
             document.getElementById('storyViewer').style.display = 'none';
             document.getElementById('progressFill').style.width = '0%';
