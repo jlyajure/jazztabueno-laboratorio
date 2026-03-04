@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>App JTBP - Laboratorio Final</title>
+    <title>App JTBP - Laboratorio Pro Final</title>
     <style>
-        /* Estilos Generales */
+        /* --- ESTILOS GENERALES --- */
         body { 
             font-family: 'Segoe UI', sans-serif; 
             background-color: #050505; 
@@ -17,7 +17,7 @@
             margin: 0;
         }
 
-        h3 { color: #ff007f; margin-bottom: 5px; letter-spacing: 2px; }
+        h3 { color: #ff007f; margin-bottom: 5px; letter-spacing: 2px; text-transform: uppercase; }
         .sub-header { color: #666; font-size: 0.7em; margin-bottom: 30px; text-transform: uppercase; }
 
         /* --- SECCIÓN DE HISTORIAS (CIRCULITOS) --- */
@@ -34,17 +34,33 @@
             border: 3px solid #ff007f; 
             cursor: pointer; 
             overflow: hidden; 
-            background-color: #000; /* Fondo negro para que no se vea vacío */
+            background-color: #000;
             transition: transform 0.2s;
+            position: relative; /* Para que el badge de "VIVO" se pegue aquí */
         }
         .story-circle:hover { transform: scale(1.1); }
         .story-circle img { 
             width: 100%; 
             height: 100%; 
-            object-fit: contain; /* Ajuste para que el logo no se corte */
+            object-fit: contain; 
         }
 
-        /* --- MENÚ PRINCIPAL (CUADRADOS CURVOS) --- */
+        /* Distintivo para la estación que está EN VIVO */
+        .story-circle.live { border-color: #00ff00; box-shadow: 0 0 10px #00ff00; }
+        .live-badge {
+            position: absolute;
+            bottom: 2px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #00ff00;
+            color: black;
+            font-size: 9px;
+            font-weight: bold;
+            padding: 1px 4px;
+            border-radius: 4px;
+        }
+
+        /* --- MENÚ PRINCIPAL (CUADRADOS) --- */
         .main-menu { 
             display: grid; 
             grid-template-columns: 1fr 1fr; 
@@ -54,7 +70,7 @@
         }
         .program-card { 
             background-color: #121212; 
-            border-radius: 25px; /* Esquinas curvas pronunciadas */
+            border-radius: 25px; 
             aspect-ratio: 1 / 1; 
             overflow: hidden; 
             cursor: pointer;
@@ -62,17 +78,17 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 12px; /* Espacio para que el logo no toque los bordes */
+            padding: 15px; 
             box-sizing: border-box;
         }
         .program-card:hover { border-color: #ff007f; }
         .program-card img { 
             width: 100%; 
             height: 100%; 
-            object-fit: contain; /* Ajuste para que las letras quepan completas */
+            object-fit: contain; 
         }
 
-        /* --- VISOR DE HISTORIAS (PANTALLA COMPLETA) --- */
+        /* --- VISOR DE HISTORIAS --- */
         .story-viewer {
             display: none; 
             position: fixed; 
@@ -96,24 +112,25 @@
     <div class="sub-header">Sala de Máquinas - Edición Final</div>
 
     <div class="stories-bar">
-        <div class="story-circle" onclick="openStory('Jazz Ta Bueno', 'Jazztabueno (2).jpg')">
+        <div class="story-circle live" onclick="openStory('Jazz Ta Bueno', 'Jazztabueno (2).jpg')">
             <img src="Jazztabueno (2).jpg">
-        </div>
-        <div class="story-circle" onclick="openStory('Salsa Brava', 'Salsa Brava.jpg')">
-            <img src="Salsa Brava.jpg">
+            <div class="live-badge">VIVO</div>
         </div>
         <div class="story-circle" onclick="openStory('Studio 79', 'S79.jpg')">
             <img src="S79.jpg">
         </div>
-        <div class="story-circle" onclick="openStory('Old School', 'Old School Radio.jpg')">
+        <div class="story-circle" onclick="openStory('Salsa Brava', 'Salsa Brava.jpg')">
+            <img src="Salsa Brava.jpg">
+        </div>
+        <div class="story-circle" onclick="openStory('Old School Rock', 'Old School Radio.jpg')">
             <img src="Old School Radio.jpg">
         </div>
     </div>
 
     <div class="main-menu">
         <div class="program-card"><img src="Jazztabueno (2).jpg"></div>
-        <div class="program-card"><img src="Salsa Brava.jpg"></div>
         <div class="program-card"><img src="S79.jpg"></div>
+        <div class="program-card"><img src="Salsa Brava.jpg"></div>
         <div class="program-card"><img src="Old School Radio.jpg"></div>
     </div>
 
@@ -135,10 +152,11 @@
             
             viewer.style.display = 'flex';
             
-            // Inicia la barrita de tiempo
+            // Reinicia y arranca la barrita
+            progress.style.width = '0%';
             setTimeout(() => { progress.style.width = '100%'; }, 50);
 
-            // Se cierra solo a los 4 segundos
+            // Cierra automático a los 4 segundos
             storyTimeout = setTimeout(() => { closeStory(); }, 4000);
         }
 
