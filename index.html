@@ -3,112 +3,111 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Laboratorio de Stories - JTBP</title>
+    <title>Laboratorio Pro - JTBP</title>
     <style>
         body { 
-            font-family: sans-serif; background-color: #111; color: white; 
-            display: flex; flex-direction: column; align-items: center; padding-top: 50px; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background-color: #050505; color: white; 
+            display: flex; flex-direction: column; align-items: center; padding: 20px;
         }
-        
-        .stories-bar { display: flex; gap: 20px; margin-bottom: 40px; }
-        
+
+        /* --- SECCIÓN DE HISTORIAS (CIRCULITOS) --- */
+        .stories-container { width: 100%; max-width: 400px; margin-bottom: 30px; }
+        .stories-bar { display: flex; gap: 15px; overflow-x: auto; padding: 10px 0; scrollbar-width: none; }
         .story-circle { 
-            width: 80px; height: 80px; border-radius: 50%; 
-            border: 3px solid #ff007f; /* Anillo de color estilo Instagram */
-            cursor: pointer; overflow: hidden; 
-            transition: transform 0.2s;
-            background-color: #222; /* Fondo por si tarda en cargar la imagen */
+            min-width: 70px; height: 70px; border-radius: 50%; 
+            border: 3px solid #ff007f; cursor: pointer; overflow: hidden; 
+            transition: transform 0.2s; background-color: #222; flex-shrink: 0;
         }
         .story-circle:hover { transform: scale(1.1); }
-        
-        /* Asegura que la imagen llene el círculo perfectamente */
         .story-circle img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* Pantalla completa que se abre al tocar una historia */
-        .story-viewer {
-            display: none; /* Oculto hasta que se haga clic */
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-color: rgba(0, 0, 0, 0.95);
-            z-index: 1000; justify-content: center; align-items: center; flex-direction: column;
+        /* --- MENÚ PRINCIPAL (CUADRADOS CURVOS) --- */
+        .main-menu { 
+            display: grid; grid-template-columns: 1fr 1fr; gap: 20px; 
+            width: 100%; max-width: 400px; 
         }
-        
-        /* Botón para cerrar */
-        .close-btn { position: absolute; top: 20px; right: 30px; color: white; font-size: 40px; cursor: pointer; font-weight: bold;}
-        
-        /* Barra de tiempo arriba de la imagen */
-        .progress-bar { width: 90%; height: 4px; background: #555; margin-top: 20px; border-radius: 2px; position: absolute; top: 10px;}
-        .progress-fill { height: 100%; background: white; width: 0%; transition: width 4s linear; /* Dura 4 segundos */ }
-        
-        /* Contenedor de la imagen de promoción */
-        .promo-content { width: 320px; text-align: center;}
-        
-        /* Estilo para la imagen principal de la historia */
-        .promo-image { width: 100%; border-radius: 15px; box-shadow: 0 0 20px rgba(255, 0, 127, 0.5); }
+        .program-card { 
+            background-color: #1a1a1a; border-radius: 20px; /* Esquinas curvas */
+            aspect-ratio: 1 / 1; overflow: hidden; cursor: pointer;
+            border: 1px solid #333; transition: background 0.3s;
+        }
+        .program-card:hover { border-color: #ff007f; }
+        .program-card img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* --- VISOR DE HISTORIAS (PANTALLA NEGRA) --- */
+        .story-viewer {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.98); z-index: 1000; 
+            justify-content: center; align-items: center; flex-direction: column;
+        }
+        .close-btn { position: absolute; top: 20px; right: 30px; color: white; font-size: 40px; cursor: pointer; }
+        .progress-bar { width: 90%; height: 4px; background: #333; position: absolute; top: 15px; border-radius: 2px; }
+        .progress-fill { height: 100%; background: white; width: 0%; transition: width 4s linear; }
+        .promo-content { width: 85%; text-align: center; }
+        .promo-image { width: 100%; border-radius: 15px; box-shadow: 0 0 30px rgba(255, 0, 127, 0.4); }
     </style>
 </head>
 <body>
 
-    <h2>Laboratorio de Pruebas: Stories</h2>
-    <p style="color: #aaa; margin-bottom: 30px;">Toca un círculo para ver la magia.</p>
+    <h3 style="color: #ff007f; margin-bottom: 5px;">JAZZTABUENO</h3>
+    <p style="color: #666; font-size: 0.8em; margin-bottom: 25px;">LABORATORIO DE DISEÑO</p>
 
-    <div class="stories-bar">
-        <div class="story-circle" onclick="openStory('JazzTaBueno', 'jazz.jpg')">
-            <img src="jazz.jpg" alt="JTB">
+    <div class="stories-container">
+        <div class="stories-bar">
+            <div class="story-circle" onclick="openStory('JazzTaBueno', 'Jazztabueno (2).jpg')">
+                <img src="Jazztabueno (2).jpg">
+            </div>
+            <div class="story-circle" onclick="openStory('Salsa Brava', 'Salsa Brava.jpg')">
+                <img src="Salsa Brava.jpg">
+            </div>
+            <div class="story-circle" onclick="openStory('Studio 79', 'S79.jpg')">
+                <img src="S79.jpg">
+            </div>
+            <div class="story-circle" onclick="openStory('Old School Rock', 'Old School Radio.jpg')">
+                <img src="Old School Radio.jpg">
+            </div>
         </div>
-        <div class="story-circle" onclick="openStory('Salsa Brava', 'salsa.jpg')">
-            <img src="salsa.jpg" alt="SB">
+    </div>
+
+    <div class="main-menu">
+        <div class="program-card" onclick="alert('Cargando Radio: JTB...')">
+            <img src="Jazztabueno (2).jpg">
         </div>
-        <div class="story-circle" onclick="openStory('Studio 79', 's79.jpg')">
-            <img src="s79.jpg" alt="S79">
+        <div class="program-card" onclick="alert('Cargando Radio: Salsa Brava...')">
+            <img src="Salsa Brava.jpg">
         </div>
-        <div class="story-circle" onclick="openStory('Old School Rock', 'rock.jpg')">
-            <img src="rock.jpg" alt="ROCK">
+        <div class="program-card" onclick="alert('Cargando Radio: Studio 79...')">
+            <img src="S79.jpg">
+        </div>
+        <div class="program-card" onclick="alert('Cargando Radio: Old School...')">
+            <img src="Old School Radio.jpg">
         </div>
     </div>
 
     <div class="story-viewer" id="storyViewer">
         <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
         <span class="close-btn" onclick="closeStory()">&times;</span>
-        
         <div class="promo-content">
-            <h2 id="storyTitle" style="color: #fff; margin-bottom: 15px;">Título</h2>
-            <img id="storyImageLarge" class="promo-image" src="" alt="Promo">
+            <h2 id="storyTitle" style="margin-bottom: 20px;"></h2>
+            <img id="storyImageLarge" class="promo-image" src="">
         </div>
     </div>
 
     <script>
         let storyTimeout;
-
-        // La función recibe el nombre del programa Y el archivo de la imagen
-        function openStory(programName, imageFileName) {
+        function openStory(name, img) {
             const viewer = document.getElementById('storyViewer');
-            const title = document.getElementById('storyTitle');
-            const imageLarge = document.getElementById('storyImageLarge');
-            const progressFill = document.getElementById('progressFill');
-
-            // 1. Cambiar texto e imagen
-            title.innerText = "¡Al Aire: " + programName + "!";
-            imageLarge.src = imageFileName; // Esto carga la imagen en grande
-
-            // 2. Mostrar la pantalla negra
+            const progress = document.getElementById('progressFill');
+            document.getElementById('storyTitle').innerText = "PROMO: " + name;
+            document.getElementById('storyImageLarge').src = img;
             viewer.style.display = 'flex';
-            
-            // 3. Iniciar la animación
-            setTimeout(() => { progressFill.style.width = '100%'; }, 50);
-
-            // 4. Cerrar a los 4 segundos
-            storyTimeout = setTimeout(() => {
-                closeStory();
-            }, 4000);
+            setTimeout(() => { progress.style.width = '100%'; }, 50);
+            storyTimeout = setTimeout(() => { closeStory(); }, 4000);
         }
-
         function closeStory() {
-            const viewer = document.getElementById('storyViewer');
-            const progressFill = document.getElementById('progressFill');
-            
-            // Ocultar todo y reiniciar la barrita
-            viewer.style.display = 'none';
-            progressFill.style.width = '0%';
+            document.getElementById('storyViewer').style.display = 'none';
+            document.getElementById('progressFill').style.width = '0%';
             clearTimeout(storyTimeout);
         }
     </script>
