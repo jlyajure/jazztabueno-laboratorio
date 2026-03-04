@@ -3,102 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>App JTBP - Edición Final</title>
+    <title>App JTBP - Laboratorio Pro</title>
     <style>
-        body { 
-            font-family: 'Segoe UI', sans-serif; 
-            background-color: #050505; 
-            color: white; 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            padding: 20px;
-            margin: 0;
-        }
-
+        body { font-family: sans-serif; background-color: #050505; color: white; display: flex; flex-direction: column; align-items: center; padding: 20px; margin: 0; }
         h3 { color: #ff007f; margin-bottom: 5px; letter-spacing: 2px; text-transform: uppercase; }
         .sub-header { color: #666; font-size: 0.7em; margin-bottom: 30px; text-transform: uppercase; }
 
-        /* --- SECCIÓN DE HISTORIAS (CIRCULITOS) --- */
-        .stories-bar { 
-            display: flex; 
-            gap: 15px; 
-            margin-bottom: 40px; 
-            padding: 5px;
-        }
+        /* CIRCULITOS DE HISTORIAS */
+        .stories-bar { display: flex; gap: 15px; margin-bottom: 40px; }
         .story-circle { 
-            width: 75px; 
-            height: 75px; 
-            border-radius: 50%; 
-            border: 3px solid #ff007f; 
-            cursor: pointer; 
-            overflow: hidden; 
-            background-color: #000;
-            transition: transform 0.2s;
-            position: relative;
+            width: 75px; height: 75px; border-radius: 50%; border: 3px solid #ff007f; 
+            cursor: pointer; overflow: hidden; background-color: #000; position: relative; 
         }
-        .story-circle:hover { transform: scale(1.1); }
-        .story-circle img { 
-            width: 100%; 
-            height: 100%; 
-            object-fit: contain; 
-        }
+        .story-circle img { width: 100%; height: 100%; object-fit: contain; }
 
-        /* Estilo para el distintivo EN VIVO (Verde Neón) */
+        /* DISTINTIVO EN VIVO */
         .story-circle.live { border-color: #00ff00; box-shadow: 0 0 10px #00ff00; }
-        .live-badge {
-            position: absolute;
-            bottom: 2px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: #00ff00;
-            color: black;
-            font-size: 9px;
-            font-weight: bold;
-            padding: 1px 4px;
-            border-radius: 4px;
-            z-index: 10;
-        }
+        .live-badge { position: absolute; bottom: 2px; left: 50%; transform: translateX(-50%); background-color: #00ff00; color: black; font-size: 9px; font-weight: bold; padding: 1px 4px; border-radius: 4px; }
 
-        /* --- MENÚ PRINCIPAL (CUADRADOS) --- */
-        .main-menu { 
-            display: grid; 
-            grid-template-columns: 1fr 1fr; 
-            gap: 20px; 
-            width: 100%; 
-            max-width: 380px; 
-        }
-        .program-card { 
-            background-color: #121212; 
-            border-radius: 25px; 
-            aspect-ratio: 1 / 1; 
-            overflow: hidden; 
-            cursor: pointer;
-            border: 1px solid #222;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 15px; 
-            box-sizing: border-box;
-        }
-        .program-card img { 
-            width: 100%; 
-            height: 100%; 
-            object-fit: contain; 
-        }
+        /* CUADRADOS PRINCIPALES */
+        .main-menu { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; width: 100%; max-width: 380px; }
+        .program-card { background-color: #121212; border-radius: 25px; aspect-ratio: 1 / 1; overflow: hidden; border: 1px solid #222; display: flex; align-items: center; justify-content: center; padding: 15px; box-sizing: border-box; }
+        .program-card img { width: 100%; height: 100%; object-fit: contain; }
 
-        /* --- VISOR DE HISTORIAS --- */
-        .story-viewer {
-            display: none; 
-            position: fixed; 
-            top: 0; left: 0; 
-            width: 100%; height: 100%;
-            background-color: rgba(0, 0, 0, 0.98); 
-            z-index: 1000; 
-            justify-content: center; 
-            align-items: center; 
-            flex-direction: column;
-        }
+        /* VISOR DE HISTORIAS */
+        .story-viewer { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.98); z-index: 1000; justify-content: center; align-items: center; flex-direction: column; }
         .close-btn { position: absolute; top: 20px; right: 30px; color: white; font-size: 40px; cursor: pointer; }
         .progress-bar { width: 90%; height: 4px; background: #333; position: absolute; top: 15px; border-radius: 2px; }
         .progress-fill { height: 100%; background: white; width: 0%; transition: width 4s linear; }
@@ -108,22 +37,16 @@
 <body>
 
     <h3>JAZZTABUENO</h3>
-    <div class="sub-header">Sala de Máquinas - Edición Final</div>
+    <div class="sub-header">Sala de Máquinas - JTBP</div>
 
     <div class="stories-bar">
         <div class="story-circle live" onclick="openStory('Jazz Ta Bueno', 'Jazztabueno (2).jpg')">
             <img src="Jazztabueno (2).jpg">
             <div class="live-badge">VIVO</div>
         </div>
-        <div class="story-circle" onclick="openStory('Studio 79', 'S79.jpg')">
-            <img src="S79.jpg">
-        </div>
-        <div class="story-circle" onclick="openStory('Salsa Brava', 'Salsa Brava.jpg')">
-            <img src="Salsa Brava.jpg">
-        </div>
-        <div class="story-circle" onclick="openStory('Old School Rock', 'Old School Radio.jpg')">
-            <img src="Old School Radio.jpg">
-        </div>
+        <div class="story-circle" onclick="openStory('Studio 79', 'S79.jpg')"><img src="S79.jpg"></div>
+        <div class="story-circle" onclick="openStory('Salsa Brava', 'Salsa Brava.jpg')"><img src="Salsa Brava.jpg"></div>
+        <div class="story-circle" onclick="openStory('Old School Rock', 'Old School Radio.jpg')"><img src="Old School Radio.jpg"></div>
     </div>
 
     <div class="main-menu">
@@ -136,7 +59,7 @@
     <div class="story-viewer" id="storyViewer">
         <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
         <span class="close-btn" onclick="closeStory()">&times;</span>
-        <h2 id="storyTitle" style="margin-bottom: 20px; font-size: 1.2em;"></h2>
+        <h2 id="storyTitle" style="margin-bottom: 20px;"></h2>
         <img id="storyImageLarge" class="promo-image" src="">
     </div>
 
