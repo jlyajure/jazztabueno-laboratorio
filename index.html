@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>App JTBP - Laboratorio Pro GitHub</title>
+    <title>App JTBP - Laboratorio GitHub Pro</title>
     <style>
         body { 
             font-family: 'Segoe UI', sans-serif; background-color: #050505; color: white; 
@@ -12,7 +12,7 @@
         h3 { color: #ff007f; margin-bottom: 5px; letter-spacing: 2px; text-transform: uppercase; }
         .sub-header { color: #666; font-size: 0.7em; margin-bottom: 30px; text-transform: uppercase; }
 
-        /* --- HISTORIAS --- */
+        /* --- SECCIÓN DE HISTORIAS --- */
         .stories-bar { display: flex; gap: 15px; margin-bottom: 40px; }
         .story-circle { 
             width: 75px; height: 75px; border-radius: 50%; border: 3px solid #ff007f; 
@@ -20,15 +20,27 @@
         }
         .story-circle img { width: 100%; height: 100%; object-fit: contain; }
         .story-circle.live { border-color: #00ff00; box-shadow: 0 0 10px #00ff00; }
-        .live-badge { position: absolute; bottom: 2px; left: 50%; transform: translateX(-50%); background-color: #00ff00; color: black; font-size: 9px; font-weight: bold; padding: 1px 4px; border-radius: 4px; z-index: 10; }
+        .live-badge { 
+            position: absolute; bottom: 2px; left: 50%; transform: translateX(-50%); 
+            background-color: #00ff00; color: black; font-size: 9px; font-weight: bold; 
+            padding: 1px 4px; border-radius: 4px; z-index: 10; 
+        }
 
-        /* --- MENÚ PRINCIPAL --- */
+        /* --- CUADRADOS PRINCIPALES --- */
         .main-menu { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; width: 100%; max-width: 380px; }
-        .program-card { background-color: #121212; border-radius: 25px; aspect-ratio: 1 / 1; overflow: hidden; border: 1px solid #222; display: flex; align-items: center; justify-content: center; padding: 15px; box-sizing: border-box; }
+        .program-card { 
+            background-color: #121212; border-radius: 25px; aspect-ratio: 1 / 1; 
+            overflow: hidden; border: 1px solid #222; display: flex; 
+            align-items: center; justify-content: center; padding: 15px; box-sizing: border-box; 
+        }
         .program-card img { width: 100%; height: 100%; object-fit: contain; }
 
-        /* --- VISOR --- */
-        .story-viewer { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.98); z-index: 1000; justify-content: center; align-items: center; flex-direction: column; }
+        /* --- VISOR DE HISTORIAS --- */
+        .story-viewer { 
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            background-color: rgba(0, 0, 0, 0.98); z-index: 1000; 
+            justify-content: center; align-items: center; flex-direction: column; 
+        }
         .close-btn { position: absolute; top: 20px; right: 30px; color: white; font-size: 40px; cursor: pointer; }
         .progress-bar { width: 90%; height: 4px; background: #333; position: absolute; top: 15px; border-radius: 2px; }
         .progress-fill { height: 100%; background: white; width: 0%; transition: width 4s linear; }
