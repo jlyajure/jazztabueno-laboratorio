@@ -14,29 +14,35 @@
         
         .story-circle { 
             width: 80px; height: 80px; border-radius: 50%; 
-            border: 3px solid #ff007f;
+            border: 3px solid #ff007f; /* Anillo de color estilo Instagram */
             cursor: pointer; overflow: hidden; 
             transition: transform 0.2s;
-            background-color: #222; 
+            background-color: #222; /* Fondo por si tarda en cargar la imagen */
         }
         .story-circle:hover { transform: scale(1.1); }
         
+        /* Asegura que la imagen llene el círculo perfectamente */
         .story-circle img { width: 100%; height: 100%; object-fit: cover; }
 
+        /* Pantalla completa que se abre al tocar una historia */
         .story-viewer {
-            display: none; 
+            display: none; /* Oculto hasta que se haga clic */
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background-color: rgba(0, 0, 0, 0.95);
             z-index: 1000; justify-content: center; align-items: center; flex-direction: column;
         }
         
+        /* Botón para cerrar */
         .close-btn { position: absolute; top: 20px; right: 30px; color: white; font-size: 40px; cursor: pointer; font-weight: bold;}
         
+        /* Barra de tiempo arriba de la imagen */
         .progress-bar { width: 90%; height: 4px; background: #555; margin-top: 20px; border-radius: 2px; position: absolute; top: 10px;}
-        .progress-fill { height: 100%; background: white; width: 0%; transition: width 4s linear; }
+        .progress-fill { height: 100%; background: white; width: 0%; transition: width 4s linear; /* Dura 4 segundos */ }
         
+        /* Contenedor de la imagen de promoción */
         .promo-content { width: 320px; text-align: center;}
         
+        /* Estilo para la imagen principal de la historia */
         .promo-image { width: 100%; border-radius: 15px; box-shadow: 0 0 20px rgba(255, 0, 127, 0.5); }
     </style>
 </head>
@@ -73,25 +79,34 @@
     <script>
         let storyTimeout;
 
+        // La función recibe el nombre del programa Y el archivo de la imagen
         function openStory(programName, imageFileName) {
             const viewer = document.getElementById('storyViewer');
             const title = document.getElementById('storyTitle');
             const imageLarge = document.getElementById('storyImageLarge');
             const progressFill = document.getElementById('progressFill');
 
+            // 1. Cambiar texto e imagen
             title.innerText = "¡Al Aire: " + programName + "!";
-            imageLarge.src = imageFileName; 
+            imageLarge.src = imageFileName; // Esto carga la imagen en grande
 
+            // 2. Mostrar la pantalla negra
             viewer.style.display = 'flex';
+            
+            // 3. Iniciar la animación
             setTimeout(() => { progressFill.style.width = '100%'; }, 50);
 
-            storyTimeout = setTimeout(() => { closeStory(); }, 4000);
+            // 4. Cerrar a los 4 segundos
+            storyTimeout = setTimeout(() => {
+                closeStory();
+            }, 4000);
         }
 
         function closeStory() {
             const viewer = document.getElementById('storyViewer');
             const progressFill = document.getElementById('progressFill');
             
+            // Ocultar todo y reiniciar la barrita
             viewer.style.display = 'none';
             progressFill.style.width = '0%';
             clearTimeout(storyTimeout);
