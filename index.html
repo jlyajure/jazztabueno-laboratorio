@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>App JTBP - Laboratorio Pro</title>
+    <title>App JTBP - Laboratorio de Promos</title>
     <style>
         body { 
             font-family: 'Segoe UI', sans-serif; background-color: #050505; color: white; 
@@ -12,13 +12,16 @@
         h3 { color: #ff007f; margin-bottom: 5px; letter-spacing: 2px; text-transform: uppercase; }
         .sub-header { color: #666; font-size: 0.7em; margin-bottom: 30px; text-transform: uppercase; }
 
-        /* --- SECCIÓN DE HISTORIAS (CIRCULITOS) --- */
+        /* --- BARRA DE HISTORIAS --- */
         .stories-bar { display: flex; gap: 15px; margin-bottom: 40px; }
         .story-circle { 
             width: 75px; height: 75px; border-radius: 50%; border: 3px solid #ff007f; 
             cursor: pointer; overflow: hidden; background-color: #000; position: relative; 
+            transition: transform 0.2s;
         }
+        .story-circle:active { transform: scale(0.9); }
         .story-circle img { width: 100%; height: 100%; object-fit: contain; }
+        
         .story-circle.live { border-color: #00ff00; box-shadow: 0 0 10px #00ff00; }
         .live-badge { 
             position: absolute; bottom: 2px; left: 50%; transform: translateX(-50%); 
@@ -26,7 +29,7 @@
             padding: 1px 4px; border-radius: 4px; z-index: 10; 
         }
 
-        /* --- MENÚ PRINCIPAL (CUADRADOS) --- */
+        /* --- MENÚ PRINCIPAL --- */
         .main-menu { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; width: 100%; max-width: 380px; }
         .program-card { 
             background-color: #121212; border-radius: 25px; aspect-ratio: 1 / 1; 
@@ -35,69 +38,84 @@
         }
         .program-card img { width: 100%; height: 100%; object-fit: contain; }
 
-        /* --- VISOR DE HISTORIAS --- */
+        /* --- VISOR DE HISTORIAS (FULL SCREEN) --- */
         .story-viewer { 
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
             background-color: rgba(0, 0, 0, 0.98); z-index: 1000; 
             justify-content: center; align-items: center; flex-direction: column; 
         }
         .close-btn { position: absolute; top: 20px; right: 30px; color: white; font-size: 40px; cursor: pointer; }
-        .progress-bar { width: 90%; height: 4px; background: #333; position: absolute; top: 15px; border-radius: 2px; }
-        .progress-fill { height: 100%; background: white; width: 0%; transition: width 4s linear; }
-        .promo-image { width: 85%; max-width: 400px; border-radius: 20px; box-shadow: 0 0 30px rgba(255, 0, 127, 0.3); }
+        
+        /* Barrita de tiempo arriba */
+        .progress-container { width: 90%; height: 4px; background: #333; position: absolute; top: 20px; border-radius: 2px; }
+        .progress-bar { height: 100%; background: #ff007f; width: 0%; border-radius: 2px; }
+
+        .promo-image { width: 85%; max-width: 400px; border-radius: 25px; box-shadow: 0 0 40px rgba(255, 0, 127, 0.4); }
+        .promo-title { margin-top: 20px; font-weight: bold; color: #ff007f; letter-spacing: 1px; }
     </style>
 </head>
 <body>
 
     <h3>JAZZTABUENO</h3>
-    <div class="sub-header">Sala de Máquinas - Edición GitHub</div>
+    <div class="sub-header">Sala de Máquinas - JTBP</div>
 
     <div class="stories-bar">
-        <div class="story-circle live" onclick="openStory('Jazz Ta Bueno', './jazztabueno.jpg')">
-            <img src="./jazztabueno.jpg">
+        <div class="story-circle live" onclick="openStory('Jazz Ta Bueno', 'jazztabueno.jpg')">
+            <img src="jazztabueno.jpg">
             <div class="live-badge">VIVO</div>
         </div>
-        <div class="story-circle" onclick="openStory('Studio 79', './studio79.jpg')">
-            <img src="./studio79.jpg">
-        </div>
-        <div class="story-circle" onclick="openStory('Salsa Brava', './salsabrava.jpg')">
-            <img src="./salsabrava.jpg">
-        </div>
-        <div class="story-circle" onclick="openStory('Old School Rock', './oldschoolradio.jpg')">
-            <img src="./oldschoolradio.jpg">
-        </div>
+        <div class="story-circle" onclick="openStory('Studio 79', 'studio79.jpg')"><img src="studio79.jpg"></div>
+        <div class="story-circle" onclick="openStory('Salsa Brava', 'salsabrava.jpg')"><img src="salsabrava.jpg"></div>
+        <div class="story-circle" onclick="openStory('Old School Rock', 'oldschoolradio.jpg')"><img src="oldschoolradio.jpg"></div>
     </div>
 
     <div class="main-menu">
-        <div class="program-card"><img src="./jazztabueno.jpg"></div>
-        <div class="program-card"><img src="./studio79.jpg"></div>
-        <div class="program-card"><img src="./salsabrava.jpg"></div>
-        <div class="program-card"><img src="./oldschoolradio.jpg"></div>
+        <div class="program-card"><img src="jazztabueno.jpg"></div>
+        <div class="program-card"><img src="studio79.jpg"></div>
+        <div class="program-card"><img src="salsabrava.jpg"></div>
+        <div class="program-card"><img src="oldschoolradio.jpg"></div>
     </div>
 
     <div class="story-viewer" id="storyViewer">
-        <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+        <div class="progress-container"><div class="progress-bar" id="progressBar"></div></div>
         <span class="close-btn" onclick="closeStory()">&times;</span>
-        <h2 id="storyTitle" style="margin-bottom: 20px;"></h2>
         <img id="storyImageLarge" class="promo-image" src="">
+        <div id="storyTitle" class="promo-title"></div>
     </div>
 
     <script>
-        let storyTimeout;
-        function openStory(name, img) {
+        let timer;
+        let progressInterval;
+
+        function openStory(name, promoImg) {
             const viewer = document.getElementById('storyViewer');
-            const progress = document.getElementById('progressFill');
-            document.getElementById('storyTitle').innerText = "PROMO: " + name;
-            document.getElementById('storyImageLarge').src = img;
+            const img = document.getElementById('storyImageLarge');
+            const title = document.getElementById('storyTitle');
+            const bar = document.getElementById('progressBar');
+
+            img.src = promoImg;
+            title.innerText = "PROMO: " + name;
             viewer.style.display = 'flex';
-            progress.style.width = '0%';
-            setTimeout(() => { progress.style.width = '100%'; }, 50);
-            storyTimeout = setTimeout(() => { closeStory(); }, 4000);
+
+            // Animación de la barrita (4 segundos)
+            let width = 0;
+            bar.style.width = '0%';
+            
+            clearInterval(progressInterval);
+            progressInterval = setInterval(() => {
+                if (width >= 100) {
+                    clearInterval(progressInterval);
+                    closeStory();
+                } else {
+                    width++;
+                    bar.style.width = width + '%';
+                }
+            }, 40); // 40ms * 100 = 4000ms (4 segundos)
         }
+
         function closeStory() {
             document.getElementById('storyViewer').style.display = 'none';
-            document.getElementById('progressFill').style.width = '0%';
-            clearTimeout(storyTimeout);
+            clearInterval(progressInterval);
         }
     </script>
 </body>
