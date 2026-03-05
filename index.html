@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JTBP Radio Profesional</title>
+    <title>JTBP Radio - Estética Pro</title>
     <style>
-        /* Estética Minimalista y Oscura */
+        /* Estética de Emisora de Lujo */
         body { 
             background-color: #050505; 
             color: #ffffff; 
@@ -17,48 +17,52 @@
             min-height: 100vh;
         }
         
-        h2 { margin-top: 45px; letter-spacing: 3px; text-transform: uppercase; font-size: 0.85rem; color: #555; }
+        h2 { margin-top: 40px; letter-spacing: 3px; text-transform: uppercase; font-size: 0.8rem; color: #444; }
 
         .stories-container { 
-            display: flex; gap: 18px; padding: 25px; overflow-x: auto; width: 100%; justify-content: center; 
+            display: flex; gap: 15px; padding: 25px; overflow-x: auto; width: 100%; justify-content: center; 
         }
         
-        /* Círculo Blindado con Borde Dorado Sutil */
+        /* Círculo con "Aire Interno" */
         .circle { 
-            width: 78px; height: 78px; border-radius: 50%; 
-            background: #111; padding: 3px; cursor: pointer; transition: transform 0.3s; 
-            border: 2px solid #d4af37; /* El toque de oro de JTBP */
-            box-shadow: 0 4px 15px rgba(0,0,0,0.6);
-            overflow: hidden; /* Esto asegura que nada se salga del círculo */
+            width: 70px; /* Reducimos un poco el tamaño general */
+            height: 70px; 
+            border-radius: 50%; 
+            background: #111; /* Fondo oscuro para que la imagen resalte */
+            padding: 8px; /* ESTO ES LA CLAVE: Da espacio para que la imagen no se vea "gigante" */
+            cursor: pointer; 
+            transition: all 0.3s ease; 
+            border: 1.5px solid #d4af37; /* El dorado de gala */
+            box-shadow: 0 4px 10px rgba(0,0,0,0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-        .circle:hover { transform: scale(1.1); border-color: #fff; }
         
-        /* EL SECRETO: Recorte Perfecto */
+        .circle:hover { transform: scale(1.1); border-color: #fff; box-shadow: 0 0 15px rgba(255,255,255,0.2); }
+        
+        /* Ajuste de la Imagen dentro del círculo */
         .circle img { 
-            width: 100%; height: 100%; 
-            object-fit: cover; /* Centra y recorta automáticamente */
-            border-radius: 50%;
-            display: block;
+            width: 100%; 
+            height: 100%; 
+            object-fit: contain; /* Muestra TODA la imagen sin cortarla */
+            border-radius: 4px; /* Un toque sutil si la imagen es cuadrada */
         }
 
-        /* Pantalla Completa de Historias */
+        /* Modal de Pantalla Completa */
         #story-overlay { 
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-            background: rgba(0, 0, 0, 0.97); z-index: 1000; justify-content: center; align-items: center; 
-            backdrop-filter: blur(15px);
+            background: rgba(0, 0, 0, 0.98); z-index: 1000; justify-content: center; align-items: center; 
+            backdrop-filter: blur(20px);
         }
         
         #story-overlay img { 
-            max-height: 82vh; max-width: 88%; border-radius: 15px; 
+            max-height: 80vh; max-width: 85%; border-radius: 15px; 
             box-shadow: 0 0 50px rgba(255, 255, 255, 0.1);
             object-fit: contain;
-            animation: fadeIn 0.4s ease;
         }
 
-        @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
-
-        .close-btn { position: absolute; top: 30px; right: 30px; font-size: 45px; color: #fff; cursor: pointer; opacity: 0.6; }
-        .close-btn:hover { opacity: 1; }
+        .close-btn { position: absolute; top: 30px; right: 30px; font-size: 45px; color: #fff; cursor: pointer; opacity: 0.5; }
     </style>
 </head>
 <body>
@@ -66,21 +70,20 @@
     <h2>Programación JTBP</h2>
 
     <div class="stories-container">
-        <div class="circle" onclick="abrirPromo('promo_jazz.jpg?v=3')"><img src="promo_jazz.jpg?v=3" alt="Jazz"></div>
-        <div class="circle" onclick="abrirPromo('promo_studio.jpg?v=3')"><img src="promo_studio.jpg?v=3" alt="S79"></div>
-        <div class="circle" onclick="abrirPromo('promo_salsa.jpg?v=3')"><img src="promo_salsa.jpg?v=3" alt="Salsa"></div>
-        <div class="circle" onclick="abrirPromo('promo_rock.jpg?v=3')"><img src="promo_rock.jpg?v=3" alt="Rock"></div>
+        <div class="circle" onclick="abrirPromo('promo_jazz.jpg?v=4')"><img src="promo_jazz.jpg?v=4"></div>
+        <div class="circle" onclick="abrirPromo('promo_studio.jpg?v=4')"><img src="promo_studio.jpg?v=4"></div>
+        <div class="circle" onclick="abrirPromo('promo_salsa.jpg?v=4')"><img src="promo_salsa.jpg?v=4"></div>
+        <div class="circle" onclick="abrirPromo('promo_rock.jpg?v=4')"><img src="promo_rock.jpg?v=4"></div>
     </div>
 
     <div id="story-overlay" onclick="cerrarPromo()">
         <span class="close-btn">&times;</span>
-        <img id="promo-img" src="" alt="Promo">
+        <img id="promo-img" src="">
     </div>
 
     <script>
         function abrirPromo(fuente) {
-            const img = document.getElementById('promo-img');
-            img.src = fuente;
+            document.getElementById('promo-img').src = fuente;
             document.getElementById('story-overlay').style.display = 'flex';
         }
         function cerrarPromo() {
