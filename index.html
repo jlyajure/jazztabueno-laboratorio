@@ -3,68 +3,157 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JTBP - Tu Radio</title>
+    <title>JTBP - App Radio Profesional</title>
     <style>
-        body { background-color: #000; color: #fff; font-family: sans-serif; margin: 0; display: flex; flex-direction: column; align-items: center; }
+        /* Estilos Base del Laboratorio */
+        body { 
+            background-color: #0a0a0a; 
+            color: #ffffff; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            margin: 0; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            min-height: 100vh;
+        }
         
-        /* Contenedor de Círculos (Historias) */
-        .stories-container { display: flex; gap: 15px; padding: 20px; overflow-x: auto; width: 100%; justify-content: center; }
-        .circle { width: 70px; height: 70px; border-radius: 50%; border: 2px solid #ff00ff; padding: 3px; cursor: pointer; transition: transform 0.2s; }
-        .circle:hover { transform: scale(1.1); }
-        .circle img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
+        h2 {
+            margin-top: 40px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            font-size: 1.1rem;
+            color: #eee;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        /* Contenedor de Círculos (Estilo Historias) */
+        .stories-container { 
+            display: flex; 
+            gap: 20px; 
+            padding: 30px; 
+            overflow-x: auto; 
+            width: 100%; 
+            justify-content: center; 
+            scrollbar-width: none; /* Oculta scroll en Firefox */
+        }
+        .stories-container::-webkit-scrollbar { display: none; } /* Oculta scroll en Chrome/Safari */
+        
+        /* El Círculo de Gala */
+        .circle { 
+            width: 85px; 
+            height: 85px; 
+            border-radius: 50%; 
+            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); 
+            padding: 3px; 
+            cursor: pointer; 
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+        
+        .circle:hover { 
+            transform: scale(1.1); 
+        }
+        
+        .circle img { 
+            width: 100%; 
+            height: 100%; 
+            border-radius: 50%; 
+            object-fit: cover; 
+            border: 2px solid #0a0a0a; 
+        }
 
         /* Pantalla Completa (El Modal) */
         #story-overlay { 
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-            background: #000; z-index: 1000; justify-content: center; align-items: center; 
+            display: none; 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            background: rgba(0, 0, 0, 0.92); 
+            z-index: 1000; 
+            justify-content: center; 
+            align-items: center; 
+            backdrop-filter: blur(8px); /* Efecto de desenfoque al fondo */
         }
-        #story-overlay img { height: 100vh; width: auto; max-width: 100%; object-fit: contain; }
-        .close-btn { position: absolute; top: 20px; right: 20px; font-size: 30px; color: white; cursor: pointer; font-weight: bold; }
+        
+        /* Ajuste de Imagen para que NO sea "bien grande" */
+        #story-overlay img { 
+            max-height: 80vh; /* Ocupa máximo el 80% del alto de la pantalla */
+            max-width: 85%;  /* Ocupa máximo el 85% del ancho */
+            border-radius: 15px; 
+            box-shadow: 0 0 50px rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            object-fit: contain;
+            animation: aparecer 0.3s ease-out;
+        }
+
+        @keyframes aparecer {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .close-btn { 
+            position: absolute; 
+            top: 30px; 
+            right: 30px; 
+            font-size: 45px; 
+            color: #ffffff; 
+            cursor: pointer; 
+            line-height: 1;
+            opacity: 0.7;
+        }
+        .close-btn:hover { opacity: 1; }
     </style>
 </head>
 <body>
 
-    <h2 style="margin-top: 20px;">Escucha tu Estilo</h2>
+    <h2>Programación JTBP</h2>
 
     <div class="stories-container">
         <div class="circle" onclick="abrirPromo('promo_jazz.jpg')">
-            <img src="https://via.placeholder.com/100/0000FF/FFFFFF?text=JTB" alt="Jazz">
+            <img src="promo_jazz.jpg" alt="Jazz" onerror="this.src='https://via.placeholder.com/100/333/fff?text=JAZZ'">
         </div>
+        
         <div class="circle" onclick="abrirPromo('promo_studio.jpg')">
-            <img src="https://via.placeholder.com/100/800080/FFFFFF?text=S79" alt="Studio 79">
+            <img src="promo_studio.jpg" alt="Studio 79" onerror="this.src='https://via.placeholder.com/100/333/fff?text=S79'">
         </div>
+        
         <div class="circle" onclick="abrirPromo('promo_salsa.jpg')">
-            <img src="https://via.placeholder.com/100/FF0000/FFFFFF?text=Salsa" alt="Salsa">
+            <img src="promo_salsa.jpg" alt="Salsa" onerror="this.src='https://via.placeholder.com/100/333/fff?text=SALSA'">
         </div>
+        
         <div class="circle" onclick="abrirPromo('promo_rock.jpg')">
-            <img src="https://via.placeholder.com/100/FFFF00/000000?text=Rock" alt="Rock">
+            <img src="promo_rock.jpg" alt="Rock" onerror="this.src='https://via.placeholder.com/100/333/fff?text=ROCK'">
         </div>
     </div>
 
     <div id="story-overlay">
         <span class="close-btn" onclick="cerrarPromo()">&times;</span>
-        <img id="promo-img" src="" alt="Promo">
+        <img id="promo-img" src="" alt="Cargando Promo...">
     </div>
 
     <script>
-        function abrirPromo(nombreArchivo) {
+        // Función para abrir la imagen
+        function abrirPromo(fuente) {
             const overlay = document.getElementById('story-overlay');
             const imagen = document.getElementById('promo-img');
             
-            // Asignamos la imagen y mostramos el panel
-            imagen.src = nombreArchivo;
+            imagen.src = fuente;
             overlay.style.display = 'flex';
-            
-            // Si la imagen falla (porque no existe el archivo), cerramos automáticamente
-            imagen.onerror = function() {
-                alert("Todavía no has subido el archivo: " + nombreArchivo);
-                cerrarPromo();
-            };
         }
 
+        // Función para cerrar la imagen
         function cerrarPromo() {
             document.getElementById('story-overlay').style.display = 'none';
         }
+
+        // Cerrar al hacer clic fuera de la imagen
+        document.getElementById('story-overlay').onclick = function(e) {
+            if (e.target !== document.getElementById('promo-img')) {
+                cerrarPromo();
+            }
+        };
     </script>
 </body>
 </html>
