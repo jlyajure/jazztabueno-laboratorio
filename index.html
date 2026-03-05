@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JTBP - App Radio Profesional</title>
+    <title>JTBP - Radio Pro v2.0</title>
     <style>
         body { 
-            background-color: #080808; 
+            background-color: #050505; 
             color: #ffffff; 
             font-family: 'Segoe UI', sans-serif; 
             margin: 0; 
@@ -16,51 +16,53 @@
             min-height: 100vh;
         }
         
-        h2 { margin-top: 40px; letter-spacing: 3px; text-transform: uppercase; font-size: 1rem; color: #aaa; }
+        h2 { margin-top: 40px; letter-spacing: 3px; text-transform: uppercase; font-size: 0.9rem; color: #666; }
 
         .stories-container { 
-            display: flex; gap: 20px; padding: 30px; overflow-x: auto; width: 100%; justify-content: center; 
+            display: flex; gap: 15px; padding: 25px; overflow-x: auto; width: 100%; justify-content: center; 
         }
         
-        /* Círculo con borde neón sutil */
+        /* Círculo con el nuevo "Borde Dorado" para verificar actualización */
         .circle { 
             width: 80px; height: 80px; border-radius: 50%; 
-            background: #222; /* Color oscuro base si no hay imagen */
-            padding: 3px; cursor: pointer; transition: transform 0.3s; 
-            border: 2px solid #fff; /* Borde blanco de gala */
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+            background: #111; padding: 3px; cursor: pointer; transition: transform 0.3s; 
+            border: 2px solid #d4af37; /* ORO: Si ves esto, el código cargó */
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
         }
-        .circle:hover { transform: scale(1.1); box-shadow: 0 0 30px rgba(255, 255, 255, 0.5); }
+        .circle:hover { transform: scale(1.1); border-color: #fff; }
         
-        /* AQUÍ ESTÁ EL BLINDAJE PARA QUE NO SE VEAN APLASTADAS */
+        /* EL SECRETO: 'object-fit: cover' para que no se aplasten */
         .circle img { 
             width: 100%; height: 100%; border-radius: 50%; 
-            object-fit: cover; /* Centra y ajusta la imagen sin deformar */
+            object-fit: cover; /* Esto corta la imagen para que encaje perfecto */
+            display: block;
         }
 
         #story-overlay { 
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-            background: rgba(0, 0, 0, 0.95); z-index: 1000; justify-content: center; align-items: center; 
-            backdrop-filter: blur(15px);
+            background: rgba(0, 0, 0, 0.98); z-index: 1000; justify-content: center; align-items: center; 
+            backdrop-filter: blur(20px);
         }
         
+        /* Ajuste para que la promo se vea de gala */
         #story-overlay img { 
-            max-height: 80vh; max-width: 85%; border-radius: 15px; 
-            box-shadow: 0 0 40px rgba(255, 255, 255, 0.1);
+            max-height: 80vh; max-width: 85%; border-radius: 12px; 
+            box-shadow: 0 0 50px rgba(255, 255, 255, 0.1);
+            object-fit: contain;
         }
 
-        .close-btn { position: absolute; top: 30px; right: 30px; font-size: 40px; color: #fff; cursor: pointer; }
+        .close-btn { position: absolute; top: 30px; right: 30px; font-size: 45px; color: #fff; cursor: pointer; }
     </style>
 </head>
 <body>
 
-    <h2>Programación en Vivo</h2>
+    <h2>Programación JTBP</h2>
 
     <div class="stories-container">
-        <div class="circle" onclick="abrirPromo('promo_jazz.jpg')"><img src="promo_jazz.jpg" alt="Jazz"></div>
-        <div class="circle" onclick="abrirPromo('promo_studio.jpg')"><img src="promo_studio.jpg" alt="S79"></div>
-        <div class="circle" onclick="abrirPromo('promo_salsa.jpg')"><img src="promo_salsa.jpg" alt="Salsa"></div>
-        <div class="circle" onclick="abrirPromo('promo_rock.jpg')"><img src="promo_rock.jpg" alt="Rock"></div>
+        <div class="circle" onclick="abrirPromo('promo_jazz.jpg')"><img src="promo_jazz.jpg" alt=""></div>
+        <div class="circle" onclick="abrirPromo('promo_studio.jpg')"><img src="promo_studio.jpg" alt=""></div>
+        <div class="circle" onclick="abrirPromo('promo_salsa.jpg')"><img src="promo_salsa.jpg" alt=""></div>
+        <div class="circle" onclick="abrirPromo('promo_rock.jpg')"><img src="promo_rock.jpg" alt=""></div>
     </div>
 
     <div id="story-overlay">
