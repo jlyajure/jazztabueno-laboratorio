@@ -3,58 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JTBP Radio - V3 FORCE</title>
+    <title>JTBP Radio Profesional</title>
     <style>
-        body { background-color: #000; color: #fff; font-family: sans-serif; margin: 0; display: flex; flex-direction: column; align-items: center; }
-        
-        /* SI VES ESTE TÍTULO EN ROJO, EL CÓDIGO POR FIN SE ACTUALIZÓ */
-        .test-banner { background: red; color: white; padding: 10px; width: 100%; text-align: center; font-weight: bold; }
-
-        .stories-container { display: flex; gap: 15px; padding: 20px; justify-content: center; }
-        
-        .circle { 
-            width: 80px; height: 80px; border-radius: 50%; 
-            border: 3px solid #d4af37; /* Borde Dorado */
-            overflow: hidden; cursor: pointer;
+        /* Estética Minimalista y Oscura */
+        body { 
+            background-color: #050505; 
+            color: #ffffff; 
+            font-family: 'Segoe UI', sans-serif; 
+            margin: 0; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            min-height: 100vh;
         }
+        
+        h2 { margin-top: 45px; letter-spacing: 3px; text-transform: uppercase; font-size: 0.85rem; color: #555; }
 
-        /* EL SECRETO PARA QUE NO SE APLASTEN */
+        .stories-container { 
+            display: flex; gap: 18px; padding: 25px; overflow-x: auto; width: 100%; justify-content: center; 
+        }
+        
+        /* Círculo Blindado con Borde Dorado Sutil */
+        .circle { 
+            width: 78px; height: 78px; border-radius: 50%; 
+            background: #111; padding: 3px; cursor: pointer; transition: transform 0.3s; 
+            border: 2px solid #d4af37; /* El toque de oro de JTBP */
+            box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+            overflow: hidden; /* Esto asegura que nada se salga del círculo */
+        }
+        .circle:hover { transform: scale(1.1); border-color: #fff; }
+        
+        /* EL SECRETO: Recorte Perfecto */
         .circle img { 
             width: 100%; height: 100%; 
-            object-fit: cover; /* Esto las recorta perfecto al círculo */
+            object-fit: cover; /* Centra y recorta automáticamente */
+            border-radius: 50%;
+            display: block;
         }
 
-        #overlay { 
+        /* Pantalla Completa de Historias */
+        #story-overlay { 
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-            background: rgba(0,0,0,0.9); z-index: 1000; justify-content: center; align-items: center; 
+            background: rgba(0, 0, 0, 0.97); z-index: 1000; justify-content: center; align-items: center; 
+            backdrop-filter: blur(15px);
         }
-        #overlay img { max-height: 85vh; max-width: 90%; border-radius: 10px; }
-        .close { position: absolute; top: 20px; right: 20px; font-size: 40px; cursor: pointer; }
+        
+        #story-overlay img { 
+            max-height: 82vh; max-width: 88%; border-radius: 15px; 
+            box-shadow: 0 0 50px rgba(255, 255, 255, 0.1);
+            object-fit: contain;
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+
+        .close-btn { position: absolute; top: 30px; right: 30px; font-size: 45px; color: #fff; cursor: pointer; opacity: 0.6; }
+        .close-btn:hover { opacity: 1; }
     </style>
 </head>
 <body>
 
-    <div class="test-banner">V3 - ACTUALIZACIÓN FORZADA</div>
+    <h2>Programación JTBP</h2>
 
     <div class="stories-container">
-        <div class="circle" onclick="abrir('promo_jazz.jpg?v=2')"><img src="promo_jazz.jpg?v=2"></div>
-        <div class="circle" onclick="abrir('promo_studio.jpg?v=2')"><img src="promo_studio.jpg?v=2"></div>
-        <div class="circle" onclick="abrir('promo_salsa.jpg?v=2')"><img src="promo_salsa.jpg?v=2"></div>
-        <div class="circle" onclick="abrir('promo_rock.jpg?v=2')"><img src="promo_rock.jpg?v=2"></div>
+        <div class="circle" onclick="abrirPromo('promo_jazz.jpg?v=3')"><img src="promo_jazz.jpg?v=3" alt="Jazz"></div>
+        <div class="circle" onclick="abrirPromo('promo_studio.jpg?v=3')"><img src="promo_studio.jpg?v=3" alt="S79"></div>
+        <div class="circle" onclick="abrirPromo('promo_salsa.jpg?v=3')"><img src="promo_salsa.jpg?v=3" alt="Salsa"></div>
+        <div class="circle" onclick="abrirPromo('promo_rock.jpg?v=3')"><img src="promo_rock.jpg?v=3" alt="Rock"></div>
     </div>
 
-    <div id="overlay" onclick="cerrar()">
-        <span class="close">&times;</span>
-        <img id="full-img">
+    <div id="story-overlay" onclick="cerrarPromo()">
+        <span class="close-btn">&times;</span>
+        <img id="promo-img" src="" alt="Promo">
     </div>
 
     <script>
-        function abrir(src) {
-            document.getElementById('full-img').src = src;
-            document.getElementById('overlay').style.display = 'flex';
+        function abrirPromo(fuente) {
+            const img = document.getElementById('promo-img');
+            img.src = fuente;
+            document.getElementById('story-overlay').style.display = 'flex';
         }
-        function cerrar() {
-            document.getElementById('overlay').style.display = 'none';
+        function cerrarPromo() {
+            document.getElementById('story-overlay').style.display = 'none';
         }
     </script>
 </body>
