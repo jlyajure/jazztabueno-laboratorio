@@ -3,86 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>App JTBP - Prueba de Fuego</title>
+    <title>JTBP - Tu Radio</title>
     <style>
-        body { font-family: 'Segoe UI', sans-serif; background-color: #050505; color: white; display: flex; flex-direction: column; align-items: center; padding: 20px; margin: 0; }
-        h3 { color: #ff007f; margin-bottom: 5px; letter-spacing: 2px; text-transform: uppercase; }
-        .sub-header { color: #666; font-size: 0.7em; margin-bottom: 30px; text-transform: uppercase; }
-
-        /* BARRA DE HISTORIAS */
-        .stories-bar { display: flex; gap: 15px; margin-bottom: 40px; }
-        .story-circle { width: 75px; height: 75px; border-radius: 50%; border: 3px solid #ff007f; cursor: pointer; overflow: hidden; background-color: #000; position: relative; }
-        .story-circle img { width: 100%; height: 100%; object-fit: contain; }
+        body { background-color: #000; color: #fff; font-family: sans-serif; margin: 0; display: flex; flex-direction: column; align-items: center; }
         
-        /* EL "INTERRUPTOR" VERDE (Clase .live) */
-        .story-circle.live { border-color: #00ff00; box-shadow: 0 0 15px #00ff00; }
-        .live-badge { position: absolute; bottom: 2px; left: 50%; transform: translateX(-50%); background-color: #00ff00; color: black; font-size: 9px; font-weight: bold; padding: 1px 4px; border-radius: 4px; z-index: 10; }
+        /* Contenedor de Círculos (Historias) */
+        .stories-container { display: flex; gap: 15px; padding: 20px; overflow-x: auto; width: 100%; justify-content: center; }
+        .circle { width: 70px; height: 70px; border-radius: 50%; border: 2px solid #ff00ff; padding: 3px; cursor: pointer; transition: transform 0.2s; }
+        .circle:hover { transform: scale(1.1); }
+        .circle img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
 
-        /* MENÚ PRINCIPAL */
-        .main-menu { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; width: 100%; max-width: 380px; }
-        .program-card { background-color: #121212; border-radius: 25px; aspect-ratio: 1 / 1; overflow: hidden; border: 1px solid #222; display: flex; align-items: center; justify-content: center; padding: 15px; }
-        .program-card img { width: 100%; height: 100%; object-fit: contain; }
-
-        /* VISOR */
-        .story-viewer { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.98); z-index: 1000; justify-content: center; align-items: center; flex-direction: column; }
-        .close-btn { position: absolute; top: 20px; right: 30px; color: white; font-size: 40px; cursor: pointer; }
-        .progress-container { width: 90%; height: 4px; background: #333; position: absolute; top: 20px; border-radius: 2px; }
-        .progress-bar { height: 100%; background: #ff007f; width: 0%; }
-        .promo-image { width: 85%; max-width: 400px; border-radius: 25px; box-shadow: 0 0 40px rgba(255, 0, 127, 0.4); }
+        /* Pantalla Completa (El Modal) */
+        #story-overlay { 
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            background: #000; z-index: 1000; justify-content: center; align-items: center; 
+        }
+        #story-overlay img { height: 100vh; width: auto; max-width: 100%; object-fit: contain; }
+        .close-btn { position: absolute; top: 20px; right: 20px; font-size: 30px; color: white; cursor: pointer; font-weight: bold; }
     </style>
 </head>
 <body>
 
-    <h3>JAZZTABUENO</h3>
-    <div class="sub-header">Sala de Máquinas - Prueba de Fuego</div>
+    <h2 style="margin-top: 20px;">Escucha tu Estilo</h2>
 
-    <div class="stories-bar">
-        <div class="story-circle live" onclick="openStory('Jazz Ta Bueno', './jazztabueno.jpg')">
-            <img src="./jazztabueno.jpg"><div class="live-badge">VIVO</div>
+    <div class="stories-container">
+        <div class="circle" onclick="abrirPromo('promo_jazz.jpg')">
+            <img src="https://via.placeholder.com/100/0000FF/FFFFFF?text=JTB" alt="Jazz">
         </div>
-        <div class="story-circle live" onclick="openStory('Studio 79', './studio79.jpg')">
-            <img src="./studio79.jpg"><div class="live-badge">VIVO</div>
+        <div class="circle" onclick="abrirPromo('promo_studio.jpg')">
+            <img src="https://via.placeholder.com/100/800080/FFFFFF?text=S79" alt="Studio 79">
         </div>
-        <div class="story-circle live" onclick="openStory('Salsa Brava', './salsabrava.jpg')">
-            <img src="./salsabrava.jpg"><div class="live-badge">VIVO</div>
+        <div class="circle" onclick="abrirPromo('promo_salsa.jpg')">
+            <img src="https://via.placeholder.com/100/FF0000/FFFFFF?text=Salsa" alt="Salsa">
         </div>
-        <div class="story-circle live" onclick="openStory('Old School Rock', './oldschoolradio.jpg')">
-            <img src="./oldschoolradio.jpg"><div class="live-badge">VIVO</div>
+        <div class="circle" onclick="abrirPromo('promo_rock.jpg')">
+            <img src="https://via.placeholder.com/100/FFFF00/000000?text=Rock" alt="Rock">
         </div>
     </div>
 
-    <div class="main-menu">
-        <div class="program-card"><img src="./jazztabueno.jpg"></div>
-        <div class="program-card"><img src="./studio79.jpg"></div>
-        <div class="program-card"><img src="./salsabrava.jpg"></div>
-        <div class="program-card"><img src="./oldschoolradio.jpg"></div>
-    </div>
-
-    <div class="story-viewer" id="storyViewer">
-        <div class="progress-container"><div class="progress-bar" id="progressBar"></div></div>
-        <span class="close-btn" onclick="closeStory()">&times;</span>
-        <img id="storyImageLarge" class="promo-image" src="">
+    <div id="story-overlay">
+        <span class="close-btn" onclick="cerrarPromo()">&times;</span>
+        <img id="promo-img" src="" alt="Promo">
     </div>
 
     <script>
-        let progressInterval;
-        function openStory(name, imgSource) {
-            const viewer = document.getElementById('storyViewer');
-            const img = document.getElementById('storyImageLarge');
-            const bar = document.getElementById('progressBar');
-            img.src = imgSource;
-            viewer.style.display = 'flex';
-            let width = 0;
-            bar.style.width = '0%';
-            clearInterval(progressInterval);
-            progressInterval = setInterval(() => {
-                if (width >= 100) { clearInterval(progressInterval); closeStory(); }
-                else { width++; bar.style.width = width + '%'; }
-            }, 40); 
+        function abrirPromo(nombreArchivo) {
+            const overlay = document.getElementById('story-overlay');
+            const imagen = document.getElementById('promo-img');
+            
+            // Asignamos la imagen y mostramos el panel
+            imagen.src = nombreArchivo;
+            overlay.style.display = 'flex';
+            
+            // Si la imagen falla (porque no existe el archivo), cerramos automáticamente
+            imagen.onerror = function() {
+                alert("Todavía no has subido el archivo: " + nombreArchivo);
+                cerrarPromo();
+            };
         }
-        function closeStory() {
-            document.getElementById('storyViewer').style.display = 'none';
-            clearInterval(progressInterval);
+
+        function cerrarPromo() {
+            document.getElementById('story-overlay').style.display = 'none';
         }
     </script>
 </body>
