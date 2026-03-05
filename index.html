@@ -6,7 +6,7 @@
     <title>JTBP - App Radio Profesional</title>
     <style>
         body { 
-            background-color: #050505; 
+            background-color: #080808; 
             color: #ffffff; 
             font-family: 'Segoe UI', sans-serif; 
             margin: 0; 
@@ -16,7 +16,7 @@
             min-height: 100vh;
         }
         
-        h2 { margin-top: 40px; letter-spacing: 3px; text-transform: uppercase; font-size: 1rem; color: #888; }
+        h2 { margin-top: 40px; letter-spacing: 3px; text-transform: uppercase; font-size: 1rem; color: #aaa; }
 
         .stories-container { 
             display: flex; gap: 20px; padding: 30px; overflow-x: auto; width: 100%; justify-content: center; 
@@ -27,10 +27,16 @@
             width: 80px; height: 80px; border-radius: 50%; 
             background: #222; /* Color oscuro base si no hay imagen */
             padding: 3px; cursor: pointer; transition: transform 0.3s; 
-            border: 2px solid #444;
+            border: 2px solid #fff; /* Borde blanco de gala */
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
         }
-        .circle:hover { transform: scale(1.1); border-color: #fff; }
-        .circle img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
+        .circle:hover { transform: scale(1.1); box-shadow: 0 0 30px rgba(255, 255, 255, 0.5); }
+        
+        /* AQUÍ ESTÁ EL BLINDAJE PARA QUE NO SE VEAN APLASTADAS */
+        .circle img { 
+            width: 100%; height: 100%; border-radius: 50%; 
+            object-fit: cover; /* Centra y ajusta la imagen sin deformar */
+        }
 
         #story-overlay { 
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
@@ -51,10 +57,10 @@
     <h2>Programación en Vivo</h2>
 
     <div class="stories-container">
-        <div class="circle" onclick="abrirPromo('promo_jazz.jpg')"><img src="promo_jazz.jpg" alt=""></div>
-        <div class="circle" onclick="abrirPromo('promo_studio.jpg')"><img src="promo_studio.jpg" alt=""></div>
-        <div class="circle" onclick="abrirPromo('promo_salsa.jpg')"><img src="promo_salsa.jpg" alt=""></div>
-        <div class="circle" onclick="abrirPromo('promo_rock.jpg')"><img src="promo_rock.jpg" alt=""></div>
+        <div class="circle" onclick="abrirPromo('promo_jazz.jpg')"><img src="promo_jazz.jpg" alt="Jazz"></div>
+        <div class="circle" onclick="abrirPromo('promo_studio.jpg')"><img src="promo_studio.jpg" alt="S79"></div>
+        <div class="circle" onclick="abrirPromo('promo_salsa.jpg')"><img src="promo_salsa.jpg" alt="Salsa"></div>
+        <div class="circle" onclick="abrirPromo('promo_rock.jpg')"><img src="promo_rock.jpg" alt="Rock"></div>
     </div>
 
     <div id="story-overlay">
