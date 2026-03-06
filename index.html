@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JazzTaBueno - Bóveda V3.1</title>
+    <title>JazzTaBueno - Bóveda V3.2</title>
     <style>
         /* ESTILOS DE GALA */
         body { background-color: #000; color: #fff; font-family: sans-serif; margin: 0; padding: 0; }
@@ -17,8 +17,21 @@
         .img-baul-final { width: 90px; border-radius: 12px; border: 2px solid #D4AF37; box-shadow: 0 0 20px #0070f3; }
         .gold-text { color: #D4AF37; text-transform: uppercase; letter-spacing: 2px; margin-top: 15px; font-size: 14px;}
 
-        /* AVISO DE GALA PARA EL OYENTE */
-        .alerta-gala { color: #0070f3; font-size: 12px; margin-bottom: 20px; font-style: italic; max-width: 500px; margin-left: auto; margin-right: auto; line-height: 1.5; }
+        /* AVISO DE GALA Y LEYENDA */
+        .alerta-gala { 
+            color: #0070f3; 
+            font-size: 12px; 
+            margin-bottom: 20px; 
+            max-width: 550px; 
+            margin-left: auto; 
+            margin-right: auto; 
+            line-height: 1.6; 
+            text-align: center;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #333;
+        }
         .alerta-gala strong { color: #D4AF37; }
 
         /* LÍNEA DE TIEMPO Y BOTONES ILUMINADOS */
@@ -35,7 +48,7 @@
             background: #000; 
             border-radius: 5px; 
             overflow: hidden; 
-            height: 55px; /* Esto corta la parte baja del iframe donde sale "Follow" */
+            height: 55px; 
         }
         .card-especial { border: 2px solid #D4AF37; box-shadow: 0 0 10px #D4AF37; }
         .card-regular { border: 1px solid #333; }
@@ -59,7 +72,8 @@
         <div id="contenido-baul" style="display:none;">
             
             <div class="alerta-gala">
-                ⚠️ <strong>Aviso Importante:</strong> Para escuchar en esta Bóveda, presiona únicamente el botón de <strong>▶ PLAY</strong>. Si tocas el título de la canción, viajarás fuera de la App hacia la página de Mixcloud.
+                <i>⚠️ <strong>Aviso:</strong> Para escuchar, presiona únicamente el botón de <strong>▶ PLAY</strong>.</i><br>
+                <i>⭐ <strong>Nota:</strong> Los programas con marco iluminado son <strong>Ediciones Especiales</strong>.</i>
             </div>
 
             <div class="timeline-swipe">
