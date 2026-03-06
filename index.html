@@ -3,91 +3,134 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JTBP Radio - Estética Pro</title>
+    <title>JazzTaBueno - El Laboratorio</title>
     <style>
-        /* Estética de Emisora de Lujo */
-        body { 
-            background-color: #050505; 
-            color: #ffffff; 
-            font-family: 'Segoe UI', sans-serif; 
-            margin: 0; 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            min-height: 100vh;
-        }
+        /* ESTILOS DE GALA JTBP */
+        body { background-color: #000; color: #fff; font-family: sans-serif; margin: 0; padding: 0; }
         
-        h2 { margin-top: 40px; letter-spacing: 3px; text-transform: uppercase; font-size: 0.8rem; color: #444; }
+        /* Sección de Promos (Lo que ya tienes) */
+        .home-section { text-align: center; padding: 20px; }
+        .promo-img { width: 90%; max-width: 400px; margin-bottom: 20px; border: 1px solid #333; }
 
-        .stories-container { 
-            display: flex; gap: 15px; padding: 25px; overflow-x: auto; width: 100%; justify-content: center; 
+        /* LA BÓVEDA: Fondo Fibra de Carbono */
+        .jtbp-vault-bg {
+            background: radial-gradient(circle, #222 10%, transparent 11%), #111;
+            background-size: 10px 10px;
+            border-top: 3px solid #D4AF37; /* Oro Cepillado */
+            padding: 50px 10px;
+            text-align: center;
         }
-        
-        /* Círculo con "Aire Interno" */
-        .circle { 
-            width: 70px; /* Reducimos un poco el tamaño general */
-            height: 70px; 
-            border-radius: 50%; 
-            background: #111; /* Fondo oscuro para que la imagen resalte */
-            padding: 8px; /* ESTO ES LA CLAVE: Da espacio para que la imagen no se vea "gigante" */
-            cursor: pointer; 
-            transition: all 0.3s ease; 
-            border: 1.5px solid #d4af37; /* El dorado de gala */
-            box-shadow: 0 4px 10px rgba(0,0,0,0.8);
+
+        /* El Baúl Animado */
+        .baul-trigger { cursor: pointer; transition: transform 0.3s; }
+        .baul-trigger:active { transform: scale(0.95); }
+        .gold-text { color: #D4AF37; text-transform: uppercase; letter-spacing: 2px; }
+
+        /* Línea de Tiempo (Swipe Horizontal) */
+        .timeline-swipe {
             display: flex;
-            align-items: center;
+            overflow-x: auto;
+            gap: 15px;
+            padding: 20px;
             justify-content: center;
+            border-bottom: 1px solid #0070f3; /* Azul Neón */
+            margin-bottom: 20px;
         }
-        
-        .circle:hover { transform: scale(1.1); border-color: #fff; box-shadow: 0 0 15px rgba(255,255,255,0.2); }
-        
-        /* Ajuste de la Imagen dentro del círculo */
-        .circle img { 
-            width: 100%; 
-            height: 100%; 
-            object-fit: contain; /* Muestra TODA la imagen sin cortarla */
-            border-radius: 4px; /* Un toque sutil si la imagen es cuadrada */
+        .year-btn {
+            background: none;
+            border: 1px solid #D4AF37;
+            color: #D4AF37;
+            padding: 8px 20px;
+            border-radius: 20px;
+            cursor: pointer;
         }
+        .year-btn:hover { background: #D4AF37; color: #000; }
 
-        /* Modal de Pantalla Completa */
-        #story-overlay { 
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-            background: rgba(0, 0, 0, 0.98); z-index: 1000; justify-content: center; align-items: center; 
-            backdrop-filter: blur(20px);
+        /* Rejilla 2x2 */
+        .grid-2x2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            max-width: 600px;
+            margin: 0 auto;
         }
-        
-        #story-overlay img { 
-            max-height: 80vh; max-width: 85%; border-radius: 15px; 
-            box-shadow: 0 0 50px rgba(255, 255, 255, 0.1);
-            object-fit: contain;
+        .mix-card { 
+            background: #000; 
+            border-radius: 5px; 
+            overflow: hidden; 
+            transition: box-shadow 0.3s;
         }
-
-        .close-btn { position: absolute; top: 30px; right: 30px; font-size: 45px; color: #fff; cursor: pointer; opacity: 0.5; }
+        .card-especial { border: 2px solid #D4AF37; box-shadow: 0 0 10px #D4AF37; }
+        .card-regular { border: 1px solid #333; }
+        .mix-card:hover { box-shadow: 0 0 15px #0070f3; }
     </style>
 </head>
 <body>
 
-    <h2>Programación JTBP</h2>
-
-    <div class="stories-container">
-        <div class="circle" onclick="abrirPromo('promo_jazz.jpg?v=4')"><img src="promo_jazz.jpg?v=4"></div>
-        <div class="circle" onclick="abrirPromo('promo_studio.jpg?v=4')"><img src="promo_studio.jpg?v=4"></div>
-        <div class="circle" onclick="abrirPromo('promo_salsa.jpg?v=4')"><img src="promo_salsa.jpg?v=4"></div>
-        <div class="circle" onclick="abrirPromo('promo_rock.jpg?v=4')"><img src="promo_rock.jpg?v=4"></div>
+    <div class="home-section">
+        <img src="promo_jazz.jpg" class="promo-img" alt="Jazz">
+        <img src="promo_rock.jpg" class="promo-img" alt="Rock">
+        <img src="promo_salsa.jpg" class="promo-img" alt="Salsa">
+        <img src="promo_studio.jpg" class="promo-img" alt="Studio">
     </div>
 
-    <div id="story-overlay" onclick="cerrarPromo()">
-        <span class="close-btn">&times;</span>
-        <img id="promo-img" src="">
-    </div>
+    <section class="jtbp-vault-bg">
+        <div class="baul-trigger" onclick="abrirCerrarBaul()">
+            <img src="promo_studio.jpg" width="80" style="border-radius:50%; border: 2px solid #D4AF37;">
+            <h2 class="gold-text">Abrir Bóveda del Legado</h2>
+        </div>
+
+        <div id="contenido-baul" style="display:none; margin-top:30px;">
+            <div class="timeline-swipe">
+                <button class="year-btn" onclick="mostrarPorAño(2025)">2025</button>
+                <button class="year-btn" onclick="mostrarPorAño(2023)">2023</button>
+                <button class="year-btn" onclick="mostrarPorAño(2022)">2022</button>
+            </div>
+
+            <div id="grid-archivos" class="grid-2x2"></div>
+        </div>
+    </section>
 
     <script>
-        function abrirPromo(fuente) {
-            document.getElementById('promo-img').src = fuente;
-            document.getElementById('story-overlay').style.display = 'flex';
+        const MIS_ARCHIVOS = [
+            { año: 2025, titulo: "Especial Studio Mix Two", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FStudio79%2Fstudio79-192025-especial-studio-mix-two%2F" },
+            { año: 2025, titulo: "Seductive Soul", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FJazzTaBueno%2Fjazztabueno-042025-seductive-soul%2F" },
+            { año: 2025, titulo: "Funky Fever", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FStudio79%2Fstudio79-182025-funky-fever%2F" },
+            { año: 2025, titulo: "Traigo Salsa", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FByJTB%2Fsalsabrava-072025-traigo-salsa%2F" },
+            { año: 2025, titulo: "Disco Nights", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FStudio79%2Fstudio79-122025-disco-nights%2F" },
+            { año: 2025, titulo: "Salsa 1983", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FByJTB%2Fsalsabrava-062025-1983%2F" },
+            { año: 2023, titulo: "Slight Return", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2Foldschoolradio%2Fold-school-rock-radio-012023-slight-return%2F" },
+            { año: 2023, titulo: "Bionic Grass", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2Foldschoolradio%2Fold-school-rock-radio-052023-bionic-grass%2F" },
+            { año: 2022, titulo: "Get Lucky", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FJazzTaBueno%2Fjazztabueno-342022-get-lucky%2F" }
+        ];
+
+        function abrirCerrarBaul() {
+            const display = document.getElementById('contenido-baul');
+            display.style.display = (display.style.display === 'none') ? 'block' : 'none';
+            if(display.style.display === 'block') mostrarPorAño(2025);
         }
-        function cerrarPromo() {
-            document.getElementById('story-overlay').style.display = 'none';
+
+        function mostrarPorAño(año) {
+            const grid = document.getElementById('grid-archivos');
+            grid.innerHTML = ''; // Efecto Flash
+
+            const filtrados = MIS_ARCHIVOS.filter(item => item.año === año);
+
+            if (filtrados.length === 0) {
+                grid.innerHTML = `<p style="color:#D4AF37; grid-column: 1/3;">Puliendo diamantes para el año ${año}...</p>`;
+                return;
+            }
+
+            filtrados.forEach(item => {
+                const esEspecial = item.titulo.toLowerCase().includes('especial');
+                const clase = esEspecial ? 'card-especial' : 'card-regular';
+                
+                grid.innerHTML += `
+                    <div class="mix-card ${clase}">
+                        <iframe width="100%" height="60" src="${item.url}" frameborder="0"></iframe>
+                    </div>
+                `;
+            });
         }
     </script>
 </body>
