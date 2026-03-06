@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JazzTaBueno - El Laboratorio V2.1</title>
+    <title>JazzTaBueno - El Laboratorio V2.3</title>
     <style>
         /* ESTILOS DE GALA JTBP */
         body { background-color: #000; color: #fff; font-family: sans-serif; margin: 0; padding: 0; }
         
-        /* Sección de Promos (ARREGLADA: Pequeños y Alineados) */
+        /* Sección de Promos (Alineadas y pequeñas) */
         .home-section { 
             display: flex; 
             justify-content: center; 
@@ -17,11 +17,7 @@
             padding: 20px; 
             flex-wrap: wrap; 
         }
-        .promo-img { 
-            width: 80px; /* Tamaño controlado para que no sean gigantes */
-            border-radius: 5px; 
-            border: 1px solid #333;
-        }
+        .promo-img { width: 80px; border-radius: 5px; border: 1px solid #333; }
 
         /* LA BÓVEDA: Fondo Fibra de Carbono */
         .jtbp-vault-bg {
@@ -32,15 +28,17 @@
             text-align: center;
         }
 
-        /* El Botón del Baúl (ARREGLADO: Tamaño Placeholder) */
+        /* EL BAÚL DE ORO (Ajustes de Gala) */
         .baul-trigger { cursor: pointer; transition: transform 0.3s; margin-bottom: 20px; display: inline-block; }
         .baul-trigger:active { transform: scale(0.95); }
-        .img-placeholder-baul { 
-            width: 60px; /* Pequeñito */
-            border-radius: 50%; /* Redondo */
+        .img-baul-final { 
+            width: 150px; /* Tamaño perfecto para el móvil y la web */
+            border-radius: 15px; /* Bordes suaves */
             border: 2px solid #D4AF37; /* Borde de Oro */
-            box-shadow: 0 0 15px #0070f3; /* Aura Neón */
+            box-shadow: 0 0 20px #0070f3; /* Aura Neón */
+            transition: box-shadow 0.3s;
         }
+        .baul-trigger:hover .img-baul-final { box-shadow: 0 0 30px #D4AF37; }
         .gold-text { color: #D4AF37; text-transform: uppercase; letter-spacing: 2px; margin-top: 15px; font-size: 14px;}
 
         /* Línea de Tiempo (Swipe Horizontal) */
@@ -90,7 +88,7 @@
     <section class="jtbp-vault-bg">
         
         <div class="baul-trigger" onclick="abrirCerrarBaul()">
-            <img src="promo_studio.jpg" class="img-placeholder-baul" alt="Baúl (Placeholder)">
+            <img src="baul.jpg" class="img-baul-final" alt="El Baúl del Legado">
             <h2 class="gold-text">ABRIR BÓVEDA DEL LEGADO</h2>
         </div>
 
