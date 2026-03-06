@@ -8,33 +8,43 @@
         /* ESTILOS DE GALA JTBP */
         body { background-color: #000; color: #fff; font-family: sans-serif; margin: 0; padding: 0; }
         
-        /* Sección de Promos (Lo que ya tienes) */
-        .home-section { text-align: center; padding: 20px; }
-        .promo-img { width: 90%; max-width: 400px; margin-bottom: 20px; border: 1px solid #333; }
+        /* Sección de Promos (Logos controlados) */
+        .home-section { 
+            display: flex; 
+            justify-content: center; 
+            align-items: center;
+            gap: 15px; 
+            padding: 20px; 
+            flex-wrap: wrap; 
+        }
+        .promo-img { width: 120px; border-radius: 5px; }
 
         /* LA BÓVEDA: Fondo Fibra de Carbono */
         .jtbp-vault-bg {
             background: radial-gradient(circle, #222 10%, transparent 11%), #111;
             background-size: 10px 10px;
-            border-top: 3px solid #D4AF37; /* Oro Cepillado */
-            padding: 50px 10px;
+            border-top: 3px solid #D4AF37;
+            padding: 40px 10px;
             text-align: center;
         }
 
-        /* El Baúl Animado */
-        .baul-trigger { cursor: pointer; transition: transform 0.3s; }
+        /* El Botón del Baúl Animado */
+        .baul-trigger { cursor: pointer; transition: transform 0.3s; margin-bottom: 20px; display: inline-block; }
         .baul-trigger:active { transform: scale(0.95); }
-        .gold-text { color: #D4AF37; text-transform: uppercase; letter-spacing: 2px; }
+        .img-baul { border-radius: 15px; box-shadow: 0 0 20px #0070f3; transition: box-shadow 0.3s; }
+        .baul-trigger:hover .img-baul { box-shadow: 0 0 30px #D4AF37; }
+        .gold-text { color: #D4AF37; text-transform: uppercase; letter-spacing: 2px; margin-top: 15px; }
 
         /* Línea de Tiempo (Swipe Horizontal) */
         .timeline-swipe {
             display: flex;
             overflow-x: auto;
             gap: 15px;
-            padding: 20px;
+            padding: 10px;
             justify-content: center;
-            border-bottom: 1px solid #0070f3; /* Azul Neón */
-            margin-bottom: 20px;
+            border-bottom: 1px solid #0070f3; 
+            margin-bottom: 30px;
+            padding-bottom: 20px;
         }
         .year-btn {
             background: none;
@@ -43,26 +53,21 @@
             padding: 8px 20px;
             border-radius: 20px;
             cursor: pointer;
+            font-weight: bold;
         }
-        .year-btn:hover { background: #D4AF37; color: #000; }
+        .year-btn:hover, .year-btn:active { background: #D4AF37; color: #000; }
 
         /* Rejilla 2x2 */
         .grid-2x2 {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            max-width: 600px;
+            gap: 15px;
+            max-width: 800px;
             margin: 0 auto;
         }
-        .mix-card { 
-            background: #000; 
-            border-radius: 5px; 
-            overflow: hidden; 
-            transition: box-shadow 0.3s;
-        }
+        .mix-card { background: #000; border-radius: 5px; overflow: hidden; }
         .card-especial { border: 2px solid #D4AF37; box-shadow: 0 0 10px #D4AF37; }
         .card-regular { border: 1px solid #333; }
-        .mix-card:hover { box-shadow: 0 0 15px #0070f3; }
     </style>
 </head>
 <body>
@@ -75,12 +80,13 @@
     </div>
 
     <section class="jtbp-vault-bg">
+        
         <div class="baul-trigger" onclick="abrirCerrarBaul()">
-            <img src="promo_studio.jpg" width="80" style="border-radius:50%; border: 2px solid #D4AF37;">
-            <h2 class="gold-text">Abrir Bóveda del Legado</h2>
+            <img src="baul.jpg" width="180" class="img-baul" alt="Baúl de Oro">
+            <h2 class="gold-text">ABRIR BÓVEDA DEL LEGADO</h2>
         </div>
 
-        <div id="contenido-baul" style="display:none; margin-top:30px;">
+        <div id="contenido-baul" style="display:none;">
             <div class="timeline-swipe">
                 <button class="year-btn" onclick="mostrarPorAño(2025)">2025</button>
                 <button class="year-btn" onclick="mostrarPorAño(2023)">2023</button>
@@ -106,18 +112,24 @@
 
         function abrirCerrarBaul() {
             const display = document.getElementById('contenido-baul');
-            display.style.display = (display.style.display === 'none') ? 'block' : 'none';
-            if(display.style.display === 'block') mostrarPorAño(2025);
+            
+            if(display.style.display === 'none') {
+                display.style.display = 'block';
+                mostrarPorAño(2025); // Carga 2025 al abrir
+            } else {
+                display.style.display = 'none';
+                document.getElementById('grid-archivos').innerHTML = ''; // Limpia al cerrar
+            }
         }
 
         function mostrarPorAño(año) {
             const grid = document.getElementById('grid-archivos');
-            grid.innerHTML = ''; // Efecto Flash
+            grid.innerHTML = ''; 
 
             const filtrados = MIS_ARCHIVOS.filter(item => item.año === año);
 
             if (filtrados.length === 0) {
-                grid.innerHTML = `<p style="color:#D4AF37; grid-column: 1/3;">Puliendo diamantes para el año ${año}...</p>`;
+                grid.innerHTML = `<p style="color:#D4AF37; grid-column: 1/3; text-align: center;">Puliendo diamantes para el año ${año}...</p>`;
                 return;
             }
 
