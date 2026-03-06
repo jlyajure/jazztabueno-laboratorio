@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JazzTaBueno - Bóveda V4.1</title>
+    <title>JazzTaBueno - Bóveda V4.2</title>
     
     <script src="https://widget.mixcloud.com/media/js/widgetApi.js"></script>
     
@@ -107,7 +107,7 @@
             if(botonApretado) botonApretado.classList.add('activo');
 
             const grid = document.getElementById('grid-archivos');
-            reproductoresActivos = []; // Reseteamos la memoria de audios
+            reproductoresActivos = []; 
             
             const filtrados = MIS_ARCHIVOS.filter(item => item.año === año);
 
@@ -116,7 +116,6 @@
                 return;
             }
 
-            // ARMADO MAESTRO: Creamos todo el contenido en texto primero
             let contenidoHtml = "";
             const categoriasUnicas = [...new Set(filtrados.map(item => item.categoria))];
             let idCounter = 0;
@@ -137,18 +136,17 @@
                 });
             });
 
-            // Inyectamos todo de un solo golpe
             grid.innerHTML = contenidoHtml;
 
-            // ESPERAMOS A QUE CARGUEN PARA CONECTAR EL MODO DIOS
-            setTimeout(() => {
-                const iframes = document.querySelectorAll('.mix-card iframe');
-                iframes.forEach(iframe => {
-                    try {
-                        const widget = Mixcloud.PlayerWidget(iframe);
-                        reproductoresActivos.push(widget);
-                        
-                        // Si le dan Play a este, pausa los demás
+            // EL NUEVO CEREBRO: Esperamos a que cada uno avise que despertó
+            const iframes = document.querySelectorAll('.mix-card iframe');
+            iframes.forEach(iframe => {
+                try {
+                    const widget = Mixcloud.PlayerWidget(iframe);
+                    reproductoresActivos.push(widget);
+                    
+                    // La promesa '.ready' es el truco para domarlos
+                    widget.ready.then(function() {
                         widget.bind('play', function() {
                             reproductoresActivos.forEach(w => {
                                 if (w !== widget) {
@@ -156,11 +154,11 @@
                                 }
                             });
                         });
-                    } catch (error) {
-                        console.log("Error cargando API de Mixcloud:", error);
-                    }
-                });
-            }, 500);
+                    });
+                } catch (error) {
+                    console.log("Esperando conexión Mixcloud...", error);
+                }
+            });
         }
     </script>
 </body>
