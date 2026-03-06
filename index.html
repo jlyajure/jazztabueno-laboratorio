@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JazzTaBueno - El Laboratorio</title>
+    <title>JazzTaBueno - El Laboratorio V2.1</title>
     <style>
         /* ESTILOS DE GALA JTBP */
         body { background-color: #000; color: #fff; font-family: sans-serif; margin: 0; padding: 0; }
         
-        /* Sección de Promos (Logos controlados) */
+        /* Sección de Promos (ARREGLADA: Pequeños y Alineados) */
         .home-section { 
             display: flex; 
             justify-content: center; 
@@ -17,7 +17,11 @@
             padding: 20px; 
             flex-wrap: wrap; 
         }
-        .promo-img { width: 120px; border-radius: 5px; }
+        .promo-img { 
+            width: 80px; /* Tamaño controlado para que no sean gigantes */
+            border-radius: 5px; 
+            border: 1px solid #333;
+        }
 
         /* LA BÓVEDA: Fondo Fibra de Carbono */
         .jtbp-vault-bg {
@@ -28,12 +32,16 @@
             text-align: center;
         }
 
-        /* El Botón del Baúl Animado */
+        /* El Botón del Baúl (ARREGLADO: Tamaño Placeholder) */
         .baul-trigger { cursor: pointer; transition: transform 0.3s; margin-bottom: 20px; display: inline-block; }
         .baul-trigger:active { transform: scale(0.95); }
-        .img-baul { border-radius: 15px; box-shadow: 0 0 20px #0070f3; transition: box-shadow 0.3s; }
-        .baul-trigger:hover .img-baul { box-shadow: 0 0 30px #D4AF37; }
-        .gold-text { color: #D4AF37; text-transform: uppercase; letter-spacing: 2px; margin-top: 15px; }
+        .img-placeholder-baul { 
+            width: 60px; /* Pequeñito */
+            border-radius: 50%; /* Redondo */
+            border: 2px solid #D4AF37; /* Borde de Oro */
+            box-shadow: 0 0 15px #0070f3; /* Aura Neón */
+        }
+        .gold-text { color: #D4AF37; text-transform: uppercase; letter-spacing: 2px; margin-top: 15px; font-size: 14px;}
 
         /* Línea de Tiempo (Swipe Horizontal) */
         .timeline-swipe {
@@ -50,10 +58,10 @@
             background: none;
             border: 1px solid #D4AF37;
             color: #D4AF37;
-            padding: 8px 20px;
+            padding: 6px 15px;
             border-radius: 20px;
             cursor: pointer;
-            font-weight: bold;
+            font-size: 12px;
         }
         .year-btn:hover, .year-btn:active { background: #D4AF37; color: #000; }
 
@@ -61,8 +69,8 @@
         .grid-2x2 {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            max-width: 800px;
+            gap: 10px;
+            max-width: 600px;
             margin: 0 auto;
         }
         .mix-card { background: #000; border-radius: 5px; overflow: hidden; }
@@ -82,7 +90,7 @@
     <section class="jtbp-vault-bg">
         
         <div class="baul-trigger" onclick="abrirCerrarBaul()">
-            <img src="baul.jpg" width="180" class="img-baul" alt="Baúl de Oro">
+            <img src="promo_studio.jpg" class="img-placeholder-baul" alt="Baúl (Placeholder)">
             <h2 class="gold-text">ABRIR BÓVEDA DEL LEGADO</h2>
         </div>
 
@@ -129,7 +137,7 @@
             const filtrados = MIS_ARCHIVOS.filter(item => item.año === año);
 
             if (filtrados.length === 0) {
-                grid.innerHTML = `<p style="color:#D4AF37; grid-column: 1/3; text-align: center;">Puliendo diamantes para el año ${año}...</p>`;
+                grid.innerHTML = `<p style="color:#D4AF37; grid-column: 1/3; text-align: center; font-size: 12px;">Puliendo diamantes para ${año}...</p>`;
                 return;
             }
 
