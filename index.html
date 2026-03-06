@@ -81,6 +81,10 @@
         .brand-title { color: var(--gold); font-family: 'Playfair Display', serif; font-size: 11px; text-transform: uppercase; line-height: 1.2; }
         .btn-salir { display: none; background: transparent !important; border: 2px solid var(--gold) !important; color: var(--gold) !important; padding: 7px 15px !important; border-radius: 8px !important; font-size: 10px !important; font-weight: 900 !important; cursor: pointer !important; }
 
+        /* Icono Bóveda en el Header */
+        .btn-boveda-header { width: 34px; height: 34px; cursor: pointer; border-radius: 8px; border: 1.5px solid var(--gold); box-shadow: 0 0 10px #0070f3; transition: transform 0.2s; object-fit: cover;}
+        .btn-boveda-header:active { transform: scale(0.9); }
+
         .container { max-width: 450px; margin: auto; padding: 15px; padding-bottom: 300px; }
         .channels-grid { display: grid !important; grid-template-columns: repeat(5, 1fr) !important; gap: 5px; margin-bottom: 25px; padding: 10px 0; }
         .ch-item { display: flex; flex-direction: column; align-items: center; text-align: center; opacity: 0.9; cursor: pointer; }
@@ -140,14 +144,11 @@
         #visualizador { width: 100%; height: 35px; background: transparent; margin-top: 5px; margin-bottom: 5px; display: block; }
 
         /* =========================================
-           ESTILOS EXCLUSIVOS DE LA BÓVEDA DEL LEGADO
+           ESTILOS DE LA BÓVEDA DEL LEGADO
            ========================================= */
-        .jtbp-vault-bg { background: radial-gradient(circle, #222 10%, transparent 11%), #111; background-size: 10px 10px; border-top: 3px solid #D4AF37; padding: 30px 10px; text-align: center; border-radius: 20px; border: 1px solid #1a1a1a; margin-bottom: 30px; }
-        .baul-trigger { cursor: pointer; transition: transform 0.3s; margin-bottom: 15px; display: inline-block; }
-        .baul-trigger:active { transform: scale(0.95); }
-        .img-baul-final { width: 90px; border-radius: 12px; border: 2px solid #D4AF37; box-shadow: 0 0 20px #0070f3; }
-        .gold-text-vault { color: #D4AF37; text-transform: uppercase; letter-spacing: 2px; margin-top: 15px; font-size: 14px; font-weight: bold;}
-        .alerta-gala { color: #0070f3; font-size: 11px; margin-bottom: 20px; max-width: 100%; margin-left: auto; margin-right: auto; line-height: 1.6; text-align: center; background: rgba(0, 0, 0, 0.5); padding: 10px; border-radius: 8px; border: 1px solid #333; }
+        .jtbp-vault-bg { background: radial-gradient(circle, #222 10%, transparent 11%), #111; background-size: 10px 10px; border-top: 3px solid #D4AF37; padding: 20px 10px; text-align: center; border-radius: 20px; border: 1px solid #1a1a1a; margin-bottom: 30px; }
+        .vault-header-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid #333; padding-bottom: 15px; }
+        .alerta-gala { color: #0070f3; font-size: 11px; margin-bottom: 20px; max-width: 100%; line-height: 1.6; text-align: center; background: rgba(0, 0, 0, 0.5); padding: 10px; border-radius: 8px; border: 1px solid #333; }
         .alerta-gala strong { color: #D4AF37; }
         .timeline-swipe { display: flex; overflow-x: auto; gap: 10px; padding: 10px; justify-content: center; border-bottom: 1px solid #0070f3; margin-bottom: 20px; padding-bottom: 15px; }
         .year-btn { background: none; border: 1px solid #D4AF37; color: #D4AF37; padding: 6px 15px; border-radius: 20px; cursor: pointer; font-size: 12px; transition: 0.3s; font-family: inherit; font-weight: bold;}
@@ -167,10 +168,14 @@
             <img src="logo.png" width="35" height="35" onerror="this.src='https://i.postimg.cc/zVD4mstP/Jazztabueno-(2).png'">
             <div class="brand-title">Jazztabueno<br>Productions</div>
         </div>
-        <button onclick="window.doLogout()" class="btn-salir" id="btn-salir">SALIR</button>
+        
+        <div style="display:flex; align-items:center; gap:12px;">
+            <img src="baul.png" onerror="this.src='baul.jpg'" class="btn-boveda-header" title="Abrir Bóveda del Legado" onclick="window.openVault()">
+            <button onclick="window.doLogout()" class="btn-salir" id="btn-salir">SALIR</button>
+        </div>
     </header>
 
-    <div class="container">
+    <div id="main-view" class="container">
         <div id="admin-panel" style="display:none; background:#111; padding:25px; border-radius:25px; border:2px solid var(--gold); margin-bottom:30px;">
             <input type="hidden" id="edit-id">
             <input type="text" id="t-titulo" style="width:100%; padding:14px; background:#000; color:white; border:1px solid #333; border-radius:10px; margin-bottom:10px;" placeholder="Título">
@@ -192,26 +197,6 @@
             </div>
         </div>
 
-        <section class="jtbp-vault-bg">
-            <div class="baul-trigger" onclick="window.abrirCerrarBaul()">
-                <img src="baul.png" class="img-baul-final" alt="Baúl" onerror="this.src='baul.jpg'">
-                <div class="gold-text-vault">ABRIR BÓVEDA DEL LEGADO</div>
-            </div>
-
-            <div id="contenido-baul" style="display:none;">
-                <div class="alerta-gala">
-                    <i>⚠️ <strong>Aviso:</strong> Para escuchar, presiona únicamente el botón de <strong>▶ PLAY</strong>.</i><br>
-                    <i>⭐ <strong>Nota:</strong> Los programas con marco iluminado son <strong>Ediciones Especiales</strong>.</i>
-                </div>
-
-                <div class="timeline-swipe">
-                    <button class="year-btn" id="btn-2025" onclick="window.mostrarPorAño(2025, this)">2025</button>
-                    <button class="year-btn" onclick="window.mostrarPorAño(2023, this)">2023</button>
-                    <button class="year-btn" onclick="window.mostrarPorAño(2022, this)">2022</button>
-                </div>
-                <div id="grid-archivos" class="grid-vault"></div>
-            </div>
-        </section>
         <div class="channels-grid">
             <div class="ch-item active" onclick="window.setFilter('Todo', this)"><img src="https://i.postimg.cc/zVD4mstP/Jazztabueno-(2).png" class="ch-logo"><span class="ch-name">Todo</span></div>
             <div class="ch-item" onclick="window.setFilter('JAZZTABUENO', this)"><img src="https://i.postimg.cc/zVD4mstP/Jazztabueno-(2).png" class="ch-logo"><span class="ch-name">Jazztabueno</span></div>
@@ -221,6 +206,31 @@
         </div>
         
         <div id="feed"></div>
+    </div>
+    
+    <div id="vault-view" class="container" style="display:none;">
+        <section class="jtbp-vault-bg">
+            <div class="vault-header-bar">
+                <div style="display:flex; align-items:center; gap: 10px;">
+                    <img src="baul.png" onerror="this.src='baul.jpg'" style="width: 35px; border-radius: 5px;">
+                    <h2 style="color:var(--gold); margin:0; font-size:14px; text-transform:uppercase; letter-spacing:1px; text-align: left;">Bóveda del<br>Legado</h2>
+                </div>
+                <button onclick="window.closeVault()" style="background:#111; border:1px solid var(--gold); color:var(--gold); padding:8px 15px; border-radius:8px; cursor:pointer; font-weight:bold; font-size:11px;">⬅ VOLVER</button>
+            </div>
+
+            <div class="alerta-gala">
+                <i>⚠️ <strong>Aviso:</strong> Para escuchar, presiona únicamente el botón de <strong>▶ PLAY</strong>.</i><br>
+                <i>⭐ <strong>Nota:</strong> Los programas con marco iluminado son <strong>Ediciones Especiales</strong>.</i>
+            </div>
+
+            <div class="timeline-swipe">
+                <button class="year-btn" id="btn-2025" onclick="window.mostrarPorAño(2025, this)">2025</button>
+                <button class="year-btn" onclick="window.mostrarPorAño(2023, this)">2023</button>
+                <button class="year-btn" onclick="window.mostrarPorAño(2022, this)">2022</button>
+            </div>
+            
+            <div id="grid-archivos" class="grid-vault"></div>
+        </section>
     </div>
 </div>
 
@@ -264,16 +274,31 @@
 
     window.misReproductoresMixcloud = [];
 
-    window.abrirCerrarBaul = () => {
-        const display = document.getElementById('contenido-baul');
-        if(display.style.display === 'none') {
-            display.style.display = 'block';
-            window.mostrarPorAño(2025, document.getElementById('btn-2025')); 
-        } else {
-            display.style.display = 'none';
-            document.getElementById('grid-archivos').innerHTML = ''; 
-            window.misReproductoresMixcloud = []; 
+    // LÓGICA DE CAMBIO DE PÁGINA
+    window.openVault = () => {
+        // Esconder principal, mostrar bóveda
+        document.getElementById('main-view').style.display = 'none';
+        document.getElementById('vault-view').style.display = 'block';
+        
+        // Cargar 2025 por defecto
+        window.mostrarPorAño(2025, document.getElementById('btn-2025')); 
+        window.scrollTo({top:0, behavior:'smooth'});
+    };
+
+    window.closeVault = () => {
+        // Esconder bóveda, mostrar principal
+        document.getElementById('vault-view').style.display = 'none';
+        document.getElementById('main-view').style.display = 'block';
+        document.getElementById('grid-archivos').innerHTML = ''; 
+        
+        // Apagar reproductores de la bóveda por seguridad
+        if(window.misReproductoresMixcloud) {
+            window.misReproductoresMixcloud.forEach(item => {
+                try { item.reproductor.pause(); } catch(e){}
+            });
         }
+        window.misReproductoresMixcloud = [];
+        window.scrollTo({top:0, behavior:'smooth'});
     };
 
     window.mostrarPorAño = (año, botonApretado) => {
@@ -287,7 +312,7 @@
         const filtrados = window.MIS_ARCHIVOS_BOVEDA.filter(item => item.año === año);
 
         if (filtrados.length === 0) {
-            grid.innerHTML = `<p style="color:#D4AF37; text-align: center;">Puliendo diamantes para ${año}...</p>`;
+            grid.innerHTML = `<p style="color:#D4AF37; text-align: center; font-size:12px;">Puliendo diamantes para ${año}...</p>`;
             return;
         }
 
@@ -323,14 +348,12 @@
                     window.misReproductoresMixcloud.push({ id: iframe.id, reproductor: widget });
                     
                     widget.bind('play', function() {
-                        // SÚPER INGENIERÍA: Si le dan play a la bóveda, apagamos el reproductor principal de la app
                         const mainMedia = document.getElementById('main-media');
                         if(mainMedia && !mainMedia.paused) {
                             mainMedia.pause();
                             if(window.actualizarUI) window.actualizarUI();
                         }
                         
-                        // Y apagamos los otros de mixcloud
                         window.misReproductoresMixcloud.forEach(item => {
                             if (item.id !== iframe.id) {
                                 item.reproductor.pause();
@@ -373,7 +396,6 @@
     let hashtagFiltro = ''; 
     let isAdmin = false;
 
-    // 🔥 VARIABLES DEL VISUALIZADOR DE AUDIO
     let audioCtx, analyser, source;
     let isVisualizerRunning = false;
     const canvas = document.getElementById('visualizador');
@@ -384,7 +406,6 @@
 
     window.actualizarUI = () => { render(); }; 
 
-    // SÚPER INGENIERÍA: Si le dan play a la App principal, pausamos la Bóveda
     media.addEventListener('play', () => {
         if(window.misReproductoresMixcloud) {
             window.misReproductoresMixcloud.forEach(item => {
