@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JazzTaBueno - Bóveda V4.2</title>
+    <title>JazzTaBueno - Bóveda V4.3 (Balazo de Plata)</title>
     
     <script src="https://widget.mixcloud.com/media/js/widgetApi.js"></script>
     
@@ -87,7 +87,7 @@
             { año: 2022, categoria: "Jazz Ta Bueno", titulo: "Get Lucky", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FJazzTaBueno%2Fjazztabueno-342022-get-lucky%2F" }
         ];
 
-        let reproductoresActivos = [];
+        let misReproductores = [];
 
         function abrirCerrarBaul() {
             const display = document.getElementById('contenido-baul');
@@ -97,7 +97,7 @@
             } else {
                 display.style.display = 'none';
                 document.getElementById('grid-archivos').innerHTML = ''; 
-                reproductoresActivos = []; 
+                misReproductores = []; 
             }
         }
 
@@ -107,7 +107,7 @@
             if(botonApretado) botonApretado.classList.add('activo');
 
             const grid = document.getElementById('grid-archivos');
-            reproductoresActivos = []; 
+            misReproductores = []; 
             
             const filtrados = MIS_ARCHIVOS.filter(item => item.año === año);
 
@@ -138,27 +138,26 @@
 
             grid.innerHTML = contenidoHtml;
 
-            // EL NUEVO CEREBRO: Esperamos a que cada uno avise que despertó
-            const iframes = document.querySelectorAll('.mix-card iframe');
-            iframes.forEach(iframe => {
-                try {
-                    const widget = Mixcloud.PlayerWidget(iframe);
-                    reproductoresActivos.push(widget);
-                    
-                    // La promesa '.ready' es el truco para domarlos
-                    widget.ready.then(function() {
+            // EL BALAZO DE PLATA: Esperamos 1.5 segundos para que cargue todo bien
+            setTimeout(() => {
+                if (typeof Mixcloud === 'undefined') return; // Si Mixcloud fue bloqueado por la App, nos detenemos.
+                
+                const iframes = document.querySelectorAll('.mix-card iframe');
+                iframes.forEach(iframe => {
+                    try {
+                        const widget = Mixcloud.PlayerWidget(iframe);
+                        misReproductores.push({ id: iframe.id, reproductor: widget });
+                        
                         widget.bind('play', function() {
-                            reproductoresActivos.forEach(w => {
-                                if (w !== widget) {
-                                    w.pause();
+                            misReproductores.forEach(item => {
+                                if (item.id !== iframe.id) {
+                                    item.reproductor.pause();
                                 }
                             });
                         });
-                    });
-                } catch (error) {
-                    console.log("Esperando conexión Mixcloud...", error);
-                }
-            });
+                    } catch (error) {}
+                });
+            }, 1500);
         }
     </script>
 </body>
