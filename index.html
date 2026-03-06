@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JazzTaBueno - El Laboratorio V2.4</title>
+    <title>JazzTaBueno - El Laboratorio V2.5</title>
     <style>
         /* ESTILOS DE GALA JTBP */
         body { background-color: #000; color: #fff; font-family: sans-serif; margin: 0; padding: 0; }
         
-        /* Sección de Promos (Alineadas y pequeñas) */
+        /* Sección de Promos */
         .home-section { 
             display: flex; 
             justify-content: center; 
@@ -28,14 +28,14 @@
             text-align: center;
         }
 
-        /* EL BAÚL DE ORO (Ajustes de Gala) */
+        /* EL BAÚL DE ORO (Tamaño Elegante Ajustado) */
         .baul-trigger { cursor: pointer; transition: transform 0.3s; margin-bottom: 20px; display: inline-block; }
         .baul-trigger:active { transform: scale(0.95); }
         .img-baul-final { 
-            width: 150px; /* Tamaño perfecto para el móvil y la web */
-            border-radius: 15px; /* Bordes suaves */
-            border: 2px solid #D4AF37; /* Borde de Oro */
-            box-shadow: 0 0 20px #0070f3; /* Aura Neón */
+            width: 90px; /* CIRUGÍA APLICADA: Tamaño perfecto y no invasivo */
+            border-radius: 12px; 
+            border: 2px solid #D4AF37; 
+            box-shadow: 0 0 20px #0070f3; 
             transition: box-shadow 0.3s;
         }
         .baul-trigger:hover .img-baul-final { box-shadow: 0 0 30px #D4AF37; }
@@ -121,10 +121,10 @@
             
             if(display.style.display === 'none') {
                 display.style.display = 'block';
-                mostrarPorAño(2025); // Carga 2025 al abrir
+                mostrarPorAño(2025); 
             } else {
                 display.style.display = 'none';
-                document.getElementById('grid-archivos').innerHTML = ''; // Limpia al cerrar
+                document.getElementById('grid-archivos').innerHTML = ''; 
             }
         }
 
