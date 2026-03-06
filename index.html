@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JazzTaBueno - Bóveda V4.0</title>
+    <title>JazzTaBueno - Bóveda V4.1</title>
+    
     <script src="https://widget.mixcloud.com/media/js/widgetApi.js"></script>
     
     <style>
@@ -86,7 +87,7 @@
             { año: 2022, categoria: "Jazz Ta Bueno", titulo: "Get Lucky", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FJazzTaBueno%2Fjazztabueno-342022-get-lucky%2F" }
         ];
 
-        let reproductoresActivos = []; // Memoria de los audios
+        let reproductoresActivos = [];
 
         function abrirCerrarBaul() {
             const display = document.getElementById('contenido-baul');
@@ -96,7 +97,7 @@
             } else {
                 display.style.display = 'none';
                 document.getElementById('grid-archivos').innerHTML = ''; 
-                reproductoresActivos = []; // Limpiamos la memoria al cerrar
+                reproductoresActivos = []; 
             }
         }
 
@@ -106,9 +107,8 @@
             if(botonApretado) botonApretado.classList.add('activo');
 
             const grid = document.getElementById('grid-archivos');
-            grid.innerHTML = ''; 
-            reproductoresActivos = []; // Reseteamos la memoria de audios al cambiar de año
-
+            reproductoresActivos = []; // Reseteamos la memoria de audios
+            
             const filtrados = MIS_ARCHIVOS.filter(item => item.año === año);
 
             if (filtrados.length === 0) {
@@ -116,18 +116,20 @@
                 return;
             }
 
+            // ARMADO MAESTRO: Creamos todo el contenido en texto primero
+            let contenidoHtml = "";
             const categoriasUnicas = [...new Set(filtrados.map(item => item.categoria))];
-            let idCounter = 0; // Para identificar cada reproductor
+            let idCounter = 0;
 
             categoriasUnicas.forEach(cat => {
-                grid.innerHTML += `<div class="categoria-titulo">► ${cat}</div>`;
+                contenidoHtml += `<div class="categoria-titulo">► ${cat}</div>`;
                 
                 const programasDeCat = filtrados.filter(item => item.categoria === cat);
                 programasDeCat.forEach(item => {
                     const esEspecial = item.titulo.toLowerCase().includes('especial');
                     const clase = esEspecial ? 'card-especial' : 'card-regular';
                     
-                    grid.innerHTML += `
+                    contenidoHtml += `
                         <div class="mix-card ${clase}">
                             <iframe id="mix-iframe-${idCounter}" width="100%" height="60" src="${item.url}" frameborder="0" style="margin-top: -2px;"></iframe>
                         </div>`;
@@ -135,22 +137,28 @@
                 });
             });
 
-            // INYECTAMOS LA LÓGICA MODO DIOS (Esperamos un segundito a que carguen)
+            // Inyectamos todo de un solo golpe
+            grid.innerHTML = contenidoHtml;
+
+            // ESPERAMOS A QUE CARGUEN PARA CONECTAR EL MODO DIOS
             setTimeout(() => {
                 const iframes = document.querySelectorAll('.mix-card iframe');
                 iframes.forEach(iframe => {
-                    const widget = Mixcloud.PlayerWidget(iframe);
-                    reproductoresActivos.push(widget);
-                    
-                    // Si le dan Play a este...
-                    widget.bind('play', function() {
-                        // ...manda a pausar a todos los demás
-                        reproductoresActivos.forEach(w => {
-                            if (w !== widget) {
-                                w.pause();
-                            }
+                    try {
+                        const widget = Mixcloud.PlayerWidget(iframe);
+                        reproductoresActivos.push(widget);
+                        
+                        // Si le dan Play a este, pausa los demás
+                        widget.bind('play', function() {
+                            reproductoresActivos.forEach(w => {
+                                if (w !== widget) {
+                                    w.pause();
+                                }
+                            });
                         });
-                    });
+                    } catch (error) {
+                        console.log("Error cargando API de Mixcloud:", error);
+                    }
                 });
             }, 500);
         }
