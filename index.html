@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JazzTaBueno - Bóveda V3.0</title>
+    <title>JazzTaBueno - Bóveda V3.1</title>
     <style>
         /* ESTILOS DE GALA */
         body { background-color: #000; color: #fff; font-family: sans-serif; margin: 0; padding: 0; }
@@ -17,17 +17,26 @@
         .img-baul-final { width: 90px; border-radius: 12px; border: 2px solid #D4AF37; box-shadow: 0 0 20px #0070f3; }
         .gold-text { color: #D4AF37; text-transform: uppercase; letter-spacing: 2px; margin-top: 15px; font-size: 14px;}
 
+        /* AVISO DE GALA PARA EL OYENTE */
+        .alerta-gala { color: #0070f3; font-size: 12px; margin-bottom: 20px; font-style: italic; max-width: 500px; margin-left: auto; margin-right: auto; line-height: 1.5; }
+        .alerta-gala strong { color: #D4AF37; }
+
         /* LÍNEA DE TIEMPO Y BOTONES ILUMINADOS */
         .timeline-swipe { display: flex; overflow-x: auto; gap: 15px; padding: 10px; justify-content: center; border-bottom: 1px solid #0070f3; margin-bottom: 20px; padding-bottom: 20px; }
         .year-btn { background: none; border: 1px solid #D4AF37; color: #D4AF37; padding: 6px 15px; border-radius: 20px; cursor: pointer; font-size: 12px; transition: 0.3s; }
-        
-        /* ESTA CLASE ILUMINA EL AÑO SELECCIONADO */
         .year-btn.activo { background: #D4AF37; color: #000; font-weight: bold; box-shadow: 0 0 10px #D4AF37; }
 
-        /* REJILLA Y SEPARADORES (Adiós Mercocha) */
+        /* REJILLA Y SEPARADORES */
         .grid-2x2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; max-width: 600px; margin: 0 auto; text-align: left; }
         .categoria-titulo { grid-column: 1 / -1; color: #0070f3; border-bottom: 1px solid #333; margin-top: 15px; padding-bottom: 5px; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; }
-        .mix-card { background: #000; border-radius: 5px; overflow: hidden; }
+        
+        /* GUILLOTINA PARA EL BOTÓN FOLLOW */
+        .mix-card { 
+            background: #000; 
+            border-radius: 5px; 
+            overflow: hidden; 
+            height: 55px; /* Esto corta la parte baja del iframe donde sale "Follow" */
+        }
         .card-especial { border: 2px solid #D4AF37; box-shadow: 0 0 10px #D4AF37; }
         .card-regular { border: 1px solid #333; }
     </style>
@@ -48,6 +57,11 @@
         </div>
 
         <div id="contenido-baul" style="display:none;">
+            
+            <div class="alerta-gala">
+                ⚠️ <strong>Aviso Importante:</strong> Para escuchar en esta Bóveda, presiona únicamente el botón de <strong>▶ PLAY</strong>. Si tocas el título de la canción, viajarás fuera de la App hacia la página de Mixcloud.
+            </div>
+
             <div class="timeline-swipe">
                 <button class="year-btn" id="btn-2025" onclick="mostrarPorAño(2025, this)">2025</button>
                 <button class="year-btn" onclick="mostrarPorAño(2023, this)">2023</button>
@@ -58,7 +72,6 @@
     </section>
 
     <script>
-        // AQUÍ ES DONDE AGREGARÁS TUS LINKS NUEVOS (Fíjate en la etiqueta "categoria")
         const MIS_ARCHIVOS = [
             { año: 2025, categoria: "Studio 79", titulo: "Especial Studio Mix Two", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FStudio79%2Fstudio79-192025-especial-studio-mix-two%2F" },
             { año: 2025, categoria: "Studio 79", titulo: "Funky Fever", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FStudio79%2Fstudio79-182025-funky-fever%2F" },
@@ -75,7 +88,6 @@
             const display = document.getElementById('contenido-baul');
             if(display.style.display === 'none') {
                 display.style.display = 'block';
-                // Al abrir, simula un click en el botón 2025
                 mostrarPorAño(2025, document.getElementById('btn-2025')); 
             } else {
                 display.style.display = 'none';
@@ -83,16 +95,13 @@
         }
 
         function mostrarPorAño(año, botonApretado) {
-            // 1. Apagar todos los botones y Encender el que se tocó
             const botones = document.querySelectorAll('.year-btn');
             botones.forEach(b => b.classList.remove('activo'));
             if(botonApretado) botonApretado.classList.add('activo');
 
-            // 2. Limpiar la rejilla
             const grid = document.getElementById('grid-archivos');
             grid.innerHTML = ''; 
 
-            // 3. Buscar los programas de ese año
             const filtrados = MIS_ARCHIVOS.filter(item => item.año === año);
 
             if (filtrados.length === 0) {
@@ -100,21 +109,18 @@
                 return;
             }
 
-            // 4. MODO ANTI-MERCOCHA: Agrupar por Categorías
             const categoriasUnicas = [...new Set(filtrados.map(item => item.categoria))];
 
             categoriasUnicas.forEach(cat => {
-                // Poner el título de la categoría
                 grid.innerHTML += `<div class="categoria-titulo">► ${cat}</div>`;
                 
-                // Poner los programas de esa categoría
                 const programasDeCat = filtrados.filter(item => item.categoria === cat);
                 programasDeCat.forEach(item => {
                     const esEspecial = item.titulo.toLowerCase().includes('especial');
                     const clase = esEspecial ? 'card-especial' : 'card-regular';
                     grid.innerHTML += `
                         <div class="mix-card ${clase}">
-                            <iframe width="100%" height="60" src="${item.url}" frameborder="0"></iframe>
+                            <iframe width="100%" height="60" src="${item.url}" frameborder="0" style="margin-top: -2px;"></iframe>
                         </div>`;
                 });
             });
