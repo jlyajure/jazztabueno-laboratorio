@@ -81,9 +81,11 @@
         .brand-title { color: var(--gold); font-family: 'Playfair Display', serif; font-size: 11px; text-transform: uppercase; line-height: 1.2; }
         .btn-salir { display: none; background: transparent !important; border: 2px solid var(--gold) !important; color: var(--gold) !important; padding: 7px 15px !important; border-radius: 8px !important; font-size: 10px !important; font-weight: 900 !important; cursor: pointer !important; }
 
-        /* Icono Bóveda en el Header */
-        .btn-boveda-header { width: 34px; height: 34px; cursor: pointer; border-radius: 8px; border: 1.5px solid var(--gold); box-shadow: 0 0 10px #0070f3; transition: transform 0.2s; object-fit: cover;}
-        .btn-boveda-header:active { transform: scale(0.9); }
+        /* EL NUEVO BOTÓN VIP DE LA BÓVEDA EN EL HEADER */
+        .btn-boveda-container { display: flex; align-items: center; gap: 8px; cursor: pointer; background: rgba(212, 175, 55, 0.1); padding: 5px 10px; border-radius: 12px; border: 1px solid var(--gold); transition: transform 0.2s; }
+        .btn-boveda-container:active { transform: scale(0.95); }
+        .btn-boveda-header { width: 38px; height: 38px; border-radius: 6px; box-shadow: 0 0 10px #0070f3; object-fit: cover; }
+        .btn-boveda-text { color: var(--gold); font-size: 9px; font-weight: 900; text-transform: uppercase; line-height: 1.1; text-align: right; }
 
         .container { max-width: 450px; margin: auto; padding: 15px; padding-bottom: 300px; }
         .channels-grid { display: grid !important; grid-template-columns: repeat(5, 1fr) !important; gap: 5px; margin-bottom: 25px; padding: 10px 0; }
@@ -170,7 +172,11 @@
         </div>
         
         <div style="display:flex; align-items:center; gap:12px;">
-            <img src="baul.png" onerror="this.src='baul.jpg'" class="btn-boveda-header" title="Abrir Bóveda del Legado" onclick="window.openVault()">
+            <div class="btn-boveda-container" onclick="window.openVault()">
+                <div class="btn-boveda-text">BÓVEDA DEL<br>LEGADO</div>
+                <img src="baul.png" onerror="this.src='baul.jpg'" class="btn-boveda-header" alt="Baúl">
+            </div>
+
             <button onclick="window.doLogout()" class="btn-salir" id="btn-salir">SALIR</button>
         </div>
     </header>
@@ -274,24 +280,19 @@
 
     window.misReproductoresMixcloud = [];
 
-    // LÓGICA DE CAMBIO DE PÁGINA
     window.openVault = () => {
-        // Esconder principal, mostrar bóveda
         document.getElementById('main-view').style.display = 'none';
         document.getElementById('vault-view').style.display = 'block';
         
-        // Cargar 2025 por defecto
         window.mostrarPorAño(2025, document.getElementById('btn-2025')); 
         window.scrollTo({top:0, behavior:'smooth'});
     };
 
     window.closeVault = () => {
-        // Esconder bóveda, mostrar principal
         document.getElementById('vault-view').style.display = 'none';
         document.getElementById('main-view').style.display = 'block';
         document.getElementById('grid-archivos').innerHTML = ''; 
         
-        // Apagar reproductores de la bóveda por seguridad
         if(window.misReproductoresMixcloud) {
             window.misReproductoresMixcloud.forEach(item => {
                 try { item.reproductor.pause(); } catch(e){}
