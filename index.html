@@ -157,6 +157,17 @@
         .mix-card-v { background: #000; border-radius: 5px; overflow: hidden; height: 55px; }
         .card-especial-v { border: 2px solid #D4AF37; box-shadow: 0 0 10px #D4AF37; }
         .card-regular-v { border: 1px solid #333; }
+
+        /* 🔥 LENTE AHUMADO PARA APAGAR EL BLANCO DE IVOOX 🔥 */
+        .filtro-ahumado { 
+            filter: brightness(0.8) contrast(1.05); 
+            opacity: 0.95; 
+            transition: all 0.3s ease; 
+        }
+        .filtro-ahumado:hover {
+            filter: brightness(0.9) contrast(1.05);
+            opacity: 1;
+        }
     </style>
 </head>
 <body>
@@ -363,9 +374,12 @@
                 const alturaContenedor = item.plataforma === 'ivoox' ? '200px' : '55px';
                 const alturaIframe = item.plataforma === 'ivoox' ? '200' : '60';
                 
+                // INGENIERÍA: Si la plataforma es iVoox, le ponemos la clase del filtro ahumado
+                const filtroEspecial = item.plataforma === 'ivoox' ? 'filtro-ahumado' : '';
+                
                 contenidoHtml += `
                     <div class="mix-card-v ${clase}" style="height: ${alturaContenedor};">
-                        <iframe id="mix-iframe-${idCounter}" width="100%" height="${alturaIframe}" src="${item.url}" frameborder="0" style="margin-top: -2px;"></iframe>
+                        <iframe class="${filtroEspecial}" id="mix-iframe-${idCounter}" width="100%" height="${alturaIframe}" src="${item.url}" frameborder="0" style="margin-top: -2px;"></iframe>
                     </div>`;
                 idCounter++;
             });
