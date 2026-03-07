@@ -227,6 +227,7 @@
 
             <div class="timeline-swipe">
                 <button class="year-btn" id="btn-2025" onclick="window.mostrarPorAño(2025, this)">2025</button>
+                <button class="year-btn" onclick="window.mostrarPorAño(2024, this)">2024</button>
                 <button class="year-btn" onclick="window.mostrarPorAño(2023, this)">2023</button>
                 <button class="year-btn" onclick="window.mostrarPorAño(2022, this)">2022</button>
                 <button class="year-btn" onclick="window.mostrarPorAño(2021, this)">2021</button>
@@ -266,45 +267,48 @@
 <script>
     window.MIS_ARCHIVOS_BOVEDA = [
         /* === 2025 === */
-        { año: 2025, categoria: "Studio 79", titulo: "Especial Studio Mix Two", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FStudio79%2Fstudio79-192025-especial-studio-mix-two%2F" },
-        { año: 2025, categoria: "Studio 79", titulo: "Funky Fever", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FStudio79%2Fstudio79-182025-funky-fever%2F" },
-        { año: 2025, categoria: "Studio 79", titulo: "Disco Nights", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FStudio79%2Fstudio79-122025-disco-nights%2F" },
-        { año: 2025, categoria: "Studio 79", titulo: "Especial Music IA", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FStudio79%2Fstudio79-142025-especial-music-ia%2F" },
-        { año: 2025, categoria: "Studio 79", titulo: "Rhythm & Blues", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FStudio79%2Fstudio79-1125-rhythm-blues%2F" },
-        { año: 2025, categoria: "Studio 79", titulo: "Moonlight Deadline", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FStudio79%2Fstudio79-152025-moonlight-deadline%2F" },
-        { año: 2025, categoria: "Studio 79", titulo: "You Win Again", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FStudio79%2Fstudio79-172025-you-win-again%2F" },
-        { año: 2025, categoria: "Studio 79", titulo: "Be Good", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FStudio79%2Fstudio79-162025-be-good%2F" },
-        { año: 2025, categoria: "JAZZTABUENO", titulo: "Seductive Soul", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FJazzTaBueno%2Fjazztabueno-042025-seductive-soul%2F" },
-        { año: 2025, categoria: "Salsa Brava", titulo: "Traigo Salsa", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FByJTB%2Fsalsabrava-072025-traigo-salsa%2F" },
-        { año: 2025, categoria: "Salsa Brava", titulo: "Salsa 1983", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FByJTB%2Fsalsabrava-062025-1983%2F" },
-        { año: 2025, categoria: "Salsa Brava", titulo: "Palo Pa Rumba", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FByJTB%2Fsalsabrava-082025-palo-pa-rumba%2F" },
-        { año: 2025, categoria: "Salsa Brava", titulo: "La Libertad", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FByJTB%2Fsalsabrava-092025-la-libertad%2F" },
-        { año: 2025, categoria: "Salsa Brava", titulo: "Escucha El Ritmo", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FByJTB%2Fsalsabrava-102025-escucha-el-ritmo%2F" },
-        { año: 2025, categoria: "Salsa Brava", titulo: "No Quiero Nada Regalao", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FByJTB%2Fsalsabrava-112025-no-quiero-nada-regalao%2F" },
+        { año: 2025, categoria: "Studio 79", titulo: "Especial Studio Mix Two", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FStudio79%2Fstudio79-192025-especial-studio-mix-two%2F", plataforma: "mixcloud" },
+        { año: 2025, categoria: "Studio 79", titulo: "Funky Fever", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FStudio79%2Fstudio79-182025-funky-fever%2F", plataforma: "mixcloud" },
+        { año: 2025, categoria: "Studio 79", titulo: "Disco Nights", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FStudio79%2Fstudio79-122025-disco-nights%2F", plataforma: "mixcloud" },
+        { año: 2025, categoria: "Studio 79", titulo: "Especial Music IA", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FStudio79%2Fstudio79-142025-especial-music-ia%2F", plataforma: "mixcloud" },
+        { año: 2025, categoria: "Studio 79", titulo: "Rhythm & Blues", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FStudio79%2Fstudio79-1125-rhythm-blues%2F", plataforma: "mixcloud" },
+        { año: 2025, categoria: "Studio 79", titulo: "Moonlight Deadline", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FStudio79%2Fstudio79-152025-moonlight-deadline%2F", plataforma: "mixcloud" },
+        { año: 2025, categoria: "Studio 79", titulo: "You Win Again", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FStudio79%2Fstudio79-172025-you-win-again%2F", plataforma: "mixcloud" },
+        { año: 2025, categoria: "Studio 79", titulo: "Be Good", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FStudio79%2Fstudio79-162025-be-good%2F", plataforma: "mixcloud" },
+        { año: 2025, categoria: "JAZZTABUENO", titulo: "Seductive Soul", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FJazzTaBueno%2Fjazztabueno-042025-seductive-soul%2F", plataforma: "mixcloud" },
+        { año: 2025, categoria: "Salsa Brava", titulo: "Traigo Salsa", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FByJTB%2Fsalsabrava-072025-traigo-salsa%2F", plataforma: "mixcloud" },
+        { año: 2025, categoria: "Salsa Brava", titulo: "Salsa 1983", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FByJTB%2Fsalsabrava-062025-1983%2F", plataforma: "mixcloud" },
+        { año: 2025, categoria: "Salsa Brava", titulo: "Palo Pa Rumba", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FByJTB%2Fsalsabrava-082025-palo-pa-rumba%2F", plataforma: "mixcloud" },
+        { año: 2025, categoria: "Salsa Brava", titulo: "La Libertad", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FByJTB%2Fsalsabrava-092025-la-libertad%2F", plataforma: "mixcloud" },
+        { año: 2025, categoria: "Salsa Brava", titulo: "Escucha El Ritmo", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FByJTB%2Fsalsabrava-102025-escucha-el-ritmo%2F", plataforma: "mixcloud" },
+        { año: 2025, categoria: "Salsa Brava", titulo: "No Quiero Nada Regalao", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FByJTB%2Fsalsabrava-112025-no-quiero-nada-regalao%2F", plataforma: "mixcloud" },
         
+        /* === PRUEBA IVOOX 2024 === */
+        { año: 2024, categoria: "Studio 79", titulo: "This is my Night", url: "https://www.ivoox.com/player_ej_129397030_4_1.html?c1=d4af37", plataforma: "ivoox" },
+
         /* === 2023 === */
-        { año: 2023, categoria: "Old School Rock", titulo: "Slight Return", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2Foldschoolradio%2Fold-school-rock-radio-012023-slight-return%2F" },
-        { año: 2023, categoria: "Old School Rock", titulo: "Bionic Grass", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2Foldschoolradio%2Fold-school-rock-radio-052023-bionic-grass%2F" },
-        { año: 2023, categoria: "Old School Rock", titulo: "Deadly Screams", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2Foldschoolradio%2Fold-school-rock-radio-092023-deadly-screams%2F" },
-        { año: 2023, categoria: "Old School Rock", titulo: "Lunatic", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2Foldschoolradio%2Fold-school-rock-radio-082023-lunatic%2F" },
-        { año: 2023, categoria: "Old School Rock", titulo: "Bonded By Blood", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2Foldschoolradio%2Fold-school-rock-radio-072023-bonded-by-blood%2F" },
-        { año: 2023, categoria: "Old School Rock", titulo: "Malcolm", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2Foldschoolradio%2Fold-school-rock-radio-062023-malcolm%2F" },
-        { año: 2023, categoria: "Old School Rock", titulo: "Grandma", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2Foldschoolradio%2Fold-school-rock-radio-042023-grandma%2F" },
-        { año: 2023, categoria: "Old School Rock", titulo: "Viking Wylde", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2Foldschoolradio%2Fold-school-rock-radio-032023-viking-wylde%2F" },
-        { año: 2023, categoria: "JAZZTABUENO", titulo: "Acid Funk", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FJazzTaBueno%2Fjazztabueno-172023-acid-funk%2F" },
-        { año: 2023, categoria: "JAZZTABUENO", titulo: "Big Band Orchestras Y Algo Jazz", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FJazzTaBueno%2Fjazztabueno-142023-big-band-orchestras-y-algo-jazz%2F" },
+        { año: 2023, categoria: "Old School Rock", titulo: "Slight Return", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2Foldschoolradio%2Fold-school-rock-radio-012023-slight-return%2F", plataforma: "mixcloud" },
+        { año: 2023, categoria: "Old School Rock", titulo: "Bionic Grass", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2Foldschoolradio%2Fold-school-rock-radio-052023-bionic-grass%2F", plataforma: "mixcloud" },
+        { año: 2023, categoria: "Old School Rock", titulo: "Deadly Screams", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2Foldschoolradio%2Fold-school-rock-radio-092023-deadly-screams%2F", plataforma: "mixcloud" },
+        { año: 2023, categoria: "Old School Rock", titulo: "Lunatic", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2Foldschoolradio%2Fold-school-rock-radio-082023-lunatic%2F", plataforma: "mixcloud" },
+        { año: 2023, categoria: "Old School Rock", titulo: "Bonded By Blood", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2Foldschoolradio%2Fold-school-rock-radio-072023-bonded-by-blood%2F", plataforma: "mixcloud" },
+        { año: 2023, categoria: "Old School Rock", titulo: "Malcolm", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2Foldschoolradio%2Fold-school-rock-radio-062023-malcolm%2F", plataforma: "mixcloud" },
+        { año: 2023, categoria: "Old School Rock", titulo: "Grandma", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2Foldschoolradio%2Fold-school-rock-radio-042023-grandma%2F", plataforma: "mixcloud" },
+        { año: 2023, categoria: "Old School Rock", titulo: "Viking Wylde", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2Foldschoolradio%2Fold-school-rock-radio-032023-viking-wylde%2F", plataforma: "mixcloud" },
+        { año: 2023, categoria: "JAZZTABUENO", titulo: "Acid Funk", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FJazzTaBueno%2Fjazztabueno-172023-acid-funk%2F", plataforma: "mixcloud" },
+        { año: 2023, categoria: "JAZZTABUENO", titulo: "Big Band Orchestras Y Algo Jazz", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FJazzTaBueno%2Fjazztabueno-142023-big-band-orchestras-y-algo-jazz%2F", plataforma: "mixcloud" },
         
         /* === 2022 === */
-        { año: 2022, categoria: "JAZZTABUENO", titulo: "Get Lucky", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FJazzTaBueno%2Fjazztabueno-342022-get-lucky%2F" },
-        { año: 2022, categoria: "JAZZTABUENO", titulo: "Original", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FJazzTaBueno%2Fjazztabueno-072022-original%2F" },
+        { año: 2022, categoria: "JAZZTABUENO", titulo: "Get Lucky", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FJazzTaBueno%2Fjazztabueno-342022-get-lucky%2F", plataforma: "mixcloud" },
+        { año: 2022, categoria: "JAZZTABUENO", titulo: "Original", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FJazzTaBueno%2Fjazztabueno-072022-original%2F", plataforma: "mixcloud" },
 
         /* === 2021 === */
-        { año: 2021, categoria: "JAZZTABUENO", titulo: "The Music Time", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FJazzTaBueno%2Fjazztabueno-012021-the-music-time%2F" },
+        { año: 2021, categoria: "JAZZTABUENO", titulo: "The Music Time", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FJazzTaBueno%2Fjazztabueno-012021-the-music-time%2F", plataforma: "mixcloud" },
 
         /* === 2020 === */
-        { año: 2020, categoria: "JAZZTABUENO", titulo: "Funky Moment", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FJazzTaBueno%2Fjazztabueno-212020-funky-moment%2F" },
-        { año: 2020, categoria: "JAZZTABUENO", titulo: "Blues", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FJazzTaBueno%2Fjazztabueno-232020-blues%2F" },
-        { año: 2020, categoria: "JAZZTABUENO", titulo: "The People", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FJazzTaBueno%2Fjazztabueno-282020-the-people%2F" }
+        { año: 2020, categoria: "JAZZTABUENO", titulo: "Funky Moment", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FJazzTaBueno%2Fjazztabueno-212020-funky-moment%2F", plataforma: "mixcloud" },
+        { año: 2020, categoria: "JAZZTABUENO", titulo: "Blues", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FJazzTaBueno%2Fjazztabueno-232020-blues%2F", plataforma: "mixcloud" },
+        { año: 2020, categoria: "JAZZTABUENO", titulo: "The People", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FJazzTaBueno%2Fjazztabueno-282020-the-people%2F", plataforma: "mixcloud" }
     ];
 
     window.misReproductoresMixcloud = [];
@@ -356,9 +360,12 @@
                 const esEspecial = item.titulo.toLowerCase().includes('especial');
                 const clase = esEspecial ? 'card-especial-v' : 'card-regular-v';
                 
+                const alturaContenedor = item.plataforma === 'ivoox' ? '200px' : '55px';
+                const alturaIframe = item.plataforma === 'ivoox' ? '200' : '60';
+                
                 contenidoHtml += `
-                    <div class="mix-card-v ${clase}">
-                        <iframe id="mix-iframe-${idCounter}" width="100%" height="60" src="${item.url}" frameborder="0" style="margin-top: -2px;"></iframe>
+                    <div class="mix-card-v ${clase}" style="height: ${alturaContenedor};">
+                        <iframe id="mix-iframe-${idCounter}" width="100%" height="${alturaIframe}" src="${item.url}" frameborder="0" style="margin-top: -2px;"></iframe>
                     </div>`;
                 idCounter++;
             });
@@ -371,20 +378,22 @@
             const iframes = document.querySelectorAll('.mix-card-v iframe');
             iframes.forEach(iframe => {
                 try {
-                    const widget = Mixcloud.PlayerWidget(iframe);
-                    window.misReproductoresMixcloud.push({ id: iframe.id, reproductor: widget });
-                    widget.bind('play', function() {
-                        const mainMedia = document.getElementById('main-media');
-                        if(mainMedia && !mainMedia.paused) {
-                            mainMedia.pause();
-                            if(window.actualizarUI) window.actualizarUI();
-                        }
-                        window.misReproductoresMixcloud.forEach(item => {
-                            if (item.id !== iframe.id) {
-                                item.reproductor.pause();
+                    if(iframe.src.includes('mixcloud.com')) {
+                        const widget = Mixcloud.PlayerWidget(iframe);
+                        window.misReproductoresMixcloud.push({ id: iframe.id, reproductor: widget });
+                        widget.bind('play', function() {
+                            const mainMedia = document.getElementById('main-media');
+                            if(mainMedia && !mainMedia.paused) {
+                                mainMedia.pause();
+                                if(window.actualizarUI) window.actualizarUI();
                             }
+                            window.misReproductoresMixcloud.forEach(item => {
+                                if (item.id !== iframe.id) {
+                                    item.reproductor.pause();
+                                }
+                            });
                         });
-                    });
+                    }
                 } catch (error) {}
             });
         }, 1500);
