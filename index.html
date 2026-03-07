@@ -78,8 +78,10 @@
         body { margin: 0; background: var(--bg); color: #ffffff; font-family: 'Plus Jakarta Sans', sans-serif; min-height: 100vh; overflow-x: hidden; }
 
         header { background: rgba(0,0,0,0.98); padding: 12px 15px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #222; position: sticky; top: 0; z-index: 100; }
-        /* TIPOGRAFÍA CORREGIDA DEL LOGO */
-        .brand-title { color: var(--gold); font-family: 'Playfair Display', serif; font-size: 14px; text-transform: uppercase; line-height: 1.1; font-weight: 800; letter-spacing: 0.5px; }
+        
+        /* AQUÍ ESTÁ EL TAMAÑO DE LA LETRA AUMENTADO (14px) PARA IGUALAR A LA OFICIAL */
+        .brand-title { color: var(--gold); font-family: 'Playfair Display', serif; font-size: 14px; text-transform: uppercase; line-height: 1.2; letter-spacing: 0.5px; }
+        
         .btn-salir { display: none; background: transparent !important; border: 2px solid var(--gold) !important; color: var(--gold) !important; padding: 7px 15px !important; border-radius: 8px !important; font-size: 10px !important; font-weight: 900 !important; cursor: pointer !important; }
 
         /* EL NUEVO BOTÓN VIP DE LA BÓVEDA EN EL HEADER */
@@ -167,8 +169,8 @@
 
 <div id="app-content">
     <header>
-        <div style="display:flex; align-items:center; gap:10px; cursor:pointer;" id="admin-trigger">
-            <img src="https://i.postimg.cc/mD363K19/Logo-Vazz.png" height="38" onerror="this.src='https://i.postimg.cc/zVD4mstP/Jazztabueno-(2).png'" alt="Logo Vazz">
+        <div style="display:flex; align-items:center; gap:12px; cursor:pointer;" id="admin-trigger">
+            <img src="logo.png" width="35" height="35" onerror="this.src='https://i.postimg.cc/zVD4mstP/Jazztabueno-(2).png'">
             <div class="brand-title">JAZZTABUENO<br>PRODUCTIONS</div>
         </div>
         
@@ -271,13 +273,15 @@
         { año: 2025, categoria: "Studio 79", titulo: "Especial Studio Mix Two", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FStudio79%2Fstudio79-192025-especial-studio-mix-two%2F" },
         { año: 2025, categoria: "Studio 79", titulo: "Funky Fever", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FStudio79%2Fstudio79-182025-funky-fever%2F" },
         { año: 2025, categoria: "Studio 79", titulo: "Disco Nights", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FStudio79%2Fstudio79-122025-disco-nights%2F" },
-        // LETRAS PEGADAS COMO PEDISTE
+        
+        /* AQUÍ ESTÁN LAS LETRAS DE JAZZTABUENO PEGADAS */
         { año: 2025, categoria: "JAZZTABUENO", titulo: "Seductive Soul", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FJazzTaBueno%2Fjazztabueno-042025-seductive-soul%2F" },
         { año: 2025, categoria: "Salsa Brava", titulo: "Traigo Salsa", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FByJTB%2Fsalsabrava-072025-traigo-salsa%2F" },
         { año: 2025, categoria: "Salsa Brava", titulo: "Salsa 1983", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FByJTB%2Fsalsabrava-062025-1983%2F" },
         { año: 2023, categoria: "Old School Rock", titulo: "Slight Return", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2Foldschoolradio%2Fold-school-rock-radio-012023-slight-return%2F" },
         { año: 2023, categoria: "Old School Rock", titulo: "Bionic Grass", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2Foldschoolradio%2Fold-school-rock-radio-052023-bionic-grass%2F" },
-        // LETRAS PEGADAS COMO PEDISTE
+        
+        /* AQUÍ TAMBIÉN JAZZTABUENO PEGADO */
         { año: 2022, categoria: "JAZZTABUENO", titulo: "Get Lucky", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FJazzTaBueno%2Fjazztabueno-342022-get-lucky%2F" }
     ];
 
