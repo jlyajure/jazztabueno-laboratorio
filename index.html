@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <title>Jazztabueno Productions - Bóveda V5.1</title>
+    <title>Jazztabueno</title>
     
     <link rel="icon" type="image/png" href="https://i.postimg.cc/zVD4mstP/Jazztabueno-(2).png">
     <link rel="apple-touch-icon" href="https://i.postimg.cc/zVD4mstP/Jazztabueno-(2).png">
     <meta name="theme-color" content="#050505">
     
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Jazztabueno Productions - Bóveda V5.1">
+    <meta property="og:title" content="Jazztabueno Productions">
     <meta property="og:description" content="Escucha nuestros programas exclusivos de Radio.">
     <meta property="og:image" itemprop="image" content="https://i.postimg.cc/zVD4mstP/Jazztabueno-(2).png">
     <meta property="og:image:width" content="800">
@@ -32,7 +32,10 @@
         window['__onGCastApiAvailable'] = function(isAvailable) {
             if (isAvailable) {
                 const castContext = cast.framework.CastContext.getInstance();
-                castContext.setOptions({ receiverApplicationId: chrome.cast.media.DEFAULT_MEDIA_RECEIVER_APP_ID, autoJoinPolicy: chrome.cast.AutoJoinPolicy.ORIGIN_SCOPED });
+                castContext.setOptions({ 
+                    receiverApplicationId: chrome.cast.media.DEFAULT_MEDIA_RECEIVER_APP_ID, 
+                    autoJoinPolicy: chrome.cast.AutoJoinPolicy.ORIGIN_SCOPED 
+                });
                 
                 const player = new cast.framework.RemotePlayer();
                 const controller = new cast.framework.RemotePlayerController(player);
@@ -58,7 +61,10 @@
                     }
                     if (event.sessionState === 'SESSION_ENDED') {
                         if (window.lastTvTime > 0) media.currentTime = window.lastTvTime;
-                        setTimeout(() => { media.play().catch(()=>{}); if(window.actualizarUI) window.actualizarUI(); }, 500);
+                        setTimeout(() => { 
+                            media.play().catch(()=>{}); 
+                            if(window.actualizarUI) window.actualizarUI(); 
+                        }, 500);
                     }
                 });
             }
@@ -67,16 +73,20 @@
     <script src="https://www.gstatic.com/cv/js/sender/v1/cast_sender.js?loadCastFramework=1"></script>
 
     <style>
-        :root { --gold: #a68a44; --bg: #050505; --card: #121212; --red: #ff4444; --blue: #0070f3; }
+        :root { --gold: #a68a44; --bg: #050505; --card: #121212; --red: #ff4444; }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none; }
         body { margin: 0; background: var(--bg); color: #ffffff; font-family: 'Plus Jakarta Sans', sans-serif; min-height: 100vh; overflow-x: hidden; }
 
-        /* HEADER UNIFICADO (Observación 1) */
-        header { background: rgba(0,0,0,0.98); padding: 12px 15px; display: flex; align-items: center; border-bottom: 1px solid #222; position: sticky; top: 0; z-index: 100; gap: 12px; }
-        .logo-vazz { display: flex; align-items: center; justify-content: center; background-color: transparent; height: 35px; }
-        .logo-vazz img { max-height: 100%; max-width: 100%; }
-        .brand-title { color: var(--gold); font-family: 'Playfair Display', serif; font-size: 14px; text-transform: uppercase; line-height: 1.2; font-weight: 800; }
-        .btn-salir { display: none; background: transparent !important; border: 2px solid var(--gold) !important; color: var(--gold) !important; padding: 7px 15px !important; border-radius: 8px !important; font-size: 10px !important; font-weight: 900 !important; cursor: pointer !important; margin-left: auto; }
+        header { background: rgba(0,0,0,0.98); padding: 12px 15px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #222; position: sticky; top: 0; z-index: 100; }
+        /* TIPOGRAFÍA CORREGIDA DEL LOGO */
+        .brand-title { color: var(--gold); font-family: 'Playfair Display', serif; font-size: 14px; text-transform: uppercase; line-height: 1.1; font-weight: 800; letter-spacing: 0.5px; }
+        .btn-salir { display: none; background: transparent !important; border: 2px solid var(--gold) !important; color: var(--gold) !important; padding: 7px 15px !important; border-radius: 8px !important; font-size: 10px !important; font-weight: 900 !important; cursor: pointer !important; }
+
+        /* EL NUEVO BOTÓN VIP DE LA BÓVEDA EN EL HEADER */
+        .btn-boveda-container { display: flex; align-items: center; gap: 8px; cursor: pointer; background: rgba(212, 175, 55, 0.1); padding: 5px 10px; border-radius: 12px; border: 1px solid var(--gold); transition: transform 0.2s; }
+        .btn-boveda-container:active { transform: scale(0.95); }
+        .btn-boveda-header { width: 38px; height: 38px; border-radius: 6px; box-shadow: 0 0 10px #0070f3; object-fit: cover; }
+        .btn-boveda-text { color: var(--gold); font-size: 9px; font-weight: 900; text-transform: uppercase; line-height: 1.1; text-align: right; }
 
         .container { max-width: 450px; margin: auto; padding: 15px; padding-bottom: 300px; }
         .channels-grid { display: grid !important; grid-template-columns: repeat(5, 1fr) !important; gap: 5px; margin-bottom: 25px; padding: 10px 0; }
@@ -137,39 +147,42 @@
         #visualizador { width: 100%; height: 35px; background: transparent; margin-top: 5px; margin-bottom: 5px; display: block; }
 
         /* =========================================
-           ESTILOS DE LA BÓVEDA DEL LEGADO V5.1
+           ESTILOS DE LA BÓVEDA DEL LEGADO
            ========================================= */
-        .jtbp-vault-bg { background: radial-gradient(circle, #222 10%, transparent 11%), #111; background-size: 10px 10px; border-top: 3px solid #D4AF37; padding: 40px 10px; text-align: center; border-radius: 20px; border: 1px solid #1a1a1a; margin-bottom: 30px; position: relative; }
-        .baul-trigger { cursor: pointer; transition: transform 0.3s; margin-bottom: 20px; display: inline-block; }
-        .baul-trigger:active { transform: scale(0.95); }
-        .img-baul-final { width: 90px; border-radius: 12px; border: 2px solid #D4AF37; box-shadow: 0 0 20px var(--blue); }
-        .gold-text { color: #D4AF37; text-transform: uppercase; letter-spacing: 2px; margin-top: 15px; font-size: 14px;}
-
-        /* ESTILOS DE CATEGORÍAS (Observación 2) */
-        .grid-2x2 { display: grid; grid-template-columns: 1fr; gap: 10px; text-align: left; }
-        .categoria-titulo { grid-column: 1 / -1; color: var(--blue); border-bottom: 1px solid #333; margin-top: 15px; padding-bottom: 5px; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; font-weight: 800; }
-        
-        /* GUILLOTINA PARA EL BOTÓN FOLLOW Y LOGO MIXCLOUD (Observación 3) */
-        .mix-card { background: #000; border-radius: 5px; overflow: hidden; height: 55px; border: 1px solid #333; }
-        .card-especial { border: 2px solid #D4AF37; box-shadow: 0 0 10px #D4AF37; }
-        
-        .timeline-swipe { display: flex; overflow-x: auto; gap: 15px; padding: 10px; justify-content: center; border-bottom: 1px solid var(--blue); margin-bottom: 20px; padding-bottom: 20px; }
-        .year-btn { background: none; border: 1px solid #D4AF37; color: #D4AF37; padding: 6px 15px; border-radius: 20px; cursor: pointer; font-size: 12px; transition: 0.3s; font-family: inherit; font-weight: 800;}
+        .jtbp-vault-bg { background: radial-gradient(circle, #222 10%, transparent 11%), #111; background-size: 10px 10px; border-top: 3px solid #D4AF37; padding: 20px 10px; text-align: center; border-radius: 20px; border: 1px solid #1a1a1a; margin-bottom: 30px; }
+        .vault-header-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid #333; padding-bottom: 15px; }
+        .alerta-gala { color: #0070f3; font-size: 11px; margin-bottom: 20px; max-width: 100%; line-height: 1.6; text-align: center; background: rgba(0, 0, 0, 0.5); padding: 10px; border-radius: 8px; border: 1px solid #333; }
+        .alerta-gala strong { color: #D4AF37; }
+        .timeline-swipe { display: flex; overflow-x: auto; gap: 10px; padding: 10px; justify-content: center; border-bottom: 1px solid #0070f3; margin-bottom: 20px; padding-bottom: 15px; }
+        .year-btn { background: none; border: 1px solid #D4AF37; color: #D4AF37; padding: 6px 15px; border-radius: 20px; cursor: pointer; font-size: 12px; transition: 0.3s; font-family: inherit; font-weight: bold;}
         .year-btn.activo { background: #D4AF37; color: #000; box-shadow: 0 0 10px #D4AF37; }
+        .grid-vault { display: grid; grid-template-columns: 1fr; gap: 10px; width: 100%; text-align: left; }
+        .categoria-titulo-vault { color: #0070f3; border-bottom: 1px solid #333; margin-top: 15px; padding-bottom: 5px; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; font-weight: bold;}
+        .mix-card-v { background: #000; border-radius: 5px; overflow: hidden; height: 55px; }
+        .card-especial-v { border: 2px solid #D4AF37; box-shadow: 0 0 10px #D4AF37; }
+        .card-regular-v { border: 1px solid #333; }
     </style>
 </head>
 <body>
 
 <div id="app-content">
     <header>
-        <div style="display:flex; align-items:center; gap:12px; cursor:pointer;" id="admin-trigger">
-            <div class="logo-vazz"><img src="https://i.postimg.cc/mD363K19/Logo-Vazz.png" alt="Vazz Ta Bueno Logo"></div>
-            <div class="brand-title">Jazztabueno<br>Productions</div>
+        <div style="display:flex; align-items:center; gap:10px; cursor:pointer;" id="admin-trigger">
+            <img src="https://i.postimg.cc/mD363K19/Logo-Vazz.png" height="38" onerror="this.src='https://i.postimg.cc/zVD4mstP/Jazztabueno-(2).png'" alt="Logo Vazz">
+            <div class="brand-title">JAZZTABUENO<br>PRODUCTIONS</div>
         </div>
-        <button onclick="window.doLogout()" class="btn-salir" id="btn-salir">SALIR</button>
+        
+        <div style="display:flex; align-items:center; gap:12px;">
+            <div class="btn-boveda-container" onclick="window.openVault()">
+                <div class="btn-boveda-text">BÓVEDA DEL<br>LEGADO</div>
+                <img src="baul.png" onerror="this.src='baul.jpg'" class="btn-boveda-header" alt="Baúl">
+            </div>
+
+            <button onclick="window.doLogout()" class="btn-salir" id="btn-salir">SALIR</button>
+        </div>
     </header>
 
-    <div class="container">
+    <div id="main-view" class="container">
         <div id="admin-panel" style="display:none; background:#111; padding:25px; border-radius:25px; border:2px solid var(--gold); margin-bottom:30px;">
             <input type="hidden" id="edit-id">
             <input type="text" id="t-titulo" style="width:100%; padding:14px; background:#000; color:white; border:1px solid #333; border-radius:10px; margin-bottom:10px;" placeholder="Título">
@@ -191,22 +204,6 @@
             </div>
         </div>
 
-        <section class="jtbp-vault-bg">
-            <div class="baul-trigger" onclick="abrirCerrarBaul()">
-                <img src="baul.png" class="img-baul-final" alt="Baúl" onerror="this.src='baul.jpg'">
-                <h2 class="gold-text">ABRIR BÓVEDA DEL LEGADO</h2>
-            </div>
-
-            <div id="contenido-baul" style="display:none;">
-                <div class="timeline-swipe">
-                    <button class="year-btn" id="btn-2025" onclick="mostrarPorAño(2025, this)">2025</button>
-                    <button class="year-btn" onclick="mostrarPorAño(2023, this)">2023</button>
-                    <button class="year-btn" onclick="mostrarPorAño(2022, this)">2022</button>
-                </div>
-                <div id="grid-archivos" class="grid-2x2"></div>
-            </div>
-        </section>
-
         <div class="channels-grid">
             <div class="ch-item active" onclick="window.setFilter('Todo', this)"><img src="https://i.postimg.cc/zVD4mstP/Jazztabueno-(2).png" class="ch-logo"><span class="ch-name">Todo</span></div>
             <div class="ch-item" onclick="window.setFilter('JAZZTABUENO', this)"><img src="https://i.postimg.cc/zVD4mstP/Jazztabueno-(2).png" class="ch-logo"><span class="ch-name">Jazztabueno</span></div>
@@ -216,6 +213,31 @@
         </div>
         
         <div id="feed"></div>
+    </div>
+    
+    <div id="vault-view" class="container" style="display:none;">
+        <section class="jtbp-vault-bg">
+            <div class="vault-header-bar">
+                <div style="display:flex; align-items:center; gap: 10px;">
+                    <img src="baul.png" onerror="this.src='baul.jpg'" style="width: 35px; border-radius: 5px;">
+                    <h2 style="color:var(--gold); margin:0; font-size:14px; text-transform:uppercase; letter-spacing:1px; text-align: left;">Bóveda del<br>Legado</h2>
+                </div>
+                <button onclick="window.closeVault()" style="background:#111; border:1px solid var(--gold); color:var(--gold); padding:8px 15px; border-radius:8px; cursor:pointer; font-weight:bold; font-size:11px;">⬅ VOLVER</button>
+            </div>
+
+            <div class="alerta-gala">
+                <i>⚠️ <strong>Aviso:</strong> Para escuchar, presiona únicamente el botón de <strong>▶ PLAY</strong>.</i><br>
+                <i>⭐ <strong>Nota:</strong> Los programas con marco iluminado son <strong>Ediciones Especiales</strong>.</i>
+            </div>
+
+            <div class="timeline-swipe">
+                <button class="year-btn" id="btn-2025" onclick="window.mostrarPorAño(2025, this)">2025</button>
+                <button class="year-btn" onclick="window.mostrarPorAño(2023, this)">2023</button>
+                <button class="year-btn" onclick="window.mostrarPorAño(2022, this)">2022</button>
+            </div>
+            
+            <div id="grid-archivos" class="grid-vault"></div>
+        </section>
     </div>
 </div>
 
@@ -246,73 +268,84 @@
 
 <script>
     window.MIS_ARCHIVOS_BOVEDA = [
-        { año: 2025, categoria: "STUDIO 79", titulo: "Studio79 19/2025 *Especial Studio Mix Two*", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FStudio79%2Fstudio79-192025-especial-studio-mix-two%2F" },
-        { año: 2025, categoria: "STUDIO 79", titulo: "Studio79 18/2025 *Funky Fever*", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FStudio79%2Fstudio79-182025-funky-fever%2F" },
-        { año: 2025, categoria: "STUDIO 79", titulo: "Studio79 12/2025 *Disco Nights*", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FStudio79%2Fstudio79-122025-disco-nights%2F" },
-        { año: 2025, categoria: "JAZZTABUENO", titulo: "JazzTaBueno 04/2025 *Seductive Soul*", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FJazzTaBueno%2Fjazztabueno-042025-seductive-soul%2F" },
-        { año: 2025, categoria: "SALSA BRAVA", titulo: "SalsaBrava 07/2025 *Traigo Salsa*", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FByJTB%2Fsalsabrava-072025-traigo-salsa%2F" },
-        { año: 2025, categoria: "SALSA BRAVA", titulo: "SalsaBrava 06/2025 *1983*", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FByJTB%2Fsalsabrava-062025-1983%2F" },
-        { año: 2023, categoria: "OLD SCHOOL ROCK", titulo: "Old School Rock Radio 01/2023 *Slight Return*", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2Foldschoolradio%2Fold-school-rock-radio-012023-slight-return%2F" },
-        { año: 2023, categoria: "OLD SCHOOL ROCK", titulo: "Old School Rock Radio 05/2023 *Bionic Grass*", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2Foldschoolradio%2Fold-school-rock-radio-052023-bionic-grass%2F" },
-        { año: 2022, categoria: "JAZZTABUENO", titulo: "JazzTaBueno 34/2022 *Get Lucky*", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FJazzTaBueno%2Fjazztabueno-342022-get-lucky%2F" }
+        { año: 2025, categoria: "Studio 79", titulo: "Especial Studio Mix Two", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FStudio79%2Fstudio79-192025-especial-studio-mix-two%2F" },
+        { año: 2025, categoria: "Studio 79", titulo: "Funky Fever", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FStudio79%2Fstudio79-182025-funky-fever%2F" },
+        { año: 2025, categoria: "Studio 79", titulo: "Disco Nights", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FStudio79%2Fstudio79-122025-disco-nights%2F" },
+        // LETRAS PEGADAS COMO PEDISTE
+        { año: 2025, categoria: "JAZZTABUENO", titulo: "Seductive Soul", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FJazzTaBueno%2Fjazztabueno-042025-seductive-soul%2F" },
+        { año: 2025, categoria: "Salsa Brava", titulo: "Traigo Salsa", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FByJTB%2Fsalsabrava-072025-traigo-salsa%2F" },
+        { año: 2025, categoria: "Salsa Brava", titulo: "Salsa 1983", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FByJTB%2Fsalsabrava-062025-1983%2F" },
+        { año: 2023, categoria: "Old School Rock", titulo: "Slight Return", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2Foldschoolradio%2Fold-school-rock-radio-012023-slight-return%2F" },
+        { año: 2023, categoria: "Old School Rock", titulo: "Bionic Grass", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2Foldschoolradio%2Fold-school-rock-radio-052023-bionic-grass%2F" },
+        // LETRAS PEGADAS COMO PEDISTE
+        { año: 2022, categoria: "JAZZTABUENO", titulo: "Get Lucky", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FJazzTaBueno%2Fjazztabueno-342022-get-lucky%2F" }
     ];
 
     window.misReproductoresMixcloud = [];
 
-    function abrirCerrarBaul() {
-        const display = document.getElementById('contenido-baul');
-        if(display.style.display === 'none') {
-            display.style.display = 'block';
-            mostrarPorAño(2025, document.getElementById('btn-2025')); 
-        } else {
-            display.style.display = 'none';
-            document.getElementById('grid-archivos').innerHTML = ''; 
-            window.misReproductoresMixcloud = []; 
-        }
-    }
+    window.openVault = () => {
+        document.getElementById('main-view').style.display = 'none';
+        document.getElementById('vault-view').style.display = 'block';
+        
+        window.mostrarPorAño(2025, document.getElementById('btn-2025')); 
+        window.scrollTo({top:0, behavior:'smooth'});
+    };
 
-    function mostrarPorAño(año, botonApretado) {
+    window.closeVault = () => {
+        document.getElementById('vault-view').style.display = 'none';
+        document.getElementById('main-view').style.display = 'block';
+        document.getElementById('grid-archivos').innerHTML = ''; 
+        
+        if(window.misReproductoresMixcloud) {
+            window.misReproductoresMixcloud.forEach(item => {
+                try { item.reproductor.pause(); } catch(e){}
+            });
+        }
+        window.misReproductoresMixcloud = [];
+        window.scrollTo({top:0, behavior:'smooth'});
+    };
+
+    window.mostrarPorAño = (año, botonApretado) => {
         const botones = document.querySelectorAll('.year-btn');
         botones.forEach(b => b.classList.remove('activo'));
         if(botonApretado) botonApretado.classList.add('activo');
 
         const grid = document.getElementById('grid-archivos');
-        grid.innerHTML = ''; 
         window.misReproductoresMixcloud = []; 
         
         const filtrados = window.MIS_ARCHIVOS_BOVEDA.filter(item => item.año === año);
 
         if (filtrados.length === 0) {
-            grid.innerHTML = `<p style="color:#D4AF37; text-align: center; grid-column: 1/-1;">Puliendo diamantes para ${año}...</p>`;
+            grid.innerHTML = `<p style="color:#D4AF37; text-align: center; font-size:12px;">Puliendo diamantes para ${año}...</p>`;
             return;
         }
 
+        let contenidoHtml = "";
         const categoriasUnicas = [...new Set(filtrados.map(item => item.categoria))];
         let idCounter = 0;
 
         categoriasUnicas.forEach(cat => {
-            // Unificando nombre de la categoría (Observación 2)
-            grid.innerHTML += `<div class="categoria-titulo">► ${cat}</div>`;
+            contenidoHtml += `<div class="categoria-titulo-vault">► ${cat}</div>`;
             
             const programasDeCat = filtrados.filter(item => item.categoria === cat);
             programasDeCat.forEach(item => {
                 const esEspecial = item.titulo.toLowerCase().includes('especial');
-                const clase = esEspecial ? 'card-especial' : '';
+                const clase = esEspecial ? 'card-especial-v' : 'card-regular-v';
                 
-                // Agregando guillotinado para el botón FOLLOW y el logo (Observación 3)
-                grid.innerHTML += `
-                    <div class="mix-card ${clase}">
+                contenidoHtml += `
+                    <div class="mix-card-v ${clase}">
                         <iframe id="mix-iframe-${idCounter}" width="100%" height="60" src="${item.url}" frameborder="0" style="margin-top: -2px;"></iframe>
                     </div>`;
                 idCounter++;
             });
         });
 
-        // Conexión del "Cerebro" de Mixcloud para apagar los otros reproductores
+        grid.innerHTML = contenidoHtml;
+
         setTimeout(() => {
             if (typeof Mixcloud === 'undefined') return; 
             
-            const iframes = document.querySelectorAll('.mix-card iframe');
+            const iframes = document.querySelectorAll('.mix-card-v iframe');
             iframes.forEach(iframe => {
                 try {
                     const widget = Mixcloud.PlayerWidget(iframe);
@@ -334,7 +367,7 @@
                 } catch (error) {}
             });
         }, 1500);
-    }
+    };
 </script>
 
 <script type="module">
@@ -342,7 +375,15 @@
     import { initializeFirestore, collection, query, orderBy, onSnapshot, addDoc, deleteDoc, doc, updateDoc, increment, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
     import { getAnalytics, logEvent } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js";
 
-    const firebaseConfig = { apiKey: "AIzaSyBwBq4gLgv4DSfUidzUuC7Irmvj_4pCTtI", authDomain: "familia-yajure-app.firebaseapp.com", projectId: "familia-yajure-app", storageBucket: "familia-yajure-app.firebasestorage.app", messagingSenderId: "692035727386", appId: "1:692035727386:web:dfa3e39a481d56368a61a3", measurementId: "G-GDBL4HPE79" };
+    const firebaseConfig = {
+      apiKey: "AIzaSyBwBq4gLgv4DSfUidzUuC7Irmvj_4pCTtI",
+      authDomain: "familia-yajure-app.firebaseapp.com",
+      projectId: "familia-yajure-app",
+      storageBucket: "familia-yajure-app.firebasestorage.app",
+      messagingSenderId: "692035727386",
+      appId: "1:692035727386:web:dfa3e39a481d56368a61a3",
+      measurementId: "G-GDBL4HPE79"
+    };
 
     const app = initializeApp(firebaseConfig);
     const db = initializeFirestore(app, { experimentalForceLongPolling: true });
@@ -407,26 +448,43 @@
     };
     
     window.setFilter = (cat, el) => { 
-        filtro = cat; hashtagFiltro = ''; 
+        filtro = cat; 
+        hashtagFiltro = ''; 
         document.querySelectorAll('.ch-item').forEach(i => i.classList.remove('active')); 
-        el.classList.add('active'); render(); 
+        el.classList.add('active'); 
+        render(); 
     };
 
     window.setHashtagFilter = (tag) => { hashtagFiltro = tag; render(); window.scrollTo({top:0, behavior:'smooth'}); };
     window.clearHashtag = () => { hashtagFiltro = ''; render(); };
     
     window.doLike = async (id, el) => {
-        if(localStorage.getItem('jtp_like_' + id) === 'true') { alert("¡Ya le diste me gusta a este programa! ❤️"); return; }
-        localStorage.setItem('jtp_like_' + id, 'true'); el.classList.add('liked');
-        let countSpan = el.querySelector('.like-count'); let current = parseInt(countSpan.innerText || "0");
-        el.innerHTML = `❤️ <span class="like-count">${current + 1}</span>`;
-        try { await updateDoc(doc(db, "radio_programas", id), { likes: increment(1) }); } catch(e) {}
+        if(localStorage.getItem('jtp_like_' + id) === 'true') {
+            alert("¡Ya le diste me gusta a este programa! ❤️");
+            return; 
+        }
+        
+        localStorage.setItem('jtp_like_' + id, 'true');
+        el.classList.add('liked');
+        
+        let countSpan = el.querySelector('.like-count');
+        let current = parseInt(countSpan.innerText || "0");
+        const newCount = current + 1;
+        el.innerHTML = `❤️ <span class="like-count">${newCount}</span>`;
+        
+        try {
+            await updateDoc(doc(db, "radio_programas", id), { likes: increment(1) });
+        } catch(e) { console.log("Error like", e); }
     };
 
     window.toggleComments = (id) => {
         const section = document.getElementById(`comments-${id}`);
-        if(section.style.display === 'block') { section.style.display = 'none'; } 
-        else { section.style.display = 'block'; window.cargarComentarios(id); }
+        if(section.style.display === 'block') {
+            section.style.display = 'none';
+        } else {
+            section.style.display = 'block';
+            window.cargarComentarios(id);
+        }
     };
 
     window.cargarComentarios = (id) => {
@@ -434,11 +492,29 @@
         onSnapshot(query(collection(db, "radio_programas", id, "comentarios"), orderBy("fecha", "asc")), (snap) => {
             listDiv.innerHTML = "";
             if(snap.empty) { listDiv.innerHTML = "<div style='color:#666; font-size:11px; text-align:center;'>Sé el primero en comentar.</div>"; return; }
+            
             snap.forEach(d => {
-                const c = d.data(); const div = document.createElement('div'); div.className = 'c-item';
-                let replyHtml = c.respuesta ? `<div class="c-reply"><div class="c-reply-head">🎙️ JTP OFICIAL:</div><div class="c-reply-msg">${c.respuesta}</div></div>` : "";
-                let adminTools = isAdmin ? `<div style="display:flex; align-items:center;">` + (!c.respuesta ? `<button class="btn-admin-reply" onclick="window.responderCom('${id}', '${d.id}')">↩️ RESPONDER</button>` : "") + `<button class="btn-admin-del" onclick="window.borrarComentario('${id}', '${d.id}')">🗑️</button></div>` : "";
-                div.innerHTML = `<div class="c-user"><span>${c.usuario}</span> ${adminTools}</div><div class="c-msg">${c.mensaje}</div>${replyHtml}`;
+                const c = d.data();
+                const div = document.createElement('div');
+                div.className = 'c-item';
+                
+                let replyHtml = "";
+                if(c.respuesta) {
+                    replyHtml = `<div class="c-reply"><div class="c-reply-head">🎙️ JTP OFICIAL:</div><div class="c-reply-msg">${c.respuesta}</div></div>`;
+                }
+
+                let adminTools = "";
+                if(isAdmin) {
+                    adminTools = `<div style="display:flex; align-items:center;">`;
+                    if(!c.respuesta) adminTools += `<button class="btn-admin-reply" onclick="window.responderCom('${id}', '${d.id}')">↩️ RESPONDER</button>`;
+                    adminTools += `<button class="btn-admin-del" onclick="window.borrarComentario('${id}', '${d.id}')">🗑️</button></div>`;
+                }
+
+                div.innerHTML = `
+                    <div class="c-user"><span>${c.usuario}</span> ${adminTools}</div>
+                    <div class="c-msg">${c.mensaje}</div>
+                    ${replyHtml}
+                `;
                 listDiv.appendChild(div);
             });
             listDiv.scrollTop = listDiv.scrollHeight;
@@ -446,26 +522,51 @@
     };
 
     window.enviarComentario = async (id) => {
-        const userIn = document.getElementById(`cuser-${id}`); const msgIn = document.getElementById(`cmsg-${id}`); const btn = document.getElementById(`cbtn-${id}`);
+        const userIn = document.getElementById(`cuser-${id}`);
+        const msgIn = document.getElementById(`cmsg-${id}`);
+        const btn = document.getElementById(`cbtn-${id}`);
+        
         if(!userIn.value || !msgIn.value) return alert("Escribe nombre y mensaje");
+        
         btn.disabled = true; btn.innerText = "...";
-        try { await addDoc(collection(db, "radio_programas", id, "comentarios"), { usuario: userIn.value, mensaje: msgIn.value, fecha: new Date().getTime() }); msgIn.value = ""; } catch(e) {}
+        try {
+            await addDoc(collection(db, "radio_programas", id, "comentarios"), {
+                usuario: userIn.value,
+                mensaje: msgIn.value,
+                fecha: new Date().getTime()
+            });
+            msgIn.value = ""; 
+        } catch(e) { alert("Error al enviar"); }
         btn.disabled = false; btn.innerText = "ENVIAR";
     };
 
     window.responderCom = async (progId, comId) => {
         const resp = prompt("Escribe tu respuesta oficial:");
-        if(resp) { try { await updateDoc(doc(db, "radio_programas", progId, "comentarios", comId), { respuesta: resp }); } catch(e) {} }
+        if(resp) {
+            try {
+                await updateDoc(doc(db, "radio_programas", progId, "comentarios", comId), { respuesta: resp });
+            } catch(e) { alert("Error al responder"); }
+        }
     };
 
     window.borrarComentario = async (progId, comId) => {
-        if(confirm("¿Borrar?")) { try { await deleteDoc(doc(db, "radio_programas", progId, "comentarios", comId)); } catch(e) {} }
+        if(confirm("¿Borrar este comentario permanentemente?")) {
+            try {
+                await deleteDoc(doc(db, "radio_programas", progId, "comentarios", comId));
+            } catch(e) { alert("Error al borrar"); }
+        }
     };
 
     function encenderVisualizador() {
         if (!audioCtx) {
-            audioCtx = new (window.AudioContext || window.webkitAudioContext)(); analyser = audioCtx.createAnalyser();
-            try { source = audioCtx.createMediaElementSource(media); source.connect(analyser); analyser.connect(audioCtx.destination); } catch(e) {}
+            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            analyser = audioCtx.createAnalyser();
+            try {
+                source = audioCtx.createMediaElementSource(media);
+                source.connect(analyser);
+                analyser.connect(audioCtx.destination);
+            } catch(e) { console.log("Ya conectado"); }
+            
             analyser.fftSize = 256; 
         }
         if (audioCtx.state === 'suspended') audioCtx.resume();
@@ -473,81 +574,270 @@
     }
 
     function pintarBarras() {
-        isVisualizerRunning = true; requestAnimationFrame(pintarBarras); if (!analyser) return;
-        const bufferLength = analyser.frequencyBinCount; const dataArray = new Uint8Array(bufferLength); analyser.getByteFrequencyData(dataArray);
-        const dpr = window.devicePixelRatio || 1; const displayWidth = canvas.clientWidth; const displayHeight = canvas.clientHeight;
-        canvas.width = displayWidth * dpr; canvas.height = displayHeight * dpr; ctx.scale(dpr, dpr); ctx.clearRect(0, 0, displayWidth, displayHeight);
-        const isMobile = displayWidth < 600; const barrasActivas = isMobile ? 40 : 80; const gap = isMobile ? 2 : 4; 
-        const barWidth = (displayWidth / barrasActivas) - gap; let x = gap / 2;
+        isVisualizerRunning = true;
+        requestAnimationFrame(pintarBarras);
+        if (!analyser) return;
+
+        const bufferLength = analyser.frequencyBinCount;
+        const dataArray = new Uint8Array(bufferLength);
+        analyser.getByteFrequencyData(dataArray);
+
+        const dpr = window.devicePixelRatio || 1;
+        const displayWidth = canvas.clientWidth;
+        const displayHeight = canvas.clientHeight;
+        
+        canvas.width = displayWidth * dpr;
+        canvas.height = displayHeight * dpr;
+        
+        ctx.scale(dpr, dpr);
+        ctx.clearRect(0, 0, displayWidth, displayHeight);
+
+        const isMobile = displayWidth < 600;
+        const barrasActivas = isMobile ? 40 : 80; 
+        const gap = isMobile ? 2 : 4; 
+        
+        const barWidth = (displayWidth / barrasActivas) - gap; 
+        let x = gap / 2;
+
         for (let i = 0; i < barrasActivas; i++) {
             const dataIndex = Math.floor(i * (bufferLength / 100)); 
-            let barHeight = (dataArray[dataIndex] / 255) * displayHeight * 1.3; ctx.fillStyle = '#a68a44'; 
-            const finalHeight = Math.max(barHeight, isMobile ? 3 : 4); ctx.fillRect(x, displayHeight - finalHeight, barWidth, finalHeight);
+            
+            let barHeight = (dataArray[dataIndex] / 255) * displayHeight;
+            barHeight = barHeight * 1.3; 
+            
+            ctx.fillStyle = '#a68a44'; 
+            
+            const finalHeight = Math.max(barHeight, isMobile ? 3 : 4);
+            
+            ctx.fillRect(x, displayHeight - finalHeight, barWidth, finalHeight);
+            
             x += barWidth + gap;
         }
     }
     
     window.playItem = async (id, url, tit, img) => {
-        if(idActual === id) { window.doToggle(); } 
-        else {
-            idActual = id; window.castUrl = url; window.castTitle = tit; window.castCover = img; media.src = url; 
+        if(idActual === id) { 
+            window.doToggle(); 
+        } else {
+            idActual = id; 
+            window.castUrl = url; window.castTitle = tit; window.castCover = img; 
+            media.src = url; 
+
             let promesa = media.play();
-            if (promesa !== undefined) { promesa.then(_ => { let memoria = localStorage.getItem('jtbp_mem_' + id); if(memoria && parseFloat(memoria) > 5) { media.currentTime = parseFloat(memoria); } encenderVisualizador(); }).catch(e => {}); }
-            document.getElementById('p-title').innerText = tit; document.getElementById('p-vinyl').style.backgroundImage = `url('${img}')`; document.getElementById('global-player').style.display = 'block';
+            if (promesa !== undefined) {
+                promesa.then(_ => {
+                    let memoria = localStorage.getItem('jtbp_mem_' + id);
+                    if(memoria && parseFloat(memoria) > 5) {
+                        media.currentTime = parseFloat(memoria);
+                    }
+                    encenderVisualizador();
+                }).catch(e => console.log("Play bloqueado por navegador:", e));
+            }
+            
+            document.getElementById('p-title').innerText = tit;
+            document.getElementById('p-vinyl').style.backgroundImage = `url('${img}')`;
+            document.getElementById('global-player').style.display = 'block';
+            
             if(analytics) logEvent(analytics, 'play_program', { program_name: tit });
+
             if(!localStorage.getItem('oyente_' + id)) {
                 localStorage.setItem('oyente_' + id, 'true');
-                try { await updateDoc(doc(db, "radio_programas", id), { reproducciones: increment(1) }); } catch(e) {}
+                try {
+                    await updateDoc(doc(db, "radio_programas", id), {
+                        reproducciones: increment(1)
+                    });
+                } catch(e) { console.log("Error contando oyente", e); }
             }
         }
         render();
     };
 
-    window.doToggle = () => { media.paused ? (media.play(), encenderVisualizador()) : media.pause(); render(); };
+    window.doToggle = () => { 
+        if(media.paused) {
+            media.play();
+            encenderVisualizador(); 
+        } else {
+            media.pause();
+        }
+        render(); 
+    };
+    
     window.doClose = () => { media.pause(); document.getElementById('global-player').style.display='none'; idActual=null; render(); };
-    window.toggleList = (id) => { const el = document.getElementById(`list-${id}`); el.style.display = el.style.display === 'block' ? 'none' : 'block'; };
+    window.toggleList = (id) => { const el = document.getElementById(`list-${id}`); el.style.display = (el.style.display === 'block') ? 'none' : 'block'; };
     window.doSpeed = () => { const r = [1.0, 1.25, 1.5, 2.0]; media.playbackRate = r[(r.indexOf(media.playbackRate)+1)%r.length]; document.getElementById('btn-speed').innerText = media.playbackRate+"x"; };
     window.doMute = () => { media.muted = !media.muted; document.getElementById('btn-mute').innerText = media.muted ? "🔇 MUTE" : "🔊 VOL"; };
     window.cancelEdit = () => { document.getElementById('admin-panel').style.display='none'; document.getElementById('edit-id').value=""; };
-    window.prepEdit = (id) => { const p = programas.find(x => x.id === id); document.getElementById('edit-id').value = p.id; document.getElementById('t-titulo').value = p.titulo; document.getElementById('t-programa').value = p.programa; document.getElementById('t-url').value = p.mp3Url; document.getElementById('t-img').value = p.imagenUrl; document.getElementById('t-tags').value = p.tags || ""; document.getElementById('t-playlist').value = p.playlist || ""; document.getElementById('admin-panel').style.display = 'block'; window.scrollTo({top:0, behavior:'smooth'}); };
+    
+    window.prepEdit = (id) => {
+        const p = programas.find(x => x.id === id);
+        document.getElementById('edit-id').value = p.id; 
+        document.getElementById('t-titulo').value = p.titulo; 
+        document.getElementById('t-programa').value = p.programa; 
+        document.getElementById('t-url').value = p.mp3Url; 
+        document.getElementById('t-img').value = p.imagenUrl; 
+        document.getElementById('t-tags').value = p.tags || ""; 
+        document.getElementById('t-playlist').value = p.playlist || ""; 
+        document.getElementById('admin-panel').style.display = 'block'; window.scrollTo({top:0, behavior:'smooth'});
+    };
     window.doDel = async (id) => { if(confirm("¿Borrar?")) await deleteDoc(doc(db, "radio_programas", id)); };
 
     document.getElementById('btn-save').onclick = async () => {
         const id = document.getElementById('edit-id').value;
-        const data = { titulo: document.getElementById('t-titulo').value, programa: document.getElementById('t-programa').value, mp3Url: document.getElementById('t-url').value, imagenUrl: document.getElementById('t-img').value || "logo.png", tags: document.getElementById('t-tags').value, playlist: document.getElementById('t-playlist').value, fecha: new Date().getTime() };
+        const data = { 
+            titulo: document.getElementById('t-titulo').value, 
+            programa: document.getElementById('t-programa').value, 
+            mp3Url: document.getElementById('t-url').value, 
+            imagenUrl: document.getElementById('t-img').value || "logo.png", 
+            tags: document.getElementById('t-tags').value, 
+            playlist: document.getElementById('t-playlist').value, 
+            fecha: new Date().getTime() 
+        };
+        
         if(!id) { data.reproducciones = 0; data.likes = 0; }
-        id ? await updateDoc(doc(db, "radio_programas", id), data) : await addDoc(collection(db, "radio_programas"), data);
+
+        if(id) await updateDoc(doc(db, "radio_programas", id), data); 
+        else await addDoc(collection(db, "radio_programas"), data);
+        
         window.cancelEdit();
     };
 
-    onSnapshot(query(collection(db, "radio_programas"), orderBy("fecha", "desc")), (snap) => { programas = []; snap.forEach(d => programas.push({id: d.id, ...d.data()})); render(); });
+    onSnapshot(query(collection(db, "radio_programas"), orderBy("fecha", "desc")), (snap) => {
+        programas = []; snap.forEach(d => programas.push({id: d.id, ...d.data()})); render();
+    });
 
     function render() {
-        const feed = document.getElementById('feed'); if(!feed) return; feed.innerHTML = "";
-        if(hashtagFiltro !== '') { feed.innerHTML = `<div style="text-align:center; margin-bottom:20px;"><span style="background:var(--gold); color:black; padding:8px 15px; border-radius:20px; font-weight:bold; font-size:12px;">Buscando: ${hashtagFiltro} <span style="margin-left:10px; cursor:pointer;" onclick="window.clearHashtag()">✖ Quitar Filtro</span></span></div>`; }
+        const feed = document.getElementById('feed');
+        if(!feed) return;
+        feed.innerHTML = "";
+
+        if(hashtagFiltro !== '') {
+            feed.innerHTML = `<div style="text-align:center; margin-bottom:20px;">
+                <span style="background:var(--gold); color:black; padding:8px 15px; border-radius:20px; font-weight:bold; font-size:12px;">
+                    Buscando: ${hashtagFiltro} <span style="margin-left:10px; cursor:pointer;" onclick="window.clearHashtag()">✖ Quitar Filtro</span>
+                </span>
+            </div>`;
+        }
+
         const list = programas.filter(p => {
-            let matchCanal = filtro === 'Todo' ? true : (p.programa || "").toUpperCase().includes(filtro.toUpperCase().split(' ')[0]) || (p.titulo || "").toUpperCase().includes(filtro.toUpperCase().split(' ')[0]);
-            let matchTag = hashtagFiltro === '' ? true : (p.tags || "").toLowerCase().includes(hashtagFiltro.toLowerCase());
+            let matchCanal = false;
+            if(filtro === 'Todo') matchCanal = true;
+            else {
+                const dbVal = (p.programa || "").toUpperCase();
+                const titVal = (p.titulo || "").toUpperCase(); 
+                const filterVal = filtro.toUpperCase();
+                if(filterVal.includes("STUDIO")) matchCanal = dbVal.includes("STUDIO") || dbVal.includes("79") || titVal.includes("STUDIO") || titVal.includes("79");
+                else matchCanal = dbVal.includes(filterVal.split(' ')[0]) || titVal.includes(filterVal.split(' ')[0]);
+            }
+
+            let matchTag = true;
+            if(hashtagFiltro !== '') {
+                matchTag = (p.tags || "").toLowerCase().includes(hashtagFiltro.toLowerCase());
+            }
+
             return matchCanal && matchTag;
         });
+
         currentRenderedList = list;
+
         list.forEach(p => {
             const isPlaying = idActual === p.id && !media.paused;
-            const vistas = p.reproducciones || 0; const likes = p.likes || 0;
-            const userLikedClass = localStorage.getItem('jtp_like_' + p.id) === 'true' ? 'liked' : '';
+            const vistas = p.reproducciones || 0;
+            const likes = p.likes || 0;
+            const isLiked = localStorage.getItem('jtp_like_' + p.id) === 'true';
+            const userLikedClass = isLiked ? 'liked' : '';
+            const heartIcon = isLiked ? '❤️' : '🤍';
+
             const arrayTags = (p.tags || "").split(' ').filter(t => t.trim().startsWith('#'));
-            let htmlTags = arrayTags.length > 0 ? `<div style="margin-top:6px;">` + arrayTags.map(t => `<span onclick="window.setHashtagFilter('${t}')" style="color:var(--gold); background:#222; padding:4px 10px; border-radius:12px; font-size:10px; font-weight:800; margin-right:5px; cursor:pointer; display:inline-block; border: 1px solid #333;">${t}</span>`).join('') + `</div>` : "";
-            const div = document.createElement('div'); div.className = `card ${isPlaying ? 'playing' : ''}`;
-            div.innerHTML = `<div class="card-cover" style="background-image: url('${p.imagenUrl}')"><div class="card-overlay"><button class="btn-play" onclick="window.playItem('${p.id}','${p.mp3Url}','${p.titulo}','${p.imagenUrl}')">${isPlaying ? SVG_PAUSE : SVG_PLAY}</button></div></div><div class="info"><div style="display:flex; justify-content:space-between; align-items:center;"><span style="color:var(--gold); font-size:9px; font-weight:900; text-transform:uppercase;">${p.programa}</span><div class="contador-oyentes">🎧 <span>${vistas}</span></div></div><div style="display:flex; justify-content:space-between; align-items:start; margin-top:8px;"><h3 class="ep-title" style="margin:0;">${p.titulo}</h3><button class="btn-like ${userLikedClass}" onclick="window.doLike('${p.id}', this)">❤️ <span class="like-count">${likes}</span></button></div>${htmlTags}<div style="display:flex; gap:10px;"><button class="btn-list" style="flex:1" onclick="window.toggleList('${p.id}')">📋 INFO</button><button class="btn-list" style="flex:1" onclick="window.toggleComments('${p.id}')">💬 CHAT</button></div><div id="list-${p.id}" class="list-box">${p.playlist || "Próximamente."}</div><div id="comments-${p.id}" class="comments-section"><div id="clist-${p.id}" class="c-list"></div><div style="margin-top:10px; padding-top:10px; border-top:1px solid #222;"><input type="text" id="cuser-${p.id}" class="c-input" placeholder="Tu Nombre"><textarea id="cmsg-${p.id}" class="c-input" placeholder="Tu Mensaje..."></textarea><button id="cbtn-${p.id}" class="c-btn" onclick="window.enviarComentario('${p.id}')">ENVIAR</button></div></div>${isAdmin ? `<div style="display:flex; gap:10px; margin-top:20px; border-top:1px solid #222; padding-top:20px;"><button onclick="window.prepEdit('${p.id}')" style="flex:1; background:transparent; border:1px solid var(--gold); color:var(--gold); padding:10px; border-radius:10px; font-weight:800;">🖋️ EDITAR</button><button onclick="window.doDel('${p.id}')" style="flex:1; background:transparent; border:1px solid #f44; color:#f44; padding:10px; border-radius:10px; font-weight:800;">🗑️ BORRAR</button></div>` : ''}</div>`;
+            let htmlTags = "";
+            if(arrayTags.length > 0) {
+                htmlTags = `<div style="margin-top:6px;">` + 
+                    arrayTags.map(t => `<span onclick="window.setHashtagFilter('${t}')" style="color:var(--gold); background:#222; padding:4px 10px; border-radius:12px; font-size:10px; font-weight:800; margin-right:5px; cursor:pointer; display:inline-block; border: 1px solid #333;">${t}</span>`).join('') 
+                + `</div>`;
+            }
+
+            const div = document.createElement('div');
+            div.className = `card ${isPlaying ? 'playing' : ''}`;
+            div.innerHTML = `
+                <div class="card-cover" style="background-image: url('${p.imagenUrl}')">
+                    <div class="card-overlay">
+                        <button class="btn-play" onclick="window.playItem('${p.id}','${p.mp3Url}','${p.titulo}','${p.imagenUrl}')">${isPlaying ? SVG_PAUSE : SVG_PLAY}</button>
+                    </div>
+                </div>
+                <div class="info">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <span style="color:var(--gold); font-size:9px; font-weight:900; text-transform:uppercase;">${p.programa}</span>
+                        <div class="contador-oyentes">🎧 <span>${vistas}</span></div>
+                    </div>
+                    
+                    <div style="display:flex; justify-content:space-between; align-items:start; margin-top:8px;">
+                         <h3 class="ep-title" style="margin:0;">${p.titulo}</h3>
+                         <button class="btn-like ${userLikedClass}" onclick="window.doLike('${p.id}', this)">
+                            ${heartIcon} <span class="like-count">${likes}</span>
+                         </button>
+                    </div>
+                    
+                    ${htmlTags}
+
+                    <div style="display:flex; gap:10px;">
+                        <button class="btn-list" style="flex:1" onclick="window.toggleList('${p.id}')">📋 INFO</button>
+                        <button class="btn-list" style="flex:1" onclick="window.toggleComments('${p.id}')">💬 CHAT</button>
+                    </div>
+                    
+                    <div id="list-${p.id}" class="list-box">${p.playlist || "Próximamente."}</div>
+                    
+                    <div id="comments-${p.id}" class="comments-section">
+                        <div id="clist-${p.id}" class="c-list"></div>
+                        <div style="margin-top:10px; padding-top:10px; border-top:1px solid #222;">
+                            <input type="text" id="cuser-${p.id}" class="c-input" placeholder="Tu Nombre">
+                            <textarea id="cmsg-${p.id}" class="c-input" placeholder="Tu Mensaje..."></textarea>
+                            <button id="cbtn-${p.id}" class="c-btn" onclick="window.enviarComentario('${p.id}')">ENVIAR</button>
+                        </div>
+                    </div>
+
+                    ${isAdmin ? `<div style="display:flex; gap:10px; margin-top:20px; border-top:1px solid #222; padding-top:20px;">
+                        <button onclick="window.prepEdit('${p.id}')" style="flex:1; background:transparent; border:1px solid var(--gold); color:var(--gold); padding:10px; border-radius:10px; font-weight:800;">🖋️ EDITAR</button>
+                        <button onclick="window.doDel('${p.id}')" style="flex:1; background:transparent; border:1px solid #f44; color:#f44; padding:10px; border-radius:10px; font-weight:800;">🗑️ BORRAR</button>
+                    </div>` : ''}
+                </div>`;
             feed.appendChild(div);
         });
-        const pBtn = document.getElementById('p-play-btn'); if(pBtn) pBtn.innerHTML = media.paused ? SVG_PLAY : SVG_PAUSE;
-        if(!media.paused) document.getElementById('global-player').classList.add('playing'); else document.getElementById('global-player').classList.remove('playing');
+
+        const pBtn = document.getElementById('p-play-btn');
+        if(pBtn) pBtn.innerHTML = media.paused ? SVG_PLAY : SVG_PAUSE;
+        if(!media.paused) document.getElementById('global-player').classList.add('playing');
+        else document.getElementById('global-player').classList.remove('playing');
     }
 
-    media.ontimeupdate = () => { seekBar.value = media.currentTime; const m = Math.floor(media.currentTime/60), s = Math.floor(media.currentTime%60); const dm = isNaN(media.duration) ? 0 : Math.floor(media.duration/60), ds = isNaN(media.duration) ? 0 : Math.floor(media.duration%60); document.getElementById('p-time').innerText = `${m}:${s<10?'0':''}${s} / ${dm}:${ds<10?'0':''}${ds}`; if (idActual && media.currentTime > 5) { localStorage.setItem('jtbp_mem_' + idActual, media.currentTime); } };
-    media.onloadedmetadata = () => { if(!isNaN(media.duration)) seekBar.max = media.duration; };
-    media.onended = () => { if(idActual) localStorage.removeItem('jtbp_mem_' + idActual); if (currentRenderedList.length > 0) { let idxActual = currentRenderedList.findIndex(p => p.id === idActual); if (idxActual !== -1 && idxActual + 1 < currentRenderedList.length) { let siguiente = currentRenderedList[idxActual + 1]; window.playItem(siguiente.id, siguiente.mp3Url, siguiente.titulo, siguiente.imagenUrl); } else { window.doClose(); } } };
+    media.ontimeupdate = () => { 
+        seekBar.value = media.currentTime; 
+        const m = Math.floor(media.currentTime/60), s = Math.floor(media.currentTime%60);
+        const dm = isNaN(media.duration) ? 0 : Math.floor(media.duration/60);
+        const ds = isNaN(media.duration) ? 0 : Math.floor(media.duration%60);
+        document.getElementById('p-time').innerText = `${m}:${s<10?'0':''}${s} / ${dm}:${ds<10?'0':''}${ds}`;
+        
+        if (idActual && media.currentTime > 5) {
+            localStorage.setItem('jtbp_mem_' + idActual, media.currentTime);
+        }
+    };
+
+    media.onloadedmetadata = () => { 
+        if(!isNaN(media.duration)) seekBar.max = media.duration; 
+    };
+
+    media.onended = () => {
+        if(idActual) localStorage.removeItem('jtbp_mem_' + idActual);
+        
+        if (currentRenderedList.length > 0) {
+            let idxActual = currentRenderedList.findIndex(p => p.id === idActual);
+            if (idxActual !== -1 && idxActual + 1 < currentRenderedList.length) {
+                let siguiente = currentRenderedList[idxActual + 1];
+                window.playItem(siguiente.id, siguiente.mp3Url, siguiente.titulo, siguiente.imagenUrl);
+            } else {
+                window.doClose();
+            }
+        }
+    };
+    
     seekBar.oninput = () => { media.currentTime = seekBar.value; };
 </script>
 </body>
