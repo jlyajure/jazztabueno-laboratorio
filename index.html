@@ -152,7 +152,6 @@
         .alerta-gala { color: #0070f3; font-size: 11px; margin-bottom: 20px; max-width: 100%; line-height: 1.6; text-align: center; background: rgba(0, 0, 0, 0.5); padding: 10px; border-radius: 8px; border: 1px solid #333; }
         .alerta-gala strong { color: #D4AF37; }
 
-        /* 🔥 ESTILO SLEEK Y DORADO PARA LA BARRA DE DESPLAZAMIENTO 🔥 */
         .timeline-swipe {
             display: flex; overflow-x: auto; gap: 10px; padding: 10px; justify-content: center; border-bottom: 1px solid #0070f3; margin-bottom: 20px; padding-bottom: 15px; 
             scrollbar-width: thin; 
@@ -320,8 +319,8 @@
             categoria: "STUDIO 79", 
             titulo: "Programa 5 Clásico", 
             url: "https://archive.org/download/studio-79-programa-5/Studio%2079%20Programa%205.mp3", 
-            plataforma: "archive",
-            cover: "https://i.postimg.cc/NKMDbYJB/S79.png" 
+            plataforma: "archive"
+            /* ¡OJO! Ya no hace falta la etiqueta "cover" aquí. La App le pondrá el logo de Studio 79 sola */
         },
 
         /* === 2023 === */
@@ -337,30 +336,27 @@
         { año: 2023, categoria: "JAZZTABUENO", titulo: "Big Band Orchestras Y Algo Jazz", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FJazzTaBueno%2Fjazztabueno-142023-big-band-orchestras-y-algo-jazz%2F", plataforma: "mixcloud" },
         
         /* === 2022 === */
-        /* 🔥 AQUI ESTAN TUS 3 ENLACES NUEVOS DEL 2022 CON SUS PORTADAS OFICIALES 🔥 */
+        /* 🔥 TUS 3 ENLACES NUEVOS: AHORA USARÁN EL LOGO OFICIAL AUTOMÁTICAMENTE 🔥 */
         { 
             año: 2022, 
             categoria: "JAZZTABUENO", 
             titulo: "Programa 1", 
             url: "https://archive.org/download/jazztabueno-programa-1-2022/Jazztabueno%20Programa%201-2022.mp3", 
-            plataforma: "archive",
-            cover: "https://i.postimg.cc/HxBB62Xz/jazztabueno-programa-1-2022.png" 
+            plataforma: "archive" 
         },
         { 
             año: 2022, 
             categoria: "JAZZTABUENO", 
             titulo: "Programa 2", 
             url: "https://archive.org/download/jazztabueno-programa-2-2022/Jazztabueno%20Programa%202-2022.mp3", 
-            plataforma: "archive",
-            cover: "https://i.postimg.cc/D0N5TwCK/jazztabueno-programa-2-2022.png" 
+            plataforma: "archive" 
         },
         { 
             año: 2022, 
             categoria: "JAZZTABUENO", 
             titulo: "Programa 3", 
             url: "https://archive.org/download/jazztabueno-programa-3-2022/Jazztabueno%20Programa%203-2022.mp3", 
-            plataforma: "archive",
-            cover: "https://i.postimg.cc/90k1hQxQ/jazztabueno-programa-3-2022.png" 
+            plataforma: "archive" 
         },
         /* Los de Mixcloud del 2022 que ya estaban */
         { año: 2022, categoria: "JAZZTABUENO", titulo: "Get Lucky", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FJazzTaBueno%2Fjazztabueno-342022-get-lucky%2F", plataforma: "mixcloud" },
@@ -422,9 +418,19 @@
                 const clase = esEspecial ? 'card-especial-v' : 'card-regular-v';
                 
                 if (item.plataforma === 'archive') {
+                    // 🔥 LÓGICA DE AUTO-PORTADA 🔥
+                    let defaultCover = "https://i.postimg.cc/zVD4mstP/Jazztabueno-(2).png"; // Jazztabueno por defecto
+                    const catUp = item.categoria.toUpperCase();
+                    if(catUp.includes("STUDIO")) defaultCover = "https://i.postimg.cc/NKMDbYJB/S79.png";
+                    else if(catUp.includes("SALSA")) defaultCover = "https://i.postimg.cc/75fchgyt/Salsa-Brava.png";
+                    else if(catUp.includes("OLD")) defaultCover = "https://i.postimg.cc/jwQ3mczC/Old-School-Radio.png";
+                    
+                    // Si el programa trae cover úsala, si no, usa la default calculada
+                    const finalCover = item.cover ? item.cover : defaultCover;
+
                     contenidoHtml += `
                     <div class="vintage-player ${clase}">
-                        <img src="${item.cover}" class="vp-cover" onerror="this.src='https://i.postimg.cc/zVD4mstP/Jazztabueno-(2).png'">
+                        <img src="${finalCover}" class="vp-cover" onerror="this.src='https://i.postimg.cc/zVD4mstP/Jazztabueno-(2).png'">
                         <div class="vp-info">
                             <div class="vp-title">${item.titulo}</div>
                             <div class="vp-controls">
