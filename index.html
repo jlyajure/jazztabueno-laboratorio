@@ -145,7 +145,7 @@
         #visualizador { width: 100%; height: 35px; background: transparent; margin-top: 5px; margin-bottom: 5px; display: block; }
 
         /* =========================================
-           ESTILOS DE LA BÓVEDA DEL LEGADO
+           ESTILOS DE LA BÓVEDA DEL LEGADO (REDISEÑO V8.4)
            ========================================= */
         .jtbp-vault-bg { background: radial-gradient(circle, #222 10%, transparent 11%), #111; background-size: 10px 10px; border-top: 3px solid #D4AF37; padding: 20px 10px; text-align: center; border-radius: 20px; border: 1px solid #1a1a1a; margin-bottom: 30px; }
         .vault-header-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid #333; padding-bottom: 15px; }
@@ -170,20 +170,31 @@
         .card-especial-v { border: 2px solid #D4AF37; box-shadow: 0 0 10px #D4AF37; }
         .card-regular-v { border: 1px solid #333; }
 
-        /* 🔥 ESTILOS DEL REPRODUCTOR VINTAGE (ARCHIVE.ORG) 🔥 */
+        /* 🔥 ESTILOS DEL REPRODUCTOR VINTAGE PULIDOS V8.4 🔥 */
         .vintage-player {
-            background: #111; border: 1px solid #222; border-left: 4px solid var(--gold); border-radius: 8px;
+            background: #111; border: 1.5px solid #222; border-left: 4px solid var(--gold); border-radius: 8px;
             display: flex; align-items: center; padding: 10px; margin-bottom: 5px; gap: 12px;
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.1); transition: border-color 0.3s;
         }
-        .vp-cover { width: 55px; height: 55px; border-radius: 6px; object-fit: cover; border: 1px solid #333; }
+        .vintage-player.playing { border-color: var(--gold); }
+        
+        /* 🔥 LA SOLUCIÓN TÉCNICA: object-fit: contain 🔥 */
+        .vp-cover { 
+            width: 55px; height: 55px; border-radius: 6px; border: 1px solid #333; flex-shrink: 0;
+            background-color: #000; /* Fondo negro por si el logo no es cuadrado */
+            object-fit: contain; /* Obliga al logo a caber completico sin cortarse */
+            object-position: center; /* Lo centra en su recuadro */
+        }
+        
         .vp-info { flex: 1; display: flex; flex-direction: column; gap: 6px; overflow: hidden; }
         .vp-title { color: #fff; font-size: 12px; font-weight: 800; margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .vp-controls { display: flex; align-items: center; gap: 10px; width: 100%; }
-        .vp-btn { background: var(--gold); border: none; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; padding: 0; flex-shrink: 0; }
+        .vp-btn { background: var(--gold); border: none; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; padding: 0; flex-shrink: 0; transition: transform 0.2s; }
+        .vp-btn:active { transform: scale(0.9); }
         .vp-btn svg { width: 14px; height: 14px; fill: #000; }
         .vp-slider { flex: 1; height: 4px; -webkit-appearance: none; background: #333; border-radius: 2px; outline: none; }
-        .vp-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 12px; height: 12px; background: var(--gold); border-radius: 50%; cursor: pointer; }
-        .vp-time { color: var(--gold); font-size: 9px; font-weight: 900; min-width: 32px; text-align: right; }
+        .vp-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 12px; height: 12px; background: var(--gold); border-radius: 50%; cursor: pointer; box-shadow: 0 0 5px rgba(212, 175, 55, 0.5); }
+        .vp-time { color: var(--gold); font-size: 9px; font-weight: 900; min-width: 32px; text-align: right; font-family: monospace; }
     </style>
 </head>
 <body>
@@ -320,7 +331,7 @@
             titulo: "Programa 5 Clásico", 
             url: "https://archive.org/download/studio-79-programa-5/Studio%2079%20Programa%205.mp3", 
             plataforma: "archive"
-            /* ¡OJO! Ya no hace falta la etiqueta "cover" aquí. La App le pondrá el logo de Studio 79 sola */
+            /* ¡OJO! Ya no hace falta la etiqueta "cover" aquí. La App le pondrá el logo sola */
         },
 
         /* === 2023 === */
@@ -336,7 +347,6 @@
         { año: 2023, categoria: "JAZZTABUENO", titulo: "Big Band Orchestras Y Algo Jazz", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FJazzTaBueno%2Fjazztabueno-142023-big-band-orchestras-y-algo-jazz%2F", plataforma: "mixcloud" },
         
         /* === 2022 === */
-        /* 🔥 TUS 3 ENLACES NUEVOS: AHORA USARÁN EL LOGO OFICIAL AUTOMÁTICAMENTE 🔥 */
         { 
             año: 2022, 
             categoria: "JAZZTABUENO", 
@@ -418,7 +428,7 @@
                 const clase = esEspecial ? 'card-especial-v' : 'card-regular-v';
                 
                 if (item.plataforma === 'archive') {
-                    // 🔥 LÓGICA DE AUTO-PORTADA 🔥
+                    // 🔥 LÓGICA DE AUTO-PORTADA INYECTADA PULIDA (V8.4) 🔥
                     let defaultCover = "https://i.postimg.cc/zVD4mstP/Jazztabueno-(2).png"; // Jazztabueno por defecto
                     const catUp = item.categoria.toUpperCase();
                     if(catUp.includes("STUDIO")) defaultCover = "https://i.postimg.cc/NKMDbYJB/S79.png";
@@ -429,19 +439,19 @@
                     const finalCover = item.cover ? item.cover : defaultCover;
 
                     contenidoHtml += `
-                    <div class="vintage-player ${clase}">
+                    <div class="vintage-player ${clase}" id="vp-card-${idCounter}">
                         <img src="${finalCover}" class="vp-cover" onerror="this.src='https://i.postimg.cc/zVD4mstP/Jazztabueno-(2).png'">
                         <div class="vp-info">
                             <div class="vp-title">${item.titulo}</div>
                             <div class="vp-controls">
-                                <button class="vp-btn" id="vp-btn-${idCounter}" onclick="toggleVintage('vp-audio-${idCounter}', 'vp-btn-${idCounter}')">
+                                <button class="vp-btn" id="vp-btn-${idCounter}" onclick="toggleVintage('vp-audio-${idCounter}', 'vp-btn-${idCounter}', 'vp-card-${idCounter}')">
                                     ${SVG_PLAY}
                                 </button>
                                 <input type="range" class="vp-slider" id="vp-slider-${idCounter}" value="0" min="0" step="1" oninput="seekVintage('vp-audio-${idCounter}', this.value)">
                                 <span class="vp-time" id="vp-time-${idCounter}">00:00</span>
                             </div>
                         </div>
-                        <audio id="vp-audio-${idCounter}" class="vintage-audio" src="${item.url}" playsinline webkit-playsinline ontimeupdate="updateVintageTime('vp-audio-${idCounter}', 'vp-slider-${idCounter}', 'vp-time-${idCounter}')" onended="resetVintage('vp-btn-${idCounter}')"></audio>
+                        <audio id="vp-audio-${idCounter}" class="vintage-audio" src="${item.url}" playsinline webkit-playsinline ontimeupdate="updateVintageTime('vp-audio-${idCounter}', 'vp-slider-${idCounter}', 'vp-time-${idCounter}')" onended="resetVintage('vp-btn-${idCounter}', 'vp-card-${idCounter}')"></audio>
                     </div>`;
                 } else {
                     contenidoHtml += `
@@ -468,6 +478,7 @@
                             if(mainMedia && !mainMedia.paused) { mainMedia.pause(); if(window.actualizarUI) window.actualizarUI(); }
                             window.misReproductoresMixcloud.forEach(item => { if (item.id !== iframe.id) { item.reproductor.pause(); } });
                             document.querySelectorAll('.vintage-audio').forEach(a => { a.pause(); document.getElementById(a.id.replace('audio', 'btn')).innerHTML = SVG_PLAY; });
+                            document.querySelectorAll('.vintage-player').forEach(c => c.classList.remove('playing'));
                         });
                     }
                 } catch (error) {}
@@ -475,22 +486,31 @@
         }, 1500);
     };
 
-    window.toggleVintage = (audioId, btnId) => {
+    window.toggleVintage = (audioId, btnId, cardId) => {
         const audio = document.getElementById(audioId);
         const btn = document.getElementById(btnId);
+        const card = document.getElementById(cardId);
         const mainMedia = document.getElementById('main-media');
+        
+        // Pausar reproductor principal
         if(mainMedia && !mainMedia.paused) { mainMedia.pause(); if(window.actualizarUI) window.actualizarUI(); }
+        // Pausar Mixclouds
         if(window.misReproductoresMixcloud) { window.misReproductoresMixcloud.forEach(item => { try { item.reproductor.pause(); } catch(e){} }); }
 
         if (audio.paused) {
+            // Pausar otros audios vintage y quitarles el estilo
             document.querySelectorAll('.vintage-audio').forEach(a => { 
                 if(a.id !== audioId) { a.pause(); document.getElementById(a.id.replace('audio', 'btn')).innerHTML = SVG_PLAY; } 
             });
+            document.querySelectorAll('.vintage-player').forEach(c => c.classList.remove('playing'));
+            
             audio.play();
             btn.innerHTML = SVG_PAUSE;
+            card.classList.add('playing');
         } else {
             audio.pause();
             btn.innerHTML = SVG_PLAY;
+            card.classList.remove('playing');
         }
     };
 
@@ -509,7 +529,10 @@
     };
 
     window.seekVintage = (audioId, val) => { document.getElementById(audioId).currentTime = val; };
-    window.resetVintage = (btnId) => { document.getElementById(btnId).innerHTML = SVG_PLAY; };
+    window.resetVintage = (btnId, cardId) => { 
+        document.getElementById(btnId).innerHTML = SVG_PLAY; 
+        document.getElementById(cardId).classList.remove('playing');
+    };
 </script>
 
 <script type="module">
@@ -543,6 +566,7 @@
             const btn = document.getElementById(a.id.replace('audio', 'btn'));
             if(btn) btn.innerHTML = SVG_PLAY;
         });
+        document.querySelectorAll('.vintage-player').forEach(c => c.classList.remove('playing'));
     });
 
     if(localStorage.getItem('jtp_auth') === 'ok') { isAdmin = true; document.getElementById('btn-salir').style.display = 'block'; }
