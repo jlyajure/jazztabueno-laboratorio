@@ -155,11 +155,9 @@
         /* 🔥 ESTILO SLEEK Y DORADO PARA LA BARRA DE DESPLAZAMIENTO 🔥 */
         .timeline-swipe {
             display: flex; overflow-x: auto; gap: 10px; padding: 10px; justify-content: center; border-bottom: 1px solid #0070f3; margin-bottom: 20px; padding-bottom: 15px; 
-            /* Firefox: barra delgada y dorada */
             scrollbar-width: thin; 
             scrollbar-color: var(--gold) #1a1a1a; 
         }
-        /* Chrome, Edge, Safari: barra elegante */
         .timeline-swipe::-webkit-scrollbar { height: 6px; }
         .timeline-swipe::-webkit-scrollbar-track { background: #1a1a1a; border-radius: 3px; }
         .timeline-swipe::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 3px; }
@@ -172,10 +170,6 @@
         .mix-card-v { background: #000; border-radius: 5px; overflow: hidden; height: 55px; }
         .card-especial-v { border: 2px solid #D4AF37; box-shadow: 0 0 10px #D4AF37; }
         .card-regular-v { border: 1px solid #333; }
-
-        /* LENTE AHUMADO PARA APAGAR EL BLANCO DE IVOOX */
-        .filtro-ahumado { filter: brightness(0.8) contrast(1.05); opacity: 0.95; transition: all 0.3s ease; }
-        .filtro-ahumado:hover { filter: brightness(0.9) contrast(1.05); opacity: 1; }
 
         /* 🔥 ESTILOS DEL REPRODUCTOR VINTAGE (ARCHIVE.ORG) 🔥 */
         .vintage-player {
@@ -319,16 +313,15 @@
         { año: 2025, categoria: "Salsa Brava", titulo: "La Libertad", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FByJTB%2Fsalsabrava-092025-la-libertad%2F", plataforma: "mixcloud" },
         { año: 2025, categoria: "Salsa Brava", titulo: "Escucha El Ritmo", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FByJTB%2Fsalsabrava-102025-escucha-el-ritmo%2F", plataforma: "mixcloud" },
         { año: 2025, categoria: "Salsa Brava", titulo: "No Quiero Nada Regalao", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FByJTB%2Fsalsabrava-112025-no-quiero-nada-regalao%2F", plataforma: "mixcloud" },
-        
+
         /* === 2024 === */
-        /* === PRUEBA DEL REPRODUCTOR VINTAGE (ARCHIVE.ORG) 🔥 === */
         { 
             año: 2024, 
             categoria: "STUDIO 79", 
             titulo: "Programa 5 Clásico", 
             url: "https://archive.org/download/studio-79-programa-5/Studio%2079%20Programa%205.mp3", 
             plataforma: "archive",
-            cover: "https://i.postimg.cc/NKMDbYJB/S79.png" // Le ponemos el logo de Studio 79 por defecto
+            cover: "https://i.postimg.cc/NKMDbYJB/S79.png" 
         },
 
         /* === 2023 === */
@@ -344,6 +337,32 @@
         { año: 2023, categoria: "JAZZTABUENO", titulo: "Big Band Orchestras Y Algo Jazz", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FJazzTaBueno%2Fjazztabueno-142023-big-band-orchestras-y-algo-jazz%2F", plataforma: "mixcloud" },
         
         /* === 2022 === */
+        /* 🔥 AQUI ESTAN TUS 3 ENLACES NUEVOS DEL 2022 CON SUS PORTADAS OFICIALES 🔥 */
+        { 
+            año: 2022, 
+            categoria: "JAZZTABUENO", 
+            titulo: "Programa 1", 
+            url: "https://archive.org/download/jazztabueno-programa-1-2022/Jazztabueno%20Programa%201-2022.mp3", 
+            plataforma: "archive",
+            cover: "https://i.postimg.cc/HxBB62Xz/jazztabueno-programa-1-2022.png" 
+        },
+        { 
+            año: 2022, 
+            categoria: "JAZZTABUENO", 
+            titulo: "Programa 2", 
+            url: "https://archive.org/download/jazztabueno-programa-2-2022/Jazztabueno%20Programa%202-2022.mp3", 
+            plataforma: "archive",
+            cover: "https://i.postimg.cc/D0N5TwCK/jazztabueno-programa-2-2022.png" 
+        },
+        { 
+            año: 2022, 
+            categoria: "JAZZTABUENO", 
+            titulo: "Programa 3", 
+            url: "https://archive.org/download/jazztabueno-programa-3-2022/Jazztabueno%20Programa%203-2022.mp3", 
+            plataforma: "archive",
+            cover: "https://i.postimg.cc/90k1hQxQ/jazztabueno-programa-3-2022.png" 
+        },
+        /* Los de Mixcloud del 2022 que ya estaban */
         { año: 2022, categoria: "JAZZTABUENO", titulo: "Get Lucky", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FJazzTaBueno%2Fjazztabueno-342022-get-lucky%2F", plataforma: "mixcloud" },
         { año: 2022, categoria: "JAZZTABUENO", titulo: "Original", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FJazzTaBueno%2Fjazztabueno-072022-original%2F", plataforma: "mixcloud" },
 
@@ -670,7 +689,7 @@
 
     function render() {
         const feed = document.getElementById('feed'); if(!feed) return; feed.innerHTML = "";
-        if(hashtagFiltro !== '') { feed.innerHTML = `<div style="text-align:center; margin-bottom:20px;"><span style="background:var(--gold); color:black; padding:8px 15px; border-radius:20px; font-weight:bold; font-size:12px;">Bucando: ${hashtagFiltro} <span style="margin-left:10px; cursor:pointer;" onclick="window.clearHashtag()">✖ Quitar Filtro</span></span></div>`; }
+        if(hashtagFiltro !== '') { feed.innerHTML = `<div style="text-align:center; margin-bottom:20px;"><span style="background:var(--gold); color:black; padding:8px 15px; border-radius:20px; font-weight:bold; font-size:12px;">Buscando: ${hashtagFiltro} <span style="margin-left:10px; cursor:pointer;" onclick="window.clearHashtag()">✖ Quitar Filtro</span></span></div>`; }
         const list = programas.filter(p => {
             let matchCanal = false;
             if(filtro === 'Todo') matchCanal = true;
