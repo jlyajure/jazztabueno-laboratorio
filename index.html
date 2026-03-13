@@ -9,7 +9,15 @@
     <link rel="apple-touch-icon" href="https://i.postimg.cc/zVD4mstP/Jazztabueno-(2).png">
     <meta name="theme-color" content="#050505">
     
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Jazztabueno Productions">
+    <meta property="og:description" content="Escucha nuestros programas exclusivos de Radio.">
+    <meta property="og:image" itemprop="image" content="https://i.postimg.cc/zVD4mstP/Jazztabueno-(2).png">
+    <meta property="og:site_name" content="Jazztabueno Productions">
+
+    <link rel="manifest" href="manifest.json">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    
     <script src="https://widget.mixcloud.com/media/js/widgetApi.js"></script>
     <script src="https://www.gstatic.com/cv/js/sender/v1/cast_sender.js?loadCastFramework=1"></script>
 
@@ -28,9 +36,10 @@
 
         .container { max-width: 450px; margin: auto; padding: 15px; padding-bottom: 300px; }
         .channels-grid { display: grid !important; grid-template-columns: repeat(5, 1fr) !important; gap: 5px; margin-bottom: 25px; padding: 10px 0; }
+        .ch-item { display: flex; flex-direction: column; align-items: center; text-align: center; opacity: 0.9; cursor: pointer; }
         .ch-logo { width: 44px; height: 44px; border-radius: 12px; border: 2.5px solid #222; margin-bottom: 6px; background: #000; object-fit: contain; }
         .active .ch-logo { border-color: var(--gold); }
-        .ch-name { font-size: 6px; color: #ffffff; font-weight: 800; text-transform: uppercase; line-height: 1.1; text-align: center; width: 100%; }
+        .ch-name { font-size: 6px; color: #ffffff; font-weight: 800; text-transform: uppercase; line-height: 1.1; width: 100%; text-align: center; }
 
         .card { background: var(--card); border-radius: 20px; margin-bottom: 30px; border: 1px solid #1a1a1a; overflow: hidden; }
         .card.playing { border-color: var(--gold); }
@@ -45,38 +54,24 @@
         .btn-list { background: #1a1a1a !important; border: 1.5px solid #333 !important; color: #ffffff !important; padding: 12px !important; border-radius: 12px !important; font-size: 11px !important; font-weight: 800 !important; width: 100% !important; cursor: pointer; margin-top:12px; }
         .list-box { display: none; margin-top: 15px; padding: 20px; background: #080808; border-radius: 15px; border: 1px solid #222; font-size: 14px; white-space: pre-wrap; }
 
-        /* BÓVEDA ESTILOS */
         .jtbp-vault-bg { background: radial-gradient(circle, #222 10%, transparent 11%), #111; background-size: 10px 10px; border-top: 3px solid #D4AF37; padding: 20px 10px; text-align: center; border-radius: 20px; border: 1px solid #1a1a1a; margin-bottom: 30px; }
-        
-        .timeline-swipe {
-            display: flex; overflow-x: auto; gap: 12px; padding: 10px 20px; 
-            justify-content: flex-start; border-bottom: 1px solid #0070f3; margin-bottom: 20px; 
-            padding-bottom: 15px; scrollbar-width: thin; scrollbar-color: var(--gold) #1a1a1a;
-            -webkit-overflow-scrolling: touch; flex-wrap: nowrap;
-        }
-        .year-btn { 
-            background: none; border: 1px solid #D4AF37; color: #D4AF37; padding: 6px 18px; 
-            border-radius: 20px; cursor: pointer; font-size: 12px; font-weight: bold; flex-shrink: 0;
-        }
+        .timeline-swipe { display: flex; overflow-x: auto; gap: 12px; padding: 10px 20px; justify-content: flex-start; border-bottom: 1px solid #0070f3; margin-bottom: 20px; padding-bottom: 15px; scrollbar-width: thin; scrollbar-color: var(--gold) #1a1a1a; -webkit-overflow-scrolling: touch; flex-wrap: nowrap; }
+        .year-btn { background: none; border: 1px solid #D4AF37; color: #D4AF37; padding: 6px 18px; border-radius: 20px; cursor: pointer; font-size: 12px; font-weight: bold; flex-shrink: 0; }
         .year-btn.activo { background: #D4AF37; color: #000; box-shadow: 0 0 10px #D4AF37; }
 
         .vault-card { background: #000; border-radius: 15px; padding: 15px; border: 1px solid #333; margin-bottom: 20px; text-align: left; }
         .mix-iframe-container { background: #000; border-radius: 8px; overflow: hidden; height: 60px; margin-top: 10px; border: 1px solid #222; }
 
-        /* Chat y Comentarios */
         .comments-section { display:none; margin-top:15px; background:#080808; border-radius:15px; padding:15px; border:1px solid #222; }
-        .c-input { width:100%; background:#1a1a1a; border:1px solid #333; color:white; padding:10px; border-radius:8px; margin-bottom:8px; font-family:inherit; font-size:12px; }
-        .c-btn { width:100%; background:#333; color:white; border:none; padding:10px; border-radius:8px; font-weight:bold; cursor:pointer; font-size:11px; }
-        .c-list { margin-top:15px; max-height:200px; overflow-y:auto; }
-        .c-item { margin-bottom:12px; border-bottom:1px solid #1a1a1a; padding-bottom:8px; }
-        .c-user { font-weight:800; color:var(--gold); font-size:11px; margin-bottom:2px; display:flex; justify-content:space-between; align-items:center; }
-        .c-msg { font-size:12px; color:#ddd; line-height:1.3; }
 
         #global-player { position: fixed; bottom: 0; left: 0; width: 100%; background: #080808; border-top: 3px solid var(--gold); padding: 15px 20px; display: none; z-index: 1000; box-shadow: 0 -10px 30px rgba(0,0,0,0.8); }
         .p-vinyl { width: 55px; height: 55px; border-radius: 50%; border: 2.3px solid var(--gold); background-size: cover; animation: rot 4s linear infinite; animation-play-state: paused; flex-shrink: 0; }
         .playing .p-vinyl { animation-play-state: running; }
         @keyframes rot { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
         
+        .controls { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #222; padding-top: 15px; margin-top: 12px; gap: 10px; }
+        .ctrl-btn { flex: 1; background: #111; border: 1px solid #333; color: #fff; padding: 12px 5px; border-radius: 12px; font-size: 9px; font-weight: 900; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; }
+
         #visualizador { width: 100%; height: 35px; background: transparent; margin-top: 5px; margin-bottom: 5px; display: block; }
     </style>
 </head>
@@ -112,7 +107,7 @@
         <section class="jtbp-vault-bg">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
                 <h2 style="color:var(--gold); margin:0; font-size:14px; text-transform:uppercase;">Bóveda del Legado</h2>
-                <button onclick="window.closeVault()" style="background:#111; border:1px solid var(--gold); color:var(--gold); padding:8px 15px; border-radius:8px;">VOLVER</button>
+                <button onclick="window.closeVault()" style="background:#111; border:1px solid var(--gold); color:var(--gold); padding:8px 15px; border-radius:8px; cursor:pointer;">VOLVER</button>
             </div>
             <div class="timeline-swipe">
                 <button class="year-btn" id="btn-2025" onclick="window.mostrarPorAño(2025, this)">2025</button>
@@ -128,15 +123,15 @@
 </div>
 
 <div id="global-player">
-    <audio id="main-media" crossorigin="anonymous" playsinline></audio>
+    <audio id="main-media" crossorigin="anonymous" playsinline webkit-playsinline></audio>
     <div style="display:flex; align-items:center; gap:15px; margin-bottom:5px;">
-        <div id="p-vinyl" class="p-vinyl"></div>
+        <div id="p-vinyl" class="p-vinyl" style="background-image: url('https://i.postimg.cc/zVD4mstP/Jazztabueno-(2).png');"></div>
         <div style="flex:1; overflow:hidden;">
-            <h4 id="p-title" style="margin:0; font-size:14px; color:#fff; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">...</h4>
+            <h4 id="p-title" style="margin:0; font-size:14px; color:#ffffff; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-weight:800;">...</h4>
             <div id="p-time" style="font-size:11px; color:var(--gold);">00:00 / 00:00</div>
         </div>
-        <button id="p-play-btn" onclick="window.doToggle()" style="background:none; border:none;"></button>
-        <button onclick="window.doClose()" style="background:none; border:none; color:#666; font-size:28px;">×</button>
+        <button id="p-play-btn" onclick="window.doToggle()" style="background:none; border:none; cursor:pointer; flex-shrink: 0;"></button>
+        <button onclick="window.doClose()" style="background:none; border:none; color:#666; font-size:28px; cursor:pointer; flex-shrink: 0;">×</button>
     </div>
     <canvas id="visualizador"></canvas>
     <input type="range" id="seek-bar" value="0" min="0" step="1" style="width:100%;">
@@ -158,23 +153,14 @@
         { año: 2025, categoria: "Studio 79", titulo: "Disco Nights", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FStudio79%2Fstudio79-122025-disco-nights%2F", plataforma: "mixcloud", id: "s79-12" },
         { año: 2025, categoria: "Studio 79", titulo: "Rhythm & Blues", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FStudio79%2Fstudio79-112025-rhythm-blues%2F", plataforma: "mixcloud", id: "s79-11" },
         { año: 2025, categoria: "JAZZTABUENO", titulo: "Seductive Soul", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FJazzTaBueno%2Fjazztabueno-042025-seductive-soul%2F", plataforma: "mixcloud", id: "jtb-04" },
-        /* === 2024 a 2020 se mantienen igual en tu lista original === */
+        { año: 2025, categoria: "Salsa Brava", titulo: "No Quiero Nada Regalao", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FByJTB%2Fsalsabrava-112025-no-quiero-nada-regalao%2F", plataforma: "mixcloud", id: "sb-11" },
+        /* === 2024 a 2020 se mantienen igual... === */
         { año: 2024, categoria: "STUDIO 79", titulo: "Programa 5 Clásico", url: "https://archive.org/download/studio-79-programa-5/Studio%2079%20Programa%205.mp3", plataforma: "archive", id: "s79-24-05" },
         { año: 2020, categoria: "STUDIO 79", titulo: "Programa 4", url: "https://archive.org/download/studio-79-programa-4-2020/Studio%2079%20Programa%204-2020.mp3", plataforma: "archive", id: "s79-20-04" }
     ];
 
-    window.openVault = () => {
-        document.getElementById('main-view').style.display = 'none';
-        document.getElementById('vault-view').style.display = 'block';
-        window.mostrarPorAño(2025, document.getElementById('btn-2025')); 
-    };
-
-    window.closeVault = () => {
-        document.getElementById('vault-view').style.display = 'none';
-        document.getElementById('main-view').style.display = 'block';
-    };
-
-    // Funciones de control de UI que hacían falta
+    window.openVault = () => { document.getElementById('main-view').style.display = 'none'; document.getElementById('vault-view').style.display = 'block'; window.mostrarPorAño(2025, document.getElementById('btn-2025')); };
+    window.closeVault = () => { document.getElementById('vault-view').style.display = 'none'; document.getElementById('main-view').style.display = 'block'; };
     window.toggleList = (id) => { const el = document.getElementById(`list-${id}`); if(el) el.style.display = (el.style.display === 'block') ? 'none' : 'block'; };
     window.toggleComments = (id) => { const el = document.getElementById(`comments-${id}`); if(el) el.style.display = (el.style.display === 'block') ? 'none' : 'block'; };
 
@@ -200,20 +186,20 @@
                         <button class="btn-list" style="flex:1; margin-top:0;" onclick="window.toggleList('${item.id}')">📋 INFO</button>
                         <button class="btn-list" style="flex:1; margin-top:0;" onclick="window.toggleComments('${item.id}')">💬 CHAT</button>
                     </div>
-                    <div id="list-${item.id}" class="list-box">Playlist del show próximamente disponible en la Bóveda.</div>
+                    <div id="list-${item.id}" class="list-box">Playlist próximamente.</div>
                     <div id="comments-${item.id}" class="comments-section">
-                        <p style="color:#666; font-size:11px; text-align:center;">El chat está desactivado para programas de la Bóveda.</p>
+                        <p style="color:#666; font-size:11px; text-align:center;">Chat archivado.</p>
                     </div>
                 </div>`;
             });
         });
-        grid.innerHTML = html || "<p style='color:#666;'>No hay programas registrados.</p>";
+        grid.innerHTML = html || "<p style='color:#666;'>Pronto más archivos.</p>";
     };
 </script>
 
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { initializeFirestore, collection, query, orderBy, onSnapshot, doc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    import { initializeFirestore, collection, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
     const firebaseConfig = { apiKey: "AIzaSyBwBq4gLgv4DSfUidzUuC7Irmvj_4pCTtI", authDomain: "familia-yajure-app.firebaseapp.com", projectId: "familia-yajure-app", storageBucket: "familia-yajure-app.firebasestorage.app", messagingSenderId: "692035727386", appId: "1:692035727386:web:dfa3e39a481d56368a61a3" };
     const app = initializeApp(firebaseConfig);
@@ -252,13 +238,11 @@
                     <span style="color:var(--gold); font-size:9px; font-weight:900; text-transform:uppercase;">${p.programa}</span>
                     <h3 class="ep-title">${p.titulo}</h3>
                     <div style="display:flex; gap:10px;">
-                        <button class="btn-list" style="flex:1" onclick="window.toggleList('${p.id}')">📋 INFO</button>
-                        <button class="btn-list" style="flex:1" onclick="window.toggleComments('${p.id}')">💬 CHAT</button>
+                        <button class="btn-list" onclick="window.toggleList('${p.id}')">📋 INFO</button>
+                        <button class="btn-list" onclick="window.toggleComments('${p.id}')">💬 CHAT</button>
                     </div>
-                    <div id="list-${p.id}" class="list-box">${p.playlist || "Playlist pronto."}</div>
-                    <div id="comments-${p.id}" class="comments-section">
-                        <p style="color:#666; font-size:12px; text-align:center;">Chat activo en tiempo real.</p>
-                    </div>
+                    <div id="list-${p.id}" class="list-box">Cargando detalles...</div>
+                    <div id="comments-${p.id}" class="comments-section">Chat habilitado.</div>
                 </div>`;
             feed.appendChild(div);
         });
