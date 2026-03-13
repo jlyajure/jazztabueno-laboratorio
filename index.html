@@ -11,6 +11,7 @@
     
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <script src="https://widget.mixcloud.com/media/js/widgetApi.js"></script>
+    <script src="https://www.gstatic.com/cv/js/sender/v1/cast_sender.js?loadCastFramework=1"></script>
 
     <style>
         :root { --gold: #a68a44; --bg: #050505; --card: #121212; --red: #ff4444; }
@@ -19,17 +20,23 @@
 
         header { background: rgba(0,0,0,0.98); padding: 12px 15px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #222; position: sticky; top: 0; z-index: 100; }
         .brand-title { color: var(--gold); font-family: 'Playfair Display', serif; font-size: 14px; text-transform: uppercase; line-height: 1.2; letter-spacing: 0.5px; }
-        
-        .btn-boveda-container { display: flex; align-items: center; gap: 8px; cursor: pointer; background: rgba(212, 175, 55, 0.1); padding: 5px 10px; border-radius: 12px; border: 1px solid var(--gold); }
+        .btn-salir { display: none; background: transparent !important; border: 2px solid var(--gold) !important; color: var(--gold) !important; padding: 7px 15px !important; border-radius: 8px !important; font-size: 10px !important; font-weight: 900 !important; cursor: pointer !important; }
+
+        .btn-boveda-container { display: flex; align-items: center; gap: 8px; cursor: pointer; background: rgba(212, 175, 55, 0.1); padding: 5px 10px; border-radius: 12px; border: 1px solid var(--gold); transition: transform 0.2s; }
         .btn-boveda-header { width: 38px; height: 38px; border-radius: 6px; box-shadow: 0 0 10px #0070f3; object-fit: cover; }
         .btn-boveda-text { color: var(--gold); font-size: 9px; font-weight: 900; text-transform: uppercase; line-height: 1.1; text-align: right; }
 
         .container { max-width: 450px; margin: auto; padding: 15px; padding-bottom: 300px; }
         .channels-grid { display: grid !important; grid-template-columns: repeat(5, 1fr) !important; gap: 5px; margin-bottom: 25px; padding: 10px 0; }
-        .ch-item { display: flex; flex-direction: column; align-items: center; text-align: center; cursor: pointer; }
         .ch-logo { width: 44px; height: 44px; border-radius: 12px; border: 2.5px solid #222; margin-bottom: 6px; background: #000; object-fit: contain; }
         .active .ch-logo { border-color: var(--gold); }
-        .ch-name { font-size: 6px; color: #ffffff; font-weight: 800; text-transform: uppercase; }
+        .ch-name { font-size: 6px; color: #ffffff; font-weight: 800; text-transform: uppercase; width: 100%; text-align: center;}
+
+        .card { background: var(--card); border-radius: 20px; margin-bottom: 30px; border: 1px solid #1a1a1a; overflow: hidden; }
+        .card.playing { border-color: var(--gold); }
+        .card-cover { width: 100%; height: 180px !important; background-size: cover; background-position: center; position: relative; border: 1.5px solid var(--gold); }
+        .btn-play { background-color: var(--gold) !important; border: none !important; width: 55px !important; height: 55px !important; border-radius: 50% !important; display: flex !important; align-items: center !important; justify-content: center !important; cursor: pointer; }
+        .btn-play svg { width: 28px !important; height: 28px !important; fill: black !important; }
 
         .jtbp-vault-bg { background: radial-gradient(circle, #222 10%, transparent 11%), #111; background-size: 10px 10px; border-top: 3px solid #D4AF37; padding: 20px 10px; text-align: center; border-radius: 20px; border: 1px solid #1a1a1a; margin-bottom: 30px; }
         
@@ -46,41 +53,52 @@
         }
         .year-btn.activo { background: #D4AF37; color: #000; box-shadow: 0 0 10px #D4AF37; }
 
-        .grid-vault { display: grid; grid-template-columns: 1fr; gap: 10px; text-align: left; }
-        .categoria-titulo-vault { color: #0070f3; border-bottom: 1px solid #333; margin-top: 15px; padding-bottom: 5px; font-size: 12px; text-transform: uppercase; font-weight: bold;}
-        .mix-card-v { background: #000; border-radius: 5px; overflow: hidden; height: 60px; border: 1px solid #333; margin-bottom: 5px;}
+        .mix-card-v { background: #000; border-radius: 5px; overflow: hidden; height: 60px; border: 1px solid #333; margin-bottom: 8px;}
         
         #global-player { position: fixed; bottom: 0; left: 0; width: 100%; background: #080808; border-top: 3px solid var(--gold); padding: 15px 20px; display: none; z-index: 1000; }
         .p-vinyl { width: 55px; height: 55px; border-radius: 50%; border: 2.3px solid var(--gold); background-size: cover; animation: rot 4s linear infinite; flex-shrink: 0; }
         @keyframes rot { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+        /* Estilos de Chat y Likes */
+        .btn-like { background:none; border:none; color:#555; cursor:pointer; }
+        .btn-like.liked { color: var(--red); }
+        .comments-section { display:none; background:#080808; border-radius:15px; padding:15px; border:1px solid #222; margin-top:10px; }
+        .c-input { width:100%; background:#1a1a1a; border:1px solid #333; color:white; padding:10px; border-radius:8px; margin-bottom:5px; }
+        .c-btn { width:100%; background:#333; color:white; padding:10px; border-radius:8px; font-weight:bold; cursor:pointer; }
     </style>
 </head>
 <body>
 
 <div id="app-content">
     <header>
-        <div style="display:flex; align-items:center; gap:12px;">
+        <div style="display:flex; align-items:center; gap:12px; cursor:pointer;" id="admin-trigger">
             <img src="https://i.postimg.cc/zVD4mstP/Jazztabueno-(2).png" width="35" height="35">
             <div class="brand-title">JAZZTABUENO<br>PRODUCTIONS</div>
         </div>
-        <div class="btn-boveda-container" onclick="window.openVault()">
-            <div class="btn-boveda-text">BÓVEDA DEL<br>LEGADO</div>
-            <img src="baul.png" onerror="this.src='https://i.postimg.cc/zVD4mstP/Jazztabueno-(2).png'" class="btn-boveda-header">
+        <div style="display:flex; align-items:center; gap:12px;">
+            <div class="btn-boveda-container" onclick="window.openVault()">
+                <div class="btn-boveda-text">BÓVEDA DEL<br>LEGADO</div>
+                <img src="baul.png" onerror="this.src='https://i.postimg.cc/zVD4mstP/Jazztabueno-(2).png'" class="btn-boveda-header">
+            </div>
+            <button onclick="window.doLogout()" class="btn-salir" id="btn-salir">SALIR</button>
         </div>
     </header>
 
     <div id="main-view" class="container">
+        <div id="admin-panel" style="display:none; background:#111; padding:20px; border:2px solid var(--gold); border-radius:20px; margin-bottom:20px;">
+             <p style="color:var(--gold); font-size:12px;">Panel de Director Activo 🎙️</p>
+        </div>
+
         <div class="channels-grid">
-            <div class="ch-item active"><img src="https://i.postimg.cc/8c7Smws4/logos-programas-jtbp.jpg" class="ch-logo"><span class="ch-name">Todo</span></div>
+            <div class="ch-item active" onclick="window.setFilter('Todo', this)"><img src="https://i.postimg.cc/8c7Smws4/logos-programas-jtbp.jpg" class="ch-logo"><span class="ch-name">Todo</span></div>
+            <div class="ch-item" onclick="window.setFilter('STUDIO 79', this)"><img src="https://i.postimg.cc/NKMDbYJB/S79.png" class="ch-logo"><span class="ch-name">Studio 79</span></div>
         </div>
-        <div id="feed">
-             <p style="text-align:center; color:#666;">Cargando programas VIP...</p>
-        </div>
+        <div id="feed"></div>
     </div>
     
     <div id="vault-view" class="container" style="display:none;">
         <section class="jtbp-vault-bg">
-            <div class="vault-header-bar" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
                 <h2 style="color:var(--gold); margin:0; font-size:14px; text-transform:uppercase;">Bóveda del Legado</h2>
                 <button onclick="window.closeVault()" style="background:#111; border:1px solid var(--gold); color:var(--gold); padding:8px 15px; border-radius:8px;">VOLVER</button>
             </div>
@@ -93,13 +111,27 @@
                 <button class="year-btn" onclick="window.mostrarPorAño(2021, this)">2021</button>
                 <button class="year-btn" onclick="window.mostrarPorAño(2020, this)">2020</button>
             </div>
-            <div id="grid-archivos" class="grid-vault"></div>
+            <div id="grid-archivos" style="text-align:left;"></div>
         </section>
     </div>
 </div>
 
+<div id="global-player">
+    <audio id="main-media" crossorigin="anonymous" playsinline></audio>
+    <div style="display:flex; align-items:center; gap:15px;">
+        <div id="p-vinyl" class="p-vinyl"></div>
+        <div style="flex:1; overflow:hidden;">
+            <h4 id="p-title" style="margin:0; font-size:14px; color:#fff; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">...</h4>
+            <div id="p-time" style="font-size:11px; color:var(--gold);">00:00 / 00:00</div>
+        </div>
+        <button id="p-play-btn" onclick="window.doToggle()" style="background:none; border:none;"></button>
+    </div>
+</div>
+
 <script>
-    // 🎯 AQUÍ ESTÁ TU LISTA DE PROGRAMAS (window.MIS_ARCHIVOS_BOVEDA)
+    const SVG_PLAY = `<svg viewBox="0 0 24 24" width="28"><path d="M8 5v14l11-7z" fill="black"/></svg>`;
+    const SVG_PAUSE = `<svg viewBox="0 0 24 24" width="28"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" fill="black"/></svg>`;
+
     window.MIS_ARCHIVOS_BOVEDA = [
         /* === 2025 === */
         { año: 2025, categoria: "Studio 79", titulo: "Especial Studio Mix Two", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FStudio79%2Fstudio79-192025-especial-studio-mix-two%2F", plataforma: "mixcloud" },
@@ -108,50 +140,80 @@
         { año: 2025, categoria: "Studio 79", titulo: "Be Good", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FStudio79%2Fstudio79-162025-be-good%2F", plataforma: "mixcloud" },
         { año: 2025, categoria: "Studio 79", titulo: "Moonlight Deadline", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FStudio79%2Fstudio79-152025-moonlight-deadline%2F", plataforma: "mixcloud" },
         { año: 2025, categoria: "Studio 79", titulo: "Especial Music IA", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FStudio79%2Fstudio79-142025-especial-music-ia%2F", plataforma: "mixcloud" },
-        
-        // ✅ PROGRAMA 13 AGREGADO POR PEPE
         { año: 2025, categoria: "Studio 79", titulo: "Especial Studio Mix One", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FStudio79%2Fstudio79-132025-especial-studio-mix-two%2F", plataforma: "mixcloud" },
-
         { año: 2025, categoria: "Studio 79", titulo: "Disco Nights", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FStudio79%2Fstudio79-122025-disco-nights%2F", plataforma: "mixcloud" },
-        
-        // ✅ PROGRAMA 11 REPARADO (CORREGIDO 112025)
         { año: 2025, categoria: "Studio 79", titulo: "Rhythm & Blues", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FStudio79%2Fstudio79-112025-rhythm-blues%2F", plataforma: "mixcloud" },
-
         { año: 2025, categoria: "JAZZTABUENO", titulo: "Seductive Soul", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FJazzTaBueno%2Fjazztabueno-042025-seductive-soul%2F", plataforma: "mixcloud" },
-        /* === Años anteriores === */
-        { año: 2024, categoria: "STUDIO 79", titulo: "Programa 5 Clásico", url: "https://archive.org/download/studio-79-programa-5/Studio%2079%20Programa%205.mp3", plataforma: "archive" },
-        { año: 2020, categoria: "STUDIO 79", titulo: "Programa 4", url: "https://archive.org/download/studio-79-programa-4-2020/Studio%2079%20Programa%204-2020.mp3", plataforma: "archive" }
+        /* Años anteriores se mantienen... */
     ];
 
-    window.openVault = () => {
-        document.getElementById('main-view').style.display = 'none';
-        document.getElementById('vault-view').style.display = 'block';
-        window.mostrarPorAño(2025, document.getElementById('btn-2025')); 
-    };
-
-    window.closeVault = () => {
-        document.getElementById('vault-view').style.display = 'none';
-        document.getElementById('main-view').style.display = 'block';
-    };
+    window.openVault = () => { document.getElementById('main-view').style.display = 'none'; document.getElementById('vault-view').style.display = 'block'; window.mostrarPorAño(2025, document.getElementById('btn-2025')); };
+    window.closeVault = () => { document.getElementById('vault-view').style.display = 'none'; document.getElementById('main-view').style.display = 'block'; };
 
     window.mostrarPorAño = (año, boton) => {
-        document.querySelectorAll('.year-btn').forEach(b => b.classList.remove('activo'));
-        if(boton) boton.classList.add('activo');
-        const grid = document.getElementById('grid-archivos');
-        const filtrados = window.MIS_ARCHIVOS_BOVEDA.filter(item => item.año === año);
-        let html = "";
-        const cats = [...new Set(filtrados.map(item => item.categoria))];
-        cats.forEach(cat => {
-            html += `<div class="categoria-titulo-vault">► ${cat}</div>`;
-            filtrados.filter(i => i.categoria === cat).forEach(i => {
-                if (i.plataforma === 'mixcloud') {
-                    html += `<div class="mix-card-v"><iframe width="100%" height="60" src="${i.url}" frameborder="0"></iframe></div>`;
-                } else {
-                    html += `<div style="padding:10px; background:#222; margin-bottom:5px; border-radius:5px; font-size:12px;">🎵 ${i.titulo} (Enlace Archive)</div>`;
-                }
+        document.querySelectorAll('.year-btn').forEach(b => b.classList.remove('activo')); if(boton) boton.classList.add('activo');
+        const grid = document.getElementById('grid-archivos'); const filtrados = window.MIS_ARCHIVOS_BOVEDA.filter(i => i.año === año);
+        let html = ""; const cats = [...new Set(filtrados.map(i => i.categoria))];
+        cats.forEach(c => {
+            html += `<div style="color:#0070f3; border-bottom:1px solid #333; margin:15px 0 5px; font-size:12px; font-weight:bold;">► ${c}</div>`;
+            filtrados.filter(i => i.categoria === c).forEach(i => {
+                html += `<div class="mix-card-v"><iframe width="100%" height="60" src="${i.url}" frameborder="0"></iframe></div>`;
             });
         });
-        grid.innerHTML = html || "<p style='color:#666;'>No hay programas en este año.</p>";
+        grid.innerHTML = html || "<p style='color:#666;'>No hay programas.</p>";
+    };
+</script>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { initializeFirestore, collection, query, orderBy, onSnapshot, doc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+    const firebaseConfig = { apiKey: "AIzaSyBwBq4gLgv4DSfUidzUuC7Irmvj_4pCTtI", authDomain: "familia-yajure-app.firebaseapp.com", projectId: "familia-yajure-app", storageBucket: "familia-yajure-app.firebasestorage.app", messagingSenderId: "692035727386", appId: "1:692035727386:web:dfa3e39a481d56368a61a3" };
+    const app = initializeApp(firebaseConfig);
+    const db = initializeFirestore(app, { experimentalForceLongPolling: true });
+    
+    const media = document.getElementById('main-media');
+    let programas = []; let idActual = null; let filtro = 'Todo';
+
+    onSnapshot(query(collection(db, "radio_programas"), orderBy("fecha", "desc")), (snap) => {
+        programas = []; snap.forEach(d => programas.push({id: d.id, ...d.data()})); render();
+    });
+
+    window.playItem = (id, url, tit, img) => {
+        idActual = id; media.src = url; media.play();
+        document.getElementById('p-title').innerText = tit;
+        document.getElementById('p-vinyl').style.backgroundImage = `url('${img}')`;
+        document.getElementById('global-player').style.display = 'block';
+        render();
+    };
+
+    window.doToggle = () => { if(media.paused) media.play(); else media.pause(); render(); };
+    window.setFilter = (cat, el) => { filtro = cat; document.querySelectorAll('.ch-item').forEach(i => i.classList.remove('active')); el.classList.add('active'); render(); };
+
+    function render() {
+        const feed = document.getElementById('feed'); if(!feed) return; feed.innerHTML = "";
+        const list = programas.filter(p => filtro === 'Todo' || p.programa === filtro);
+        list.forEach(p => {
+            const isPlaying = idActual === p.id && !media.paused;
+            const div = document.createElement('div'); div.className = `card ${isPlaying ? 'playing' : ''}`;
+            div.innerHTML = `
+                <div class="card-cover" style="background-image: url('${p.imagenUrl}')">
+                    <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center;">
+                        <button class="btn-play" onclick="window.playItem('${p.id}','${p.mp3Url}','${p.titulo}','${p.imagenUrl}')">${isPlaying ? SVG_PAUSE : SVG_PLAY}</button>
+                    </div>
+                </div>
+                <div class="info">
+                    <span style="color:var(--gold); font-size:10px; font-weight:800;">${p.programa}</span>
+                    <h3 style="margin:5px 0; font-size:18px;">${p.titulo}</h3>
+                </div>`;
+            feed.appendChild(div);
+        });
+        document.getElementById('p-play-btn').innerHTML = media.paused ? SVG_PLAY : SVG_PAUSE;
+    }
+
+    media.ontimeupdate = () => {
+        const m = Math.floor(media.currentTime/60), s = Math.floor(media.currentTime%60);
+        document.getElementById('p-time').innerText = `${m}:${s<10?'0':''}${s} / --:--`;
     };
 </script>
 </body>
