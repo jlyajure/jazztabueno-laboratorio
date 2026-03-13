@@ -41,8 +41,7 @@
                         const session = castContext.getCurrentSession();
                         const info = new chrome.cast.media.MediaInfo(window.castUrl, 'audio/mp3');
                         const meta = new chrome.cast.media.MusicTrackMediaMetadata();
-                        meta.title = window.castTitle; 
-                        meta.artist = "Jazztabueno Productions";
+                        meta.title = window.castTitle; meta.artist = "Jazztabueno Productions";
                         meta.images = [new chrome.cast.Image(window.castCover)];
                         info.metadata = meta;
                         const req = new chrome.cast.media.LoadRequest(info);
@@ -62,7 +61,7 @@
 
         header { background: rgba(0,0,0,0.98); padding: 12px 15px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #222; position: sticky; top: 0; z-index: 100; }
         .brand-title { color: var(--gold); font-family: 'Playfair Display', serif; font-size: 14px; text-transform: uppercase; line-height: 1.2; letter-spacing: 0.5px; }
-        .btn-salir { display: none; background: transparent !important; border: 2px solid var(--gold) !important; color: var(--gold) !important; padding: 7px 15px !important; border-radius: 8px !important; font-size: 10px !important; font-weight: 900 !important; }
+        .btn-salir { display: none; background: transparent !important; border: 2px solid var(--gold) !important; color: var(--gold) !important; padding: 7px 15px !important; border-radius: 8px !important; font-size: 10px !important; font-weight: 900 !important; cursor: pointer !important; }
 
         .btn-boveda-container { display: flex; align-items: center; gap: 8px; cursor: pointer; background: rgba(212, 175, 55, 0.1); padding: 5px 10px; border-radius: 12px; border: 1px solid var(--gold); transition: transform 0.2s; }
         .btn-boveda-header { width: 38px; height: 38px; border-radius: 6px; box-shadow: 0 0 10px #0070f3; object-fit: cover; }
@@ -70,9 +69,10 @@
 
         .container { max-width: 450px; margin: auto; padding: 15px; padding-bottom: 300px; }
         .channels-grid { display: grid !important; grid-template-columns: repeat(5, 1fr) !important; gap: 5px; margin-bottom: 25px; padding: 10px 0; }
+        .ch-item { display: flex; flex-direction: column; align-items: center; text-align: center; cursor: pointer; }
         .ch-logo { width: 44px; height: 44px; border-radius: 12px; border: 2.5px solid #222; margin-bottom: 6px; background: #000; object-fit: contain; }
         .active .ch-logo { border-color: var(--gold); }
-        .ch-name { font-size: 6px; color: #ffffff; font-weight: 800; text-transform: uppercase; text-align: center; width: 100%; }
+        .ch-name { font-size: 6px; color: #ffffff; font-weight: 800; text-transform: uppercase; line-height: 1.1; width: 100%; text-align: center; }
 
         .card { background: var(--card); border-radius: 20px; margin-bottom: 30px; border: 1px solid #1a1a1a; overflow: hidden; }
         .card.playing { border-color: var(--gold); }
@@ -82,7 +82,11 @@
         .btn-play svg { width: 28px !important; height: 28px !important; fill: black !important; }
         
         .info { padding: 20px; }
-        .ep-title { margin: 8px 0 4px 0; font-size: 19px; font-weight: 800; color: #ffffff; }
+        .ep-title { margin: 8px 0 4px 0; font-size: 19px; font-weight: 800; color: #ffffff; display: flex; justify-content: space-between; align-items: start; }
+        
+        .btn-like { background:none; border:none; cursor:pointer; font-size:18px; color:#555; transition:0.2s; display:flex; flex-direction:column; align-items:center; }
+        .btn-like.liked { color: var(--red); transform: scale(1.1); }
+        .like-count { font-size: 9px; margin-top: 3px; font-weight: 800; color: #888; }
 
         .btn-list { background: #1a1a1a !important; border: 1.5px solid #333 !important; color: #ffffff !important; padding: 12px !important; border-radius: 12px !important; font-size: 11px !important; font-weight: 800 !important; width: 100% !important; cursor: pointer; margin-top:12px; }
         .list-box { display: none; margin-top: 15px; padding: 20px; background: #080808; border-radius: 15px; border: 1px solid #222; font-size: 14px; white-space: pre-wrap; }
@@ -102,28 +106,15 @@
         }
         .year-btn.activo { background: #D4AF37; color: #000; box-shadow: 0 0 10px #D4AF37; }
 
-        .vintage-player {
-            background: #111; border: 1.5px solid #222; border-left: 4px solid var(--gold); border-radius: 8px;
-            display: flex; align-items: center; padding: 10px; margin-bottom: 5px; gap: 12px;
-        }
-        .vintage-player.playing { border-color: var(--gold); }
-        .vp-cover { width: 55px; height: 55px; border-radius: 6px; border: 1px solid #333; flex-shrink: 0; background-color: #000; object-fit: contain; }
-        .vp-info { flex: 1; display: flex; flex-direction: column; gap: 6px; overflow: hidden; }
-        .vp-title { color: #fff; font-size: 12px; font-weight: 800; margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .vp-controls { display: flex; align-items: center; gap: 10px; width: 100%; }
-        .vp-btn { background: var(--gold); border: none; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; }
-        .vp-btn svg { width: 14px; height: 14px; fill: #000; }
-        .vp-slider { flex: 1; height: 4px; -webkit-appearance: none; background: #333; border-radius: 2px; }
-        .vp-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 12px; height: 12px; background: var(--gold); border-radius: 50%; }
-        .vp-time { color: var(--gold); font-size: 9px; font-weight: 900; min-width: 32px; font-family: monospace; }
-        .mix-card-v { background: #000; border-radius: 5px; overflow: hidden; height: 55px; border: 1px solid #333; }
+        .vault-card { background: #000; border-radius: 15px; padding: 15px; border: 1px solid #333; margin-bottom: 20px; text-align: left; }
+        .mix-iframe-container { background: #000; border-radius: 8px; overflow: hidden; height: 60px; margin-top: 10px; border: 1px solid #222; }
 
         .comments-section { display:none; margin-top:15px; background:#080808; border-radius:15px; padding:15px; border:1px solid #222; }
-        .c-input { width:100%; background:#1a1a1a; border:1px solid #333; color:white; padding:10px; border-radius:8px; margin-bottom:8px; font-size:12px; }
-        .c-btn { width:100%; background:#333; color:white; padding:10px; border-radius:8px; font-weight:bold; cursor:pointer; }
+        .c-input { width:100%; background:#1a1a1a; border:1px solid #333; color:white; padding:10px; border-radius:8px; margin-bottom:8px; font-family:inherit; font-size:12px; }
+        .c-btn { width:100%; background:#333; color:white; border:none; padding:10px; border-radius:8px; font-weight:bold; cursor:pointer; font-size:11px; }
         .c-list { margin-top:15px; max-height:200px; overflow-y:auto; }
         .c-item { margin-bottom:12px; border-bottom:1px solid #1a1a1a; padding-bottom:8px; }
-        .c-user { font-weight:800; color:var(--gold); font-size:11px; }
+        .c-user { font-weight:800; color:var(--gold); font-size:11px; margin-bottom:2px; display:flex; justify-content:space-between; align-items:center; }
         .c-msg { font-size:12px; color:#ddd; line-height:1.3; }
 
         #global-player { position: fixed; bottom: 0; left: 0; width: 100%; background: #080808; border-top: 3px solid var(--gold); padding: 15px 20px; display: none; z-index: 1000; box-shadow: 0 -10px 30px rgba(0,0,0,0.8); }
@@ -133,6 +124,9 @@
         
         .controls { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #222; padding-top: 15px; margin-top: 12px; gap: 10px; }
         .ctrl-btn { flex: 1; background: #111; border: 1px solid #333; color: #fff; padding: 12px 5px; border-radius: 12px; font-size: 9px; font-weight: 900; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        
+        .contador-oyentes { display: flex; align-items: center; gap: 5px; background: #1a1a1a; padding: 4px 10px; border-radius: 20px; border: 1px solid #333; font-size: 11px; color: #aaa; font-weight: bold; }
+        .contador-oyentes span { color: var(--gold); }
         #visualizador { width: 100%; height: 35px; background: transparent; margin-top: 5px; margin-bottom: 5px; display: block; }
     </style>
 </head>
@@ -141,7 +135,7 @@
 <div id="app-content">
     <header>
         <div style="display:flex; align-items:center; gap:12px; cursor:pointer;" id="admin-trigger">
-            <img src="logo.png" width="35" height="35" onerror="this.src='https://i.postimg.cc/zVD4mstP/Jazztabueno-(2).png'">
+            <img src="https://i.postimg.cc/zVD4mstP/Jazztabueno-(2).png" width="35" height="35">
             <div class="brand-title">JAZZTABUENO<br>PRODUCTIONS</div>
         </div>
         <div style="display:flex; align-items:center; gap:12px;">
@@ -161,11 +155,12 @@
                 <option value="JAZZTABUENO">JAZZTABUENO</option>
                 <option value="STUDIO 79">STUDIO 79</option>
                 <option value="SALSA BRAVA">SALSA BRAVA</option>
+                <option value="OLD SCHOOL RADIO">OLD SCHOOL RADIO</option>
             </select>
             <input type="text" id="t-url" style="width:100%; padding:14px; background:#000; color:white; border:1px solid #333; border-radius:10px; margin-bottom:10px;" placeholder="URL MP3">
             <input type="text" id="t-img" style="width:100%; padding:14px; background:#000; color:white; border:1px solid #333; border-radius:10px; margin-bottom:10px;" placeholder="URL Portada">
             <textarea id="t-playlist" style="width:100%; height:120px; background:#000; color:white; border:1px solid var(--gold); border-radius:10px; padding:10px; margin-bottom:15px;" placeholder="Lista..."></textarea>
-            <button id="btn-save" style="width:100%; background:var(--gold); border:none; padding:15px; border-radius:12px; font-weight:800;">💾 GUARDAR</button>
+            <button id="btn-save" style="width:100%; background:var(--gold); border:none; padding:15px; border-radius:12px; font-weight:800;">💾 GUARDAR show</button>
         </div>
 
         <div class="channels-grid">
@@ -173,6 +168,7 @@
             <div class="ch-item" onclick="window.setFilter('JAZZTABUENO', this)"><img src="https://i.postimg.cc/zVD4mstP/Jazztabueno-(2).png" class="ch-logo"><span class="ch-name">Jazztabueno</span></div>
             <div class="ch-item" onclick="window.setFilter('STUDIO 79', this)"><img src="https://i.postimg.cc/NKMDbYJB/S79.png" class="ch-logo"><span class="ch-name">Studio 79</span></div>
             <div class="ch-item" onclick="window.setFilter('SALSA BRAVA', this)"><img src="https://i.postimg.cc/75fchgyt/Salsa-Brava.png" class="ch-logo"><span class="ch-name">Salsa Brava</span></div>
+            <div class="ch-item" onclick="window.setFilter('OLD SCHOOL RADIO', this)"><img src="https://i.postimg.cc/jwQ3mczC/Old-School-Radio.png" class="ch-logo"><span class="ch-name">Old School Radio</span></div>
         </div>
         <div id="feed"></div>
     </div>
@@ -199,7 +195,7 @@
 <div id="global-player">
     <audio id="main-media" crossorigin="anonymous" playsinline webkit-playsinline></audio>
     <div style="display:flex; align-items:center; gap:15px; margin-bottom:5px;">
-        <div id="p-vinyl" class="p-vinyl" style="background-image: url('https://i.postimg.cc/zVD4mstP/Jazztabueno-(2).png');"></div>
+        <div id="p-vinyl" class="p-vinyl"></div>
         <div style="flex:1; overflow:hidden;">
             <h4 id="p-title" style="margin:0; font-size:14px; color:#fff; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">...</h4>
             <div id="p-time" style="font-size:11px; color:var(--gold);">00:00 / 00:00</div>
@@ -216,27 +212,12 @@
     const SVG_PAUSE = `<svg viewBox="0 0 24 24" width="28"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" fill="white"/></svg>`;
 
     window.MIS_ARCHIVOS_BOVEDA = [
-        /* === 2025 === */
-        { año: 2025, categoria: "Studio 79", titulo: "Especial Studio Mix Two", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FStudio79%2Fstudio79-192025-especial-studio-mix-two%2F", plataforma: "mixcloud" },
-        { año: 2025, categoria: "Studio 79", titulo: "Funky Fever", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FStudio79%2Fstudio79-182025-funky-fever%2F", plataforma: "mixcloud" },
-        { año: 2025, categoria: "Studio 79", titulo: "You Win Again", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FStudio79%2Fstudio79-172025-you-win-again%2F", plataforma: "mixcloud" },
-        { año: 2025, categoria: "Studio 79", titulo: "Be Good", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FStudio79%2Fstudio79-162025-be-good%2F", plataforma: "mixcloud" },
-        { año: 2025, categoria: "Studio 79", titulo: "Moonlight Deadline", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FStudio79%2Fstudio79-152025-moonlight-deadline%2F", plataforma: "mixcloud" },
-        { año: 2025, categoria: "Studio 79", titulo: "Especial Music IA", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FStudio79%2Fstudio79-142025-especial-music-ia%2F", plataforma: "mixcloud" },
-        
-        // ✅ PROGRAMA 13 AGREGADO
-        { año: 2025, categoria: "Studio 79", titulo: "Especial Studio Mix One", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FStudio79%2Fstudio79-132025-especial-studio-mix-two%2F", plataforma: "mixcloud" },
-
-        { año: 2025, categoria: "Studio 79", titulo: "Disco Nights", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FStudio79%2Fstudio79-122025-disco-nights%2F", plataforma: "mixcloud" },
-        
-        // ✅ PROGRAMA 11 REPARADO (CORREGIDO URL)
-        { año: 2025, categoria: "Studio 79", titulo: "Rhythm & Blues", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FStudio79%2Fstudio79-112025-rhythm-blues%2F", plataforma: "mixcloud" },
-
-        { año: 2025, categoria: "JAZZTABUENO", titulo: "Seductive Soul", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FJazzTaBueno%2Fjazztabueno-042025-seductive-soul%2F", plataforma: "mixcloud" },
-        { año: 2025, categoria: "Salsa Brava", titulo: "No Quiero Nada Regalao", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FByJTB%2Fsalsabrava-112025-no-quiero-nada-regalao%2F", plataforma: "mixcloud" },
-        /* === Años anteriores mantenidos === */
-        { año: 2024, categoria: "STUDIO 79", titulo: "Programa 5 Clásico", url: "https://archive.org/download/studio-79-programa-5/Studio%2079%20Programa%205.mp3", plataforma: "archive" },
-        { año: 2020, categoria: "STUDIO 79", titulo: "Programa 4", url: "https://archive.org/download/studio-79-programa-4-2020/Studio%2079%20Programa%204-2020.mp3", plataforma: "archive" }
+        { año: 2025, categoria: "Studio 79", titulo: "Especial Studio Mix Two", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FStudio79%2Fstudio79-192025-especial-studio-mix-two%2F", plataforma: "mixcloud", id: "s79-25-19" },
+        { año: 2025, categoria: "Studio 79", titulo: "Funky Fever", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FStudio79%2Fstudio79-182025-funky-fever%2F", plataforma: "mixcloud", id: "s79-25-18" },
+        { año: 2025, categoria: "Studio 79", titulo: "Especial Studio Mix One", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FStudio79%2Fstudio79-132025-especial-studio-mix-two%2F", plataforma: "mixcloud", id: "s79-25-13" },
+        { año: 2025, categoria: "Studio 79", titulo: "Rhythm & Blues", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FStudio79%2Fstudio79-112025-rhythm-blues%2F", plataforma: "mixcloud", id: "s79-25-11" },
+        { año: 2023, categoria: "Old School Rock", titulo: "Slight Return", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2Foldschoolradio%2Fold-school-rock-radio-012023-slight-return%2F", plataforma: "mixcloud", id: "osrr-23-01" },
+        { año: 2020, categoria: "STUDIO 79", titulo: "Programa 4", url: "https://archive.org/download/studio-79-programa-4-2020/Studio%2079%20Programa%204-2020.mp3", plataforma: "archive", id: "s79-20-04" }
     ];
 
     window.openVault = () => { document.getElementById('main-view').style.display = 'none'; document.getElementById('vault-view').style.display = 'block'; window.mostrarPorAño(2025, document.getElementById('btn-2025')); };
@@ -252,29 +233,28 @@
         const cats = [...new Set(filtrados.map(item => item.categoria))];
         cats.forEach(cat => {
             html += `<div style="color:#0070f3; border-bottom:1px solid #333; margin:20px 0 10px; font-size:12px; font-weight:bold; text-align:left;">► ${cat}</div>`;
-            filtrados.filter(i => i.categoria === cat).forEach((i, idx) => {
-                const id = `vault-${año}-${idx}`;
+            filtrados.filter(i => i.categoria === cat).forEach((i) => {
                 html += `
                 <div class="vault-card">
                     <span style="color:var(--gold); font-size:9px; font-weight:900;">${i.categoria}</span>
                     <h3 style="margin:5px 0; font-size:16px;">${i.titulo}</h3>
                     <div class="mix-iframe-container"><iframe width="100%" height="60" src="${i.url}" frameborder="0"></iframe></div>
                     <div style="display:flex; gap:10px; margin-top:10px;">
-                        <button class="btn-list" onclick="window.toggleList('${id}')">📋 INFO</button>
-                        <button class="btn-list" onclick="window.toggleComments('${id}')">💬 CHAT</button>
+                        <button class="btn-list" onclick="window.toggleList('${i.id}')">📋 INFO</button>
+                        <button class="btn-list" onclick="window.toggleComments('${i.id}')">💬 CHAT</button>
                     </div>
-                    <div id="list-${id}" class="list-box">Playlist en Bóveda.</div>
-                    <div id="comments-${id}" class="comments-section"><p style="color:#666; font-size:11px;">Chat archivado.</p></div>
+                    <div id="list-${i.id}" class="list-box">Playlist archivada.</div>
+                    <div id="comments-${i.id}" class="comments-section"><p style="color:#666; font-size:11px;">Chat histórico.</p></div>
                 </div>`;
             });
         });
-        grid.innerHTML = html || "<p style='color:#666;'>Cargando...</p>";
+        grid.innerHTML = html || "<p style='color:#666;'>No hay archivos.</p>";
     };
 </script>
 
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { initializeFirestore, collection, query, orderBy, onSnapshot, doc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    import { initializeFirestore, collection, query, orderBy, onSnapshot, doc, updateDoc, increment, addDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
     const firebaseConfig = { apiKey: "AIzaSyBwBq4gLgv4DSfUidzUuC7Irmvj_4pCTtI", authDomain: "familia-yajure-app.firebaseapp.com", projectId: "familia-yajure-app", storageBucket: "familia-yajure-app.firebasestorage.app", messagingSenderId: "692035727386", appId: "1:692035727386:web:dfa3e39a481d56368a61a3" };
     const app = initializeApp(firebaseConfig);
@@ -296,12 +276,14 @@
     };
 
     window.doToggle = () => { if(media.paused) media.play(); else media.pause(); render(); };
-    window.doClose = () => { media.pause(); document.getElementById('global-player').style.display='none'; idActual=null; render(); };
     window.setFilter = (cat, el) => { filtro = cat; document.querySelectorAll('.ch-item').forEach(i => i.classList.remove('active')); el.classList.add('active'); render(); };
+    window.doClose = () => { media.pause(); document.getElementById('global-player').style.display='none'; idActual=null; render(); };
+    window.doLogout = () => { localStorage.removeItem('jtp_auth'); location.reload(); };
 
     function render() {
         const feed = document.getElementById('feed'); if(!feed) return; feed.innerHTML = "";
         const list = programas.filter(p => (filtro === 'Todo' || (p.programa||"").toUpperCase().includes(filtro.toUpperCase())));
+        if(list.length === 0) { feed.innerHTML = "<p style='text-align:center; color:#666;'>No hay programas en esta sección.</p>"; return; }
         list.forEach(p => {
             const isPlaying = idActual === p.id && !media.paused;
             const div = document.createElement('div'); div.className = `card ${isPlaying ? 'playing' : ''}`;
@@ -317,7 +299,7 @@
                         <button class="btn-list" onclick="window.toggleComments('${p.id}')">💬 CHAT</button>
                     </div>
                     <div id="list-${p.id}" class="list-box">${p.playlist || "Próximamente."}</div>
-                    <div id="comments-${p.id}" class="comments-section">Cargando chat...</div>
+                    <div id="comments-${p.id}" class="comments-section">Chat habilitado vía Firebase.</div>
                 </div>`;
             feed.appendChild(div);
         });
