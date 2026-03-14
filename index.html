@@ -94,7 +94,6 @@
 
         .jtbp-vault-bg { background: radial-gradient(circle, #222 10%, transparent 11%), #111; background-size: 10px 10px; border-top: 3px solid #D4AF37; padding: 20px 10px; text-align: center; border-radius: 20px; border: 1px solid #1a1a1a; margin-bottom: 30px; }
         
-        /* 🔥 FIX DEL SCROLL HORIZONTAL DE AÑOS 🔥 */
         .timeline-swipe {
             display: flex; overflow-x: auto; gap: 12px; padding: 10px 20px; 
             justify-content: flex-start; border-bottom: 1px solid #0070f3; margin-bottom: 20px; 
@@ -276,7 +275,10 @@
         { año: 2025, categoria: "Studio 79", titulo: "Funky Fever", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FStudio79%2Fstudio79-182025-funky-fever%2F", plataforma: "mixcloud" },
         { año: 2025, categoria: "Studio 79", titulo: "Especial Studio Mix One", url: "https://archive.org/download/studio-79-13-2025-especial-studio-mix-one/Studio79%20-%2013_2025%20_ESPECIAL%20STUDIO%20MIX%20ONE_.mp3", plataforma: "archive" },
         { año: 2025, categoria: "Studio 79", titulo: "Disco Nights", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FStudio79%2Fstudio79-122025-disco-nights%2F", plataforma: "mixcloud" },
-        { año: 2025, categoria: "Studio 79", titulo: "Rhythm & Blues", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FStudio79%2Fstudio79-112025-rhythm-blues%2F", plataforma: "mixcloud" }, 
+        
+        // 🎯 RHYTHM & BLUES AHORA ES ARCHIVE
+        { año: 2025, categoria: "Studio 79", titulo: "Rhythm & Blues", url: "https://archive.org/download/programa-11-rhythm-blues/Programa%2011%20%28Rhythm%20%26%20Blues%29.mp3", plataforma: "archive" }, 
+        
         { año: 2025, categoria: "Studio 79", titulo: "Especial Music IA", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FStudio79%2Fstudio79-142025-especial-music-ia%2F", plataforma: "mixcloud" },
         { año: 2025, categoria: "Studio 79", titulo: "Moonlight Deadline", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FStudio79%2Fstudio79-152025-moonlight-deadline%2F", plataforma: "mixcloud" },
         { año: 2025, categoria: "Studio 79", titulo: "You Win Again", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FStudio79%2Fstudio79-172025-you-win-again%2F", plataforma: "mixcloud" },
@@ -364,7 +366,6 @@
                 const esEspecial = item.titulo.toLowerCase().includes('especial');
                 const clase = esEspecial ? 'card-especial-v' : 'card-regular-v';
                 
-                // 🛑 AQUI QUITE LOS BOTONES DE INFO Y CHAT PARA LA BOVEDA 🛑
                 if (item.plataforma === 'archive') {
                     let defaultCover = "https://i.postimg.cc/zVD4mstP/Jazztabueno-(2).png";
                     const catUp = item.categoria.toUpperCase();
