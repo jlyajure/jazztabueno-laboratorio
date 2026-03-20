@@ -378,7 +378,6 @@
                 const esEspecial = item.titulo.toLowerCase().includes('especial');
                 const claseEspecial = esEspecial ? 'card-especial-v' : '';
                 
-                // 💎 CAJA PRINCIPAL CON SU TÍTULO Y MARCO (SIN BOTONES DE INFO) 💎
                 contenidoHtml += `
                 <div class="vault-card ${claseEspecial}">
                     <span style="color:var(--gold); font-size:9px; font-weight:900; text-transform:uppercase;">${item.categoria}</span>
@@ -415,7 +414,7 @@
                     </div>`;
                 }
                 
-                contenidoHtml += `</div>`; // Se cierra la caja
+                contenidoHtml += `</div>`;
                 idCounter++;
             });
         });
@@ -509,11 +508,11 @@
 
     window.actualizarUI = () => { render(); }; 
 
-    // 🔗 CREADOR DE PASES VIP (NUEVO)
+    // 🔗 CREADOR DE PASES VIP
     window.copiarLinkVIP = (id) => {
         const urlPase = window.location.origin + window.location.pathname + "?play=" + id;
         navigator.clipboard.writeText(urlPase).then(() => {
-            alert("🎟️ ¡Pase VIP copiado!\n\nYa puedes pegar el link en WhatsApp. Quien lo abra, escuchará este programa automáticamente.");
+            alert("🎟️ ¡Pase VIP copiado!\n\nYa puedes pegar el link en WhatsApp. Quien lo abra, escuchará este programa.");
         }).catch(err => {
             alert("Error al copiar: " + err);
         });
@@ -616,22 +615,33 @@
         }
     }
     
+    // 🎧 FUNCIÓN PLAY MEJORADA CON AVISO ANTIBLOQUEO
     window.playItem = async (id, url, tit, img) => {
         if(idActual === id) { 
             window.doToggle(); 
         } else {
             idActual = id; window.castUrl = url; window.castTitle = tit; window.castCover = img; media.src = url; 
+            
+            // 1. Cargamos el diseño del reproductor de inmediato
+            document.getElementById('p-title').innerText = tit;
+            document.getElementById('p-vinyl').style.backgroundImage = `url('${img}')`;
+            document.getElementById('global-player').style.display = 'block';
+
+            // 2. Intentamos reproducir el audio
             let promesa = media.play();
             if (promesa !== undefined) {
                 promesa.then(_ => {
                     let memoria = localStorage.getItem('jtbp_mem_' + id);
                     if(memoria && parseFloat(memoria) > 5) { media.currentTime = parseFloat(memoria); }
                     encenderVisualizador();
-                }).catch(e => {});
+                }).catch(e => {
+                    // 🛡️ 3. SI EL NAVEGADOR BLOQUEA EL AUDIO, MUESTRA ESTE AVISO
+                    const btn = document.getElementById('p-play-btn');
+                    if(btn) btn.innerHTML = SVG_PLAY;
+                    alert("🎟️ ¡Tu Pase VIP está listo!\n\nPor reglas de seguridad de tu navegador, presiona el botón de PLAY (▶️) en la barra inferior para escuchar.");
+                });
             }
-            document.getElementById('p-title').innerText = tit;
-            document.getElementById('p-vinyl').style.backgroundImage = `url('${img}')`;
-            document.getElementById('global-player').style.display = 'block';
+            
             if ('mediaSession' in navigator) {
                 navigator.mediaSession.metadata = new MediaMetadata({
                     title: tit, artist: 'Jazztabueno Productions', album: 'Radio Oficial', artwork: [ { src: img, sizes: '512x512', type: 'image/jpeg' } ]
@@ -664,7 +674,7 @@
         window.cancelEdit();
     };
 
-    // 🎟️ SISTEMA AUTOMÁTICO DE PASES VIP (DEEP LINK) 🎟️
+    // 🎟️ SISTEMA AUTOMÁTICO DE PASES VIP
     let paseVipUsado = false; 
 
     onSnapshot(query(collection(db, "radio_programas"), orderBy("fecha", "desc")), (snap) => { 
@@ -714,7 +724,6 @@
             let htmlTags = arrayTags.length > 0 ? `<div style="margin-top:6px;">` + arrayTags.map(t => `<span onclick="window.setHashtagFilter('${t}')" style="color:var(--gold); background:#222; padding:4px 10px; border-radius:12px; font-size:10px; font-weight:800; margin-right:5px; cursor:pointer; display:inline-block; border: 1px solid #333;">${t}</span>`).join('') + `</div>` : "";
 
             const div = document.createElement('div'); div.className = `card ${isPlaying ? 'playing' : ''}`;
-            // AQUÍ ESTÁ EL BOTÓN DE COPIAR 🔗 INTEGRADO PERFECTAMENTE
             div.innerHTML = `
                 <div class="card-cover" style="background-image: url('${p.imagenUrl}')">
                     <div class="card-overlay"><button class="btn-play" onclick="window.playItem('${p.id}','${p.mp3Url}','${p.titulo}','${p.imagenUrl}')">${isPlaying ? SVG_PAUSE : SVG_PLAY}</button></div>
