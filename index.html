@@ -214,7 +214,7 @@
     <div id="vault-view" class="container" style="display:none;">
         <section class="jtbp-vault-bg">
             <div class="vault-header-bar" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-                <h2 style="color:var(--gold); margin:0; font-size:14px; text-transform:uppercase; letter-spacing:1px; text-align: left;">Bóveda del<br>Legado</h2>
+                <h2 style="color:var(--gold); margin:0; font-size:14px; text-transform:uppercase; letter-spacing:1px; text-align: left;">Bóveda del Legado</h2>
             </div>
             <br>
             <div class="alerta-gala">
@@ -237,7 +237,7 @@
 </div>
 
 <div id="global-player">
-    <audio id="main-media" playsinline webkit-playsinline></audio>
+    <audio id="main-media" crossorigin="anonymous" playsinline webkit-playsinline></audio>
     <div style="display:flex; align-items:center; gap:15px; margin-bottom:5px;">
         <div id="p-vinyl" class="p-vinyl" style="background-image: url('https://i.postimg.cc/zVD4mstP/Jazztabueno-(2).png');"></div>
         <div style="flex:1; overflow:hidden;">
@@ -366,9 +366,9 @@
                 const esEspecial = item.titulo.toLowerCase().includes('especial');
                 const claseEspecial = esEspecial ? 'card-especial-v' : '';
                 
-                contenidoHtml += `<br>
-                <div class="vault-card ${claseEspecial}"><br>
-                    <span style="color:var(--gold); font-size:9px; font-weight:900; text-transform:uppercase;">${item.categoria}</span><br>
+                contenidoHtml += `
+                <div class="vault-card ${claseEspecial}">
+                    <span style="color:var(--gold); font-size:9px; font-weight:900; text-transform:uppercase;">${item.categoria}</span>
                     <h3 style="margin:5px 0 10px 0; font-size:15px; font-weight:800; color:#fff;">${item.titulo}</h3>`;
 
                 if (item.plataforma === 'archive') {
@@ -380,25 +380,25 @@
                     
                     const finalCover = item.cover ? item.cover : defaultCover;
 
-                    contenidoHtml += `<br>
-                    <div class="vintage-player" id="vp-card-${idCounter}"><br>
-                        <img src="${finalCover}" class="vp-cover" onerror="this.src='https://i.postimg.cc/zVD4mstP/Jazztabueno-(2).png'"><br>
-                        <div class="vp-info"><br>
-                            <div class="vp-title">Reproductor VIP</div><br>
-                            <div class="vp-controls"><br>
-                                <button class="vp-btn" id="vp-btn-${idCounter}" onclick="window.toggleVintage('vp-audio-${idCounter}', 'vp-btn-${idCounter}', 'vp-card-${idCounter}')"><br>
-                                    ${SVG_PLAY}<br>
-                                </button><br>
-                                <input type="range" class="vp-slider" id="vp-slider-${idCounter}" value="0" min="0" step="1" oninput="window.seekVintage('vp-audio-${idCounter}', this.value)"><br>
-                                <span class="vp-time" id="vp-time-${idCounter}">00:00</span><br>
-                            </div><br>
-                        </div><br>
-                        <audio id="vp-audio-${idCounter}" class="vintage-audio" src="${item.url}" playsinline webkit-playsinline ontimeupdate="window.updateVintageTime('vp-audio-${idCounter}', 'vp-slider-${idCounter}', 'vp-time-${idCounter}')" onended="window.resetVintage('vp-btn-${idCounter}', 'vp-card-${idCounter}')"></audio><br>
+                    contenidoHtml += `
+                    <div class="vintage-player" id="vp-card-${idCounter}">
+                        <img src="${finalCover}" class="vp-cover" onerror="this.src='https://i.postimg.cc/zVD4mstP/Jazztabueno-(2).png'">
+                        <div class="vp-info">
+                            <div class="vp-title">Reproductor VIP</div>
+                            <div class="vp-controls">
+                                <button class="vp-btn" id="vp-btn-${idCounter}" onclick="window.toggleVintage('vp-audio-${idCounter}', 'vp-btn-${idCounter}', 'vp-card-${idCounter}')">
+                                    ${SVG_PLAY}
+                                </button>
+                                <input type="range" class="vp-slider" id="vp-slider-${idCounter}" value="0" min="0" step="1" oninput="window.seekVintage('vp-audio-${idCounter}', this.value)">
+                                <span class="vp-time" id="vp-time-${idCounter}">00:00</span>
+                            </div>
+                        </div>
+                        <audio id="vp-audio-${idCounter}" class="vintage-audio" src="${item.url}" playsinline webkit-playsinline ontimeupdate="window.updateVintageTime('vp-audio-${idCounter}', 'vp-slider-${idCounter}', 'vp-time-${idCounter}')" onended="window.resetVintage('vp-btn-${idCounter}', 'vp-card-${idCounter}')"></audio>
                     </div>`;
                 } else {
-                    contenidoHtml += `<br>
-                    <div class="mix-iframe-container"><br>
-                        <iframe id="mix-iframe-${idCounter}" width="100%" height="60" src="${item.url}" frameborder="0" style="margin-top: -2px;"></iframe><br>
+                    contenidoHtml += `
+                    <div class="mix-iframe-container">
+                        <iframe id="mix-iframe-${idCounter}" width="100%" height="60" src="${item.url}" frameborder="0" style="margin-top: -2px;"></iframe>
                     </div>`;
                 }
                 
@@ -621,7 +621,7 @@
                 }).catch(e => {
                     const btn = document.getElementById('p-play-btn');
                     if(btn) btn.innerHTML = SVG_PLAY;
-                    alert("🎟️ ¡Tu Pase VIP está listo!\n\nPresiona el botón de PLAY (▶️) abajo para escuchar.");
+                    alert("🎟️ ¡Tu Pase VIP está listo!\n\nPor reglas de seguridad de tu navegador, presiona el botón de PLAY (▶️) en la barra inferior para escuchar.");
                 });
             }
             
@@ -706,34 +706,34 @@
             let htmlTags = arrayTags.length > 0 ? `<div style="margin-top:6px;">` + arrayTags.map(t => `<span onclick="window.setHashtagFilter('${t}')" style="color:var(--gold); background:#222; padding:4px 10px; border-radius:12px; font-size:10px; font-weight:800; margin-right:5px; cursor:pointer; display:inline-block; border: 1px solid #333;">${t}</span>`).join('') + `</div>` : "";
 
             const div = document.createElement('div'); div.className = `card ${isPlaying ? 'playing' : ''}`;
-            div.innerHTML = `<br>
-                <div class="card-cover" style="background-image: url('${p.imagenUrl}')"><br>
-                    <div class="card-overlay"><button class="btn-play" onclick="window.playItem('${p.id}','${p.mp3Url}','${p.titulo}','${p.imagenUrl}')">${isPlaying ? SVG_PAUSE : SVG_PLAY}</button></div><br>
-                </div><br>
-                <div class="info"><br>
-                    <div style="display:flex; justify-content:space-between; align-items:center;"><br>
-                        <span style="color:var(--gold); font-size:9px; font-weight:900; text-transform:uppercase;">${p.programa}</span><div class="contador-oyentes">🎧 <span>${vistas}</span></div><br>
-                    </div><br>
-                    <div style="display:flex; justify-content:space-between; align-items:start; margin-top:8px;"><br>
-                         <h3 class="ep-title" style="margin:0;">${p.titulo}</h3><br>
-                         <button class="btn-like ${userLikedClass}" onclick="window.doLike('${p.id}', this)">${heartIcon} <span class="like-count">${likes}</span></button><br>
-                    </div><br>
-                    ${htmlTags}<br>
-                    <div style="display:flex; gap:10px;"><br>
-                        <button class="btn-list" style="flex:1" onclick="window.toggleList('${p.id}')">📋 INFO</button><br>
-                        <button class="btn-list" style="flex:1" onclick="window.toggleComments('${p.id}')">💬 CHAT</button><br>
-                        <button class="btn-list" style="flex:0.4; font-size: 15px !important; padding: 0 !important; display: flex; align-items: center; justify-content: center;" onclick="window.copiarLinkVIP('${p.id}')" title="Copiar link directo">🔗</button><br>
-                    </div><br>
-                    <div id="list-${p.id}" class="list-box">${p.playlist || "Próximamente."}</div><br>
-                    <div id="comments-${p.id}" class="comments-section"><br>
-                        <div id="clist-${p.id}" class="c-list"></div><br>
-                        <div style="margin-top:10px; padding-top:10px; border-top:1px solid #222;"><br>
-                            <input type="text" id="cuser-${p.id}" class="c-input" placeholder="Tu Nombre"><br>
-                            <textarea id="cmsg-${p.id}" class="c-input" placeholder="Tu Mensaje..."></textarea><br>
-                            <button id="cbtn-${p.id}" class="c-btn" onclick="window.enviarComentario('${p.id}')">ENVIAR</button><br>
-                        </div><br>
-                    </div><br>
-                    ${isAdmin ? `<div style="display:flex; gap:10px; margin-top:20px; border-top:1px solid #222; padding-top:20px;"><button onclick="window.prepEdit('${p.id}')" style="flex:1; background:transparent; border:1px solid var(--gold); color:var(--gold); padding:10px; border-radius:10px; font-weight:800;">🖋️ EDITAR</button><button onclick="window.doDel('${p.id}')" style="flex:1; background:transparent; border:1px solid #f44; color:#f44; padding:10px; border-radius:10px; font-weight:800;">🗑️ BORRAR</button></div>` : ''}<br>
+            div.innerHTML = `
+                <div class="card-cover" style="background-image: url('${p.imagenUrl}')">
+                    <div class="card-overlay"><button class="btn-play" onclick="window.playItem('${p.id}','${p.mp3Url}','${p.titulo}','${p.imagenUrl}')">${isPlaying ? SVG_PAUSE : SVG_PLAY}</button></div>
+                </div>
+                <div class="info">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <span style="color:var(--gold); font-size:9px; font-weight:900; text-transform:uppercase;">${p.programa}</span><div class="contador-oyentes">🎧 <span>${vistas}</span></div>
+                    </div>
+                    <div style="display:flex; justify-content:space-between; align-items:start; margin-top:8px;">
+                         <h3 class="ep-title" style="margin:0;">${p.titulo}</h3>
+                         <button class="btn-like ${userLikedClass}" onclick="window.doLike('${p.id}', this)">${heartIcon} <span class="like-count">${likes}</span></button>
+                    </div>
+                    ${htmlTags}
+                    <div style="display:flex; gap:10px;">
+                        <button class="btn-list" style="flex:1" onclick="window.toggleList('${p.id}')">📋 INFO</button>
+                        <button class="btn-list" style="flex:1" onclick="window.toggleComments('${p.id}')">💬 CHAT</button>
+                        <button class="btn-list" style="flex:0.4; font-size: 15px !important; padding: 0 !important; display: flex; align-items: center; justify-content: center;" onclick="window.copiarLinkVIP('${p.id}')" title="Copiar link directo">🔗</button>
+                    </div>
+                    <div id="list-${p.id}" class="list-box">${p.playlist || "Próximamente."}</div>
+                    <div id="comments-${p.id}" class="comments-section">
+                        <div id="clist-${p.id}" class="c-list"></div>
+                        <div style="margin-top:10px; padding-top:10px; border-top:1px solid #222;">
+                            <input type="text" id="cuser-${p.id}" class="c-input" placeholder="Tu Nombre">
+                            <textarea id="cmsg-${p.id}" class="c-input" placeholder="Tu Mensaje..."></textarea>
+                            <button id="cbtn-${p.id}" class="c-btn" onclick="window.enviarComentario('${p.id}')">ENVIAR</button>
+                        </div>
+                    </div>
+                    ${isAdmin ? `<div style="display:flex; gap:10px; margin-top:20px; border-top:1px solid #222; padding-top:20px;"><button onclick="window.prepEdit('${p.id}')" style="flex:1; background:transparent; border:1px solid var(--gold); color:var(--gold); padding:10px; border-radius:10px; font-weight:800;">🖋️ EDITAR</button><button onclick="window.doDel('${p.id}')" style="flex:1; background:transparent; border:1px solid #f44; color:#f44; padding:10px; border-radius:10px; font-weight:800;">🗑️ BORRAR</button></div>` : ''}
                 </div>`;
             feed.appendChild(div);
         });
