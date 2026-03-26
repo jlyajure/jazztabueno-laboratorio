@@ -1,4 +1,4 @@
-:root { --gold: #a68a44; --bg: #050505; --card: #0d0d0d; --tag-bg: #a68a44; }
+:root { --gold: #a68a44; --bg: #050505; --card: #0d0d0d; }
 * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none; }
 body { margin: 0; background: var(--bg); color: #ffffff; font-family: 'Plus Jakarta Sans', sans-serif; min-height: 100vh; overflow-x: hidden; }
 
@@ -25,32 +25,48 @@ header { background: rgba(0,0,0,0.98); padding: 15px; display: flex; justify-con
 /* TARJETA VIP (IMAGEN 2) */
 .card { background: var(--card); border-radius: 25px; margin-bottom: 35px; border: 1px solid #1a1a1a; overflow: hidden; }
 .card-cover { width: 100%; height: 230px; background-size: cover; background-position: center; position: relative; border-bottom: 1.5px solid var(--gold); }
-.btn-play-card { background: rgba(166, 138, 68, 0.8); border: none; width: 70px; height: 70px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; backdrop-filter: blur(5px); }
+.btn-play-card { background: rgba(166, 138, 68, 0.85); border: none; width: 70px; height: 70px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; backdrop-filter: blur(5px); }
 .btn-play-card svg { width: 30px; height: 30px; fill: #000; }
 
 .info { padding: 20px; }
 .header-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
 .ep-category { color: var(--gold); font-size: 11px; font-weight: 900; text-transform: uppercase; }
-.listeners { background: rgba(255,255,255,0.05); padding: 4px 10px; border-radius: 20px; display: flex; align-items: center; gap: 5px; color: var(--gold); font-size: 12px; font-weight: 800; }
+.listeners { background: rgba(255,255,255,0.05); padding: 4px 10px; border-radius: 20px; color: var(--gold); font-size: 12px; font-weight: 800; }
 
 .title-row { display: flex; justify-content: space-between; align-items: start; margin-bottom: 20px; }
 .ep-title { margin: 0; font-size: 24px; font-weight: 800; color: #fff; line-height: 1.1; flex: 1; }
 .likes-box { text-align: center; margin-left: 15px; }
 .likes-box span { display: block; font-size: 10px; color: var(--gold); font-weight: 900; margin-top: 3px; }
 
-/* HASHTAGS DORADOS (IMAGEN 2) */
+/* HASHTAGS DORADOS */
 .tag-container { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 25px; }
 .tag { background: rgba(166, 138, 68, 0.15); color: var(--gold); padding: 5px 12px; border-radius: 20px; font-size: 11px; font-weight: 800; }
 
-/* BOTONES INFO Y CHAT */
+/* BOTONES ACCIÓN */
 .btn-group { display: flex; gap: 12px; margin-bottom: 25px; }
 .btn-main { background: #161616; border: 1px solid #222; color: #fff; flex: 1; padding: 12px; border-radius: 15px; font-weight: 800; font-size: 13px; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; }
 .btn-link { background: #161616; border: 1px solid #222; width: 48px; height: 48px; border-radius: 15px; display: flex; align-items: center; justify-content: center; cursor: pointer; }
 
-/* BOTONES EDITAR Y BORRAR GRANDES */
+/* EDITAR Y BORRAR */
 .admin-row { display: flex; gap: 12px; border-top: 1px solid #1a1a1a; padding-top: 20px; }
-.btn-edit { flex: 1; background: transparent; border: 1.5px solid var(--gold); color: var(--gold); padding: 14px; border-radius: 12px; font-size: 14px; font-weight: 900; display: flex; align-items: center; justify-content: center; gap: 10px; cursor: pointer; }
-.btn-delete { flex: 1; background: transparent; border: 1.5px solid #ff4444; color: #ff4444; padding: 14px; border-radius: 12px; font-size: 14px; font-weight: 900; display: flex; align-items: center; justify-content: center; gap: 10px; cursor: pointer; }
+.btn-edit { flex: 1; background: transparent; border: 1.5px solid var(--gold); color: var(--gold); padding: 14px; border-radius: 12px; font-size: 13px; font-weight: 900; cursor: pointer; }
+.btn-delete { flex: 1; background: transparent; border: 1.5px solid #ff4444; color: #ff4444; padding: 14px; border-radius: 12px; font-size: 13px; font-weight: 900; cursor: pointer; }
 
 /* BÓVEDA (IMAGEN 3) */
-.card-especial-v { border: 2.5px solid var(--gold) !important; box-shadow: 0 0 20px rgba(166, 138, 68, 0.4); }
+.jtbp-vault-bg { background: radial-gradient(circle, #222 10%, transparent 11%), #111; background-size: 10px 10px; border-top: 3px solid var(--gold); padding: 25px 10px; text-align: center; border-radius: 25px; margin-bottom: 30px; }
+.alerta-boveda { font-size: 16px !important; line-height: 1.6; margin-bottom: 30px; color: #fff; background: rgba(166, 138, 68, 0.1); padding: 20px; border-radius: 15px; border: 1.5px dashed var(--gold); }
+
+.vault-card { background: #000; border-radius: 20px; padding: 20px; border: 1px solid #333; margin-bottom: 15px; position: relative; }
+.vault-card.card-especial-v { border: 3px solid var(--gold); box-shadow: 0 0 25px rgba(166, 138, 68, 0.4); }
+
+.vintage-player { background: #111; border: 1.5px solid #222; border-left: 5px solid var(--gold); border-radius: 12px; display: flex; align-items: center; padding: 10px; margin-top: 15px; gap: 15px; }
+.vp-cover { width: 55px; height: 55px; border-radius: 8px; background: #000; object-fit: contain; }
+.vp-btn { background: var(--gold); border: none; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+
+#global-player { position: fixed; bottom: 0; left: 0; width: 100%; background: #080808; border-top: 3px solid var(--gold); padding: 15px 20px; display: none; z-index: 1000; box-shadow: 0 -10px 40px rgba(0,0,0,0.9); }
+.p-vinyl { width: 50px; height: 50px; border-radius: 50%; border: 2px solid var(--gold); background-size: cover; animation: rot 4s linear infinite; animation-play-state: paused; }
+.playing .p-vinyl { animation-play-state: running; }
+@keyframes rot { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+#seek-bar { width: 100%; margin: 10px 0; -webkit-appearance: none; background: #333; height: 4px; border-radius: 2px; }
+#seek-bar::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; background: var(--gold); border-radius: 50%; }
