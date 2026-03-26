@@ -12,20 +12,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <script src="https://widget.mixcloud.com/media/js/widgetApi.js"></script>
     
-    <script>
-        window.castUrl = ""; window.castTitle = ""; window.castCover = ""; window.lastTvTime = 0;
-        window['__onGCastApiAvailable'] = function(isAvailable) {
-            if (isAvailable) {
-                const castContext = cast.framework.CastContext.getInstance();
-                castContext.setOptions({ 
-                    receiverApplicationId: chrome.cast.media.DEFAULT_MEDIA_RECEIVER_APP_ID, 
-                    autoJoinPolicy: chrome.cast.AutoJoinPolicy.ORIGIN_SCOPED 
-                });
-            }
-        };
-    </script>
-    <script src="https://www.gstatic.com/cv/js/sender/v1/cast_sender.js?loadCastFramework=1"></script>
-
     <style>
         :root { --gold: #a68a44; --bg: #050505; --card: #121212; --red: #ff4444; }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none; }
@@ -59,6 +45,7 @@
         .card { background: var(--card); border-radius: 20px; margin-bottom: 30px; border: 1px solid #1a1a1a; overflow: hidden; }
         .card.playing { border-color: var(--gold); }
         .card-cover { width: 100%; height: 180px; background-size: cover; background-position: center; position: relative; border-bottom: 1.5px solid var(--gold); }
+        .card-overlay { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
         .btn-play { background-color: var(--gold); border: none; width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; }
         .btn-play svg { width: 28px; height: 28px; fill: #000 !important; }
         
@@ -69,9 +56,12 @@
         /* BÓVEDA ESTÉTICA VIP ORIGINAL */
         .jtbp-vault-bg { background: radial-gradient(circle, #222 10%, transparent 11%), #111; background-size: 10px 10px; border-top: 3px solid var(--gold); padding: 20px 10px; text-align: center; border-radius: 20px; border: 1px solid #1a1a1a; margin-bottom: 30px; }
         .timeline-swipe { display: flex; overflow-x: auto; gap: 12px; padding: 10px 20px; margin-bottom: 20px; border-bottom: 2.5px solid #D4AF37; padding-bottom: 15px; scrollbar-width: thin; scrollbar-color: var(--gold) #1a1a1a; }
+        .timeline-swipe::-webkit-scrollbar { height: 4px; }
+        .timeline-swipe::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 10px; }
         
         .year-btn { background: none; border: 1px solid #D4AF37; color: #D4AF37; padding: 6px 18px; border-radius: 20px; cursor: pointer; font-size: 12px; font-weight: bold; flex-shrink: 0; transition: 0.3s; }
         .year-btn.activo { background: var(--gold); color: #000; box-shadow: 0 0 15px rgba(166, 138, 68, 0.7); }
+
         /* AVISO Y NOTA MÁS GRANDES - IMAGEN 3 */
         .alerta-boveda { font-size: 15px !important; line-height: 1.6; margin-bottom: 25px; color: #fff; background: rgba(166, 138, 68, 0.15); padding: 18px; border-radius: 15px; border: 1.5px dashed var(--gold); text-align: center; }
 
@@ -123,15 +113,14 @@
         </div>
         <div id="feed"></div>
     </div>
+    
     <div id="vault-view" class="container" style="display:none;">
         <section class="jtbp-vault-bg">
             <h2 style="color:var(--gold); font-size:16px; text-transform:uppercase; margin-bottom:20px;">Bóveda del Legado</h2>
-            
             <div class="alerta-boveda">
-                <p>⚠️ <strong>Aviso:</strong> Para escuchar, presiona únicamente el botón de <strong>▶ PLAY</strong>.</p>
-                <p>⭐ <strong>Nota:</strong> Los programas con marco iluminado son <strong>Ediciones Especiales</strong>.</p>
+                <i>⚠️ <strong>Aviso:</strong> Para escuchar, presiona únicamente el botón de <strong>▶ PLAY</strong>.</i><br>
+                <i>⭐ <strong>Nota:</strong> Los programas con marco iluminado son <strong>Ediciones Especiales</strong>.</i>
             </div>
-
             <div class="timeline-swipe">
                 <button class="year-btn" id="btn-2025" onclick="window.mostrarPorAño(2025, this)">2025</button>
                 <button class="year-btn" onclick="window.mostrarPorAño(2024, this)">2024</button>
@@ -140,7 +129,7 @@
                 <button class="year-btn" onclick="window.mostrarPorAño(2021, this)">2021</button>
                 <button class="year-btn" onclick="window.mostrarPorAño(2020, this)">2020</button>
             </div>
-            <div id="grid-archivos" class="grid-vault"></div>
+            <div id="grid-archivos"></div>
         </section>
     </div>
 </div>
@@ -148,7 +137,7 @@
 <div id="global-player">
     <audio id="main-media" playsinline webkit-playsinline></audio>
     <div style="display:flex; align-items:center; gap:15px;">
-        <div id="p-vinyl" class="p-vinyl"></div>
+        <div id="p-vinyl" class="p-vinyl" style="background-image: url('https://i.postimg.cc/zVD4mstP/Jazztabueno-(2).png');"></div>
         <div style="flex:1; overflow:hidden;">
             <h4 id="p-title" style="margin:0; font-size:14px; color:#fff; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-weight:800;">...</h4>
             <div id="p-time" style="font-size:11px; color:var(--gold);">00:00 / 00:00</div>
@@ -163,9 +152,9 @@
 <div id="pantalla-salida">
     <img src="https://i.postimg.cc/zVD4mstP/Jazztabueno-(2).png" width="120">
     <h2 style="color:white; margin-top:20px;">Radio Detenida</h2>
-    <p style="color:var(--gold);">Gracias por ser parte del Legado</p>
     <button onclick="location.reload()" style="margin-top:30px; background:var(--gold); padding:12px 25px; border-radius:30px; border:none; font-weight:bold; cursor:pointer;">VOLVER</button>
 </div>
+
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getFirestore, collection, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
@@ -187,15 +176,30 @@
         { año: 2025, categoria: "Studio 79", titulo: "Especial Studio Mix One", url: "https://archive.org/download/studio-79-13-2025-especial-studio-mix-one/Studio79%20-%2013_2025%20_ESPECIAL%20STUDIO%20MIX%20ONE_.mp3" },
         { año: 2025, categoria: "Studio 79", titulo: "Disco Nights", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FStudio79%2Fstudio79-122025-disco-nights%2F", plataforma: "mixcloud" },
         { año: 2025, categoria: "Studio 79", titulo: "Rhythm & Blues", url: "https://archive.org/download/programa-11-rhythm-blues/Programa%2011%20%28Rhythm%20%26%20Blues%29.mp3" },
+        { año: 2025, categoria: "Studio 79", titulo: "Especial Music IA", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FStudio79%2Fstudio79-142025-especial-music-ia%2F", plataforma: "mixcloud" },
+        { año: 2025, categoria: "Studio 79", titulo: "Moonlight Deadline", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FStudio79%2Fstudio79-152025-moonlight-deadline%2F", plataforma: "mixcloud" },
+        { año: 2025, categoria: "Studio 79", titulo: "You Win Again", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FStudio79%2Fstudio79-172025-you-win-again%2F", plataforma: "mixcloud" },
+        { año: 2025, categoria: "Studio 79", titulo: "Be Good", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FStudio79%2Fstudio79-162025-be-good%2F", plataforma: "mixcloud" },
+        { año: 2025, categoria: "JAZZTABUENO", titulo: "Seductive Soul", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FJazzTaBueno%2Fjazztabueno-042025-seductive-soul%2F", plataforma: "mixcloud" },
+        { año: 2025, categoria: "Salsa Brava", titulo: "Traigo Salsa", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FByJTB%2Fsalsabrava-072025-traigo-salsa%2F", plataforma: "mixcloud" },
+        { año: 2025, categoria: "Salsa Brava", titulo: "Salsa 1983", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FByJTB%2Fsalsabrava-062025-1983%2F", plataforma: "mixcloud" },
+        { año: 2025, categoria: "Salsa Brava", titulo: "Palo Pa Rumba", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FByJTB%2Fsalsabrava-082025-palo-pa-rumba%2F", plataforma: "mixcloud" },
+        { año: 2025, categoria: "Salsa Brava", titulo: "La Libertad", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FByJTB%2Fsalsabrava-092025-la-libertad%2F", plataforma: "mixcloud" },
+        { año: 2025, categoria: "Salsa Brava", titulo: "Escucha El Ritmo", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FByJTB%2Fsalsabrava-102025-escucha-el-ritmo%2F", plataforma: "mixcloud" },
+        { año: 2025, categoria: "Salsa Brava", titulo: "No Quiero Nada Regalao", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FByJTB%2Fsalsabrava-112025-no-quiero-nada-regalao%2F", plataforma: "mixcloud" },
         { año: 2024, categoria: "STUDIO 79", titulo: "Programa 5 Clásico", url: "https://archive.org/download/studio-79-programa-5/Studio%2079%20Programa%205.mp3" },
+        { año: 2024, categoria: "STUDIO 79", titulo: "Programa 1", url: "https://archive.org/download/studio-79-programa-1/Studio%2079%20Programa%201.mp3" },
+        { año: 2023, categoria: "Old School Rock", titulo: "Slight Return", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2Foldschoolradio%2Fold-school-rock-radio-012023-slight-return%2F", plataforma: "mixcloud" },
+        { año: 2023, categoria: "Old School Rock", titulo: "Bionic Grass", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2Foldschoolradio%2Fold-school-rock-radio-052023-bionic-grass%2F", plataforma: "mixcloud" },
         { año: 2023, categoria: "JAZZTABUENO", titulo: "Acid Funk", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FJazzTaBueno%2Fjazztabueno-172023-acid-funk%2F", plataforma: "mixcloud" },
         { año: 2022, categoria: "JAZZTABUENO", titulo: "Programa 1", url: "https://archive.org/download/jazztabueno-programa-1-2022/Jazztabueno%20Programa%201-2022.mp3" },
         { año: 2021, categoria: "SALSA BRAVA", titulo: "Programa 1", url: "https://archive.org/download/salsa-brava-programa-1-2021/Salsa%20Brava%20Programa%201-2021.mp3" },
-        { año: 2020, categoria: "STUDIO 79", titulo: "Programa 4", url: "https://archive.org/download/studio-79-programa-4-2020/Studio%2079%20Programa%204-2020.mp3" }
+        { año: 2020, categoria: "STUDIO 79", titulo: "Programa 4", url: "https://archive.org/download/studio-79-programa-4-2020/Studio%2079%20Programa%204-2020.mp3" },
+        { año: 2020, categoria: "JAZZTABUENO", titulo: "The People", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FJazzTaBueno%2Fjazztabueno-282020-the-people%2F", plataforma: "mixcloud" }
     ];
 
     window.openVault = () => { document.getElementById('main-view').style.display = 'none'; document.getElementById('vault-view').style.display = 'block'; document.getElementById('btn-boveda-header').style.display = 'none'; document.getElementById('btn-volver-header').style.display = 'block'; window.mostrarPorAño(2025, document.getElementById('btn-2025')); window.scrollTo({top:0, behavior:'smooth'}); };
-    window.closeVault = () => { document.getElementById('vault-view').style.display = 'none'; document.getElementById('main-view').style.display = 'block'; document.getElementById('btn-volver-header').style.display = 'none'; document.getElementById('btn-boveda-header').style.display = 'flex'; idActual = null; media.pause(); render(); };
+    window.closeVault = () => { document.getElementById('vault-view').style.display = 'none'; document.getElementById('main-view').style.display = 'block'; document.getElementById('btn-volver-header').style.display = 'none'; document.getElementById('btn-boveda-header').style.display = 'flex'; idActual = null; media.pause(); render(); window.scrollTo({top:0, behavior:'smooth'}); };
     window.mostrarPorAño = (año, btn) => {
         document.querySelectorAll('.year-btn').forEach(b => b.classList.remove('activo'));
         if(btn) btn.classList.add('activo');
@@ -208,7 +212,7 @@
             const esEspecial = item.titulo.toLowerCase().includes('especial');
             const icon = (idActual === item.url && !media.paused) ? SVG_PAUSE : SVG_PLAY;
             if(item.plataforma === 'mixcloud') { return `<div class="vault-card"><span style="color:var(--gold); font-size:9px; font-weight:bold; text-transform:uppercase;">${item.categoria}</span><h3 style="margin:5px 0;">${item.titulo}</h3><iframe width="100%" height="60" src="${item.url}" frameborder="0"></iframe></div>`; }
-            else { return `<div class="vault-card ${esEspecial ? 'card-especial-v' : ''}"><span style="color:var(--gold); font-size:9px; font-weight:bold;">${item.categoria}</span><h3 style="margin:5px 0;">${item.titulo}</h3><div class="vintage-player"><img src="${defaultCover}" class="vp-cover"><button class="vp-btn" onclick="window.playVault('${item.url}', '${item.titulo}')">${icon}</button><span style="font-size:10px; color:var(--gold); font-weight:bold;">Reproductor VIP</span></div></div>`; }
+            else { return `<div class="vault-card ${esEspecial ? 'card-especial-v' : ''}"><span style="color:var(--gold); font-size:9px; font-weight:bold; text-transform:uppercase;">${item.categoria}</span><h3 style="margin:5px 0;">${item.titulo}</h3><div class="vintage-player"><img src="${defaultCover}" class="vp-cover"><button class="vp-btn" onclick="window.playVault('${item.url}', '${item.titulo}')">${icon}</button><span style="font-size:10px; color:var(--gold); font-weight:bold;">Reproductor VIP</span></div></div>`; }
         }).join('');
     };
     window.playVault = (url, tit) => {
