@@ -20,15 +20,15 @@ header { background: rgba(0,0,0,0.98); padding: 15px; display: flex; justify-con
 .channels-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 25px; padding: 10px 0; }
 .ch-item { display: flex; flex-direction: column; align-items: center; text-align: center; opacity: 0.6; cursor: pointer; }
 .ch-item.active { opacity: 1; }
-.ch-logo { width: 48px; height: 48px; border-radius: 14px; border: 2.3px solid #222; background: #000; object-fit: contain; }
+.ch-logo { width: 48px; height: 48px; border-radius: 14px; border: 2px solid #222; background: #000; object-fit: contain; }
 .active .ch-logo { border-color: var(--gold); box-shadow: 0 0 10px rgba(166, 138, 68, 0.3); }
 .ch-name { font-size: 7px; color: #fff; font-weight: 800; text-transform: uppercase; margin-top: 5px; }
 
-/* DISEÑO DE TARJETA EXACTO IMAGEN 2 */
+/* TARJETA VIP (ESTILO IMAGEN 2) */
 .card { background: var(--card); border-radius: 25px; margin-bottom: 35px; border: 1px solid #1a1a1a; overflow: hidden; }
 .card-cover { width: 100%; height: 230px; background-size: cover; background-position: center; position: relative; border-bottom: 1.5px solid var(--gold); }
 .card-overlay { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
-.btn-play-card { background: rgba(166, 138, 68, 0.85); border: none; width: 70px; height: 70px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; backdrop-filter: blur(5px); transition: 0.3s; }
+.btn-play-card { background: rgba(166, 138, 68, 0.85); border: none; width: 70px; height: 70px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; backdrop-filter: blur(5px); }
 .btn-play-card svg { width: 30px; height: 30px; fill: #000 !important; }
 
 .info { padding: 20px; }
@@ -52,14 +52,14 @@ header { background: rgba(0,0,0,0.98); padding: 15px; display: flex; justify-con
 .btn-edit { flex: 1; background: transparent; border: 1.5px solid var(--gold); color: var(--gold); padding: 12px; border-radius: 12px; font-size: 13px; font-weight: 900; cursor: pointer; }
 .btn-delete { flex: 1; background: transparent; border: 1.5px solid #ff4444; color: #ff4444; padding: 12px; border-radius: 12px; font-size: 13px; font-weight: 900; cursor: pointer; }
 
-/* BÓVEDA ESTÉTICA VIP IMAGEN 3 */
-.jtbp-vault-bg { background: radial-gradient(circle, #222 10%, transparent 11%), #111; background-size: 10px 10px; border-top: 3px solid var(--gold); padding: 25px 10px; text-align: center; border-radius: 25px; border: 1px solid #1a1a1a; margin-bottom: 30px; }
+/* BÓVEDA ESTÉTICA VIP (IMAGEN 3) */
+.jtbp-vault-bg { background: radial-gradient(circle, #222 10%, transparent 11%), #111; background-size: 10px 10px; border-top: 3px solid var(--gold); padding: 25px 10px; text-align: center; border-radius: 25px; margin-bottom: 30px; }
 .alerta-boveda { font-size: 16px !important; line-height: 1.6; margin-bottom: 25px; color: #fff; background: rgba(166, 138, 68, 0.1); padding: 20px; border-radius: 15px; border: 1.5px dashed var(--gold); text-align: center; }
 
 .vault-card { background: #000; border-radius: 20px; padding: 20px; border: 1px solid #333; margin-bottom: 15px; position: relative; text-align: left; }
 .vault-card.card-especial-v { border: 3.5px solid var(--gold); box-shadow: 0 0 25px rgba(166, 138, 68, 0.4); }
 
-.vintage-player { background: #111; border: 1.5px solid #222; border-left: 5px solid var(--gold); border-radius: 12px; display: flex; align-items: center; padding: 12px; margin-top: 15px; gap: 15px; }
+.vintage-player { background: #111; border: 1.5px solid #222; border-left: 5px solid var(--gold); border-radius: 12px; display: flex; align-items: center; padding: 10px; margin-top: 15px; gap: 15px; }
 .vp-cover { width: 60px; height: 60px; border-radius: 8px; background: #000; object-fit: contain; }
 .vp-btn { background: var(--gold); border: none; width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; }
 
@@ -69,6 +69,6 @@ header { background: rgba(0,0,0,0.98); padding: 15px; display: flex; justify-con
 @keyframes rot { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
 #seek-bar { width: 100%; margin: 12px 0; -webkit-appearance: none; background: #333; height: 4px; border-radius: 2px; }
-#seek-bar::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; background: var(--gold); border-radius: 50%; }
+#seek-bar::-webkit-slider-thumb { -webkit-appearance: none; width: 14px; height: 14px; background: var(--gold); border-radius: 50%; }
 
 #pantalla-salida { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:#050505; z-index:99999; flex-direction:column; align-items:center; justify-content:center; padding:20px; text-align:center; }
