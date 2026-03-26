@@ -50,15 +50,19 @@
         .ep-title { margin: 8px 0 4px 0; font-size: 19px; font-weight: 800; }
         .btn-list { background: #1a1a1a; border: 1.5px solid #333; color: #ffffff; padding: 12px; border-radius: 12px; font-size: 11px; font-weight: 800; width: 100%; cursor: pointer; margin-top:12px; }
 
-        /* BÓVEDA: ESTÉTICA ORIGINAL MEJORADA */
-        .jtbp-vault-bg { background: radial-gradient(circle, #222 10%, transparent 11%), #111; background-size: 10px 10px; border-top: 3px solid var(--gold); padding: 20px 10px; text-align: center; border-radius: 20px; border: 1px solid #1a1a1a; margin-bottom: 30px; }
-        .timeline-swipe { display: flex; overflow-x: auto; gap: 12px; padding: 10px 20px; margin-bottom: 20px; border-bottom: 1px solid var(--gold); padding-bottom: 15px; }
-        
-        .year-btn { background: none; border: 1px solid var(--gold); color: var(--gold); padding: 6px 18px; border-radius: 20px; cursor: pointer; font-size: 12px; font-weight: bold; flex-shrink: 0; transition: 0.3s; }
-        .year-btn.activo { background: var(--gold); color: #000; box-shadow: 0 0 15px rgba(166, 138, 68, 0.5); }
+        /* BÓVEDA ESTÉTICA ORIGINAL */
+        .jtbp-vault-bg { background: radial-gradient(circle, #222 10%, transparent 11%), #111; background-size: 10px 10px; border-top: 3px solid #D4AF37; padding: 20px 10px; text-align: center; border-radius: 20px; border: 1px solid #1a1a1a; margin-bottom: 30px; }
+        .timeline-swipe { display: flex; overflow-x: auto; gap: 12px; padding: 10px 20px; margin-bottom: 20px; border-bottom: 2px solid #D4AF37; padding-bottom: 15px; scrollbar-width: thin; scrollbar-color: var(--gold) #1a1a1a; }
+        .timeline-swipe::-webkit-scrollbar { height: 4px; }
+        .timeline-swipe::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 10px; }
+
+        .year-btn { background: none; border: 1px solid #D4AF37; color: #D4AF37; padding: 6px 18px; border-radius: 20px; cursor: pointer; font-size: 12px; font-weight: bold; flex-shrink: 0; transition: 0.3s; }
+        .year-btn.activo { background: #D4AF37; color: #000; box-shadow: 0 0 15px rgba(212, 175, 55, 0.6); }
 
         .vault-card { background: #000; border-radius: 15px; padding: 15px; border: 1px solid #333; margin-bottom: 15px; text-align: left; }
         .vintage-player { background: #111; border: 1.5px solid #222; border-left: 4px solid var(--gold); border-radius: 8px; display: flex; align-items: center; padding: 10px; margin-top: 10px; gap: 12px; }
+        
+        /* FONDO NEGRO LOGOS */
         .vp-cover { width: 55px; height: 55px; border-radius: 6px; border: 1px solid #333; background: #000 !important; object-fit: contain; }
         .vp-btn { background: var(--gold); border: none; width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; }
         .vp-btn svg { width: 18px; height: 18px; fill: #000 !important; }
@@ -107,6 +111,12 @@
     <div id="vault-view" class="container" style="display:none;">
         <section class="jtbp-vault-bg">
             <h2 style="color:var(--gold); font-size:14px; text-transform:uppercase; margin-bottom:15px;">Bóveda del Legado</h2>
+            
+            <div style="margin-bottom:20px; text-align:center; font-size:12px;">
+                <p>⚠️ <i><strong>Aviso:</strong> Para escuchar, presiona únicamente el botón de <strong>▶ PLAY</strong>.</i></p>
+                <p>⭐ <i><strong>Nota:</strong> Los programas con marco iluminado son <strong>Ediciones Especiales</strong>.</i></p>
+            </div>
+
             <div class="timeline-swipe">
                 <button class="year-btn" id="btn-2025" onclick="window.mostrarPorAño(2025, this)">2025</button>
                 <button class="year-btn" onclick="window.mostrarPorAño(2024, this)">2024</button>
@@ -123,10 +133,10 @@
 <div id="global-player">
     <audio id="main-media" playsinline webkit-playsinline></audio>
     <div style="display:flex; align-items:center; gap:15px;">
-        <div id="p-vinyl" class="p-vinyl" style="background-image: url('https://i.postimg.cc/zVD4mstP/Jazztabueno-(2).png');"></div>
+        <div id="p-vinyl" class="p-vinyl"></div>
         <div style="flex:1; overflow:hidden;">
-            <h4 id="p-title" style="margin:0; font-size:14px; color:#fff; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">...</h4>
-            <div id="p-time" style="font-size:11px; color:var(--gold);">00:00 / 00:00</div>
+            <h4 id="p-title" style="margin:0; font-size:14px; color:#fff; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-weight:800;">...</h4>
+            <div id="p-time" style="font-size:11px; color:var(--gold); font-weight:900;">00:00 / 00:00</div>
         </div>
         <button onclick="window.doToggle()" id="p-play-btn" style="background:none; border:none; cursor:pointer;"></button>
         <button onclick="window.doClose()" style="background:none; border:none; color:#666; font-size:24px;">×</button>
@@ -137,7 +147,8 @@
 
 <div id="pantalla-salida">
     <img src="https://i.postimg.cc/zVD4mstP/Jazztabueno-(2).png" width="120">
-    <h2 style="color:white; margin-top:20px;">Radio Detenida</h2>
+    <h2 style="color:white; margin-top:20px;">Música Detenida</h2>
+    <p style="color:var(--gold);">Gracias por ser parte del Legado</p>
     <button onclick="location.reload()" style="margin-top:30px; background:var(--gold); padding:12px 25px; border-radius:30px; border:none; font-weight:bold; cursor:pointer;">VOLVER</button>
 </div>
 
@@ -175,7 +186,6 @@
         { año: 2025, categoria: "Salsa Brava", titulo: "No Quiero Nada Regalao", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FByJTB%2Fsalsabrava-112025-no-quiero-nada-regalao%2F", plataforma: "mixcloud" },
         { año: 2024, categoria: "STUDIO 79", titulo: "Programa 5 Clásico", url: "https://archive.org/download/studio-79-programa-5/Studio%2079%20Programa%205.mp3" },
         { año: 2023, categoria: "Old School Rock", titulo: "Slight Return", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2Foldschoolradio%2Fold-school-rock-radio-012023-slight-return%2F", plataforma: "mixcloud" },
-        { año: 2023, categoria: "Old School Rock", titulo: "Bionic Grass", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2Foldschoolradio%2Fold-school-rock-radio-052023-bionic-grass%2F", plataforma: "mixcloud" },
         { año: 2023, categoria: "JAZZTABUENO", titulo: "Acid Funk", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FJazzTaBueno%2Fjazztabueno-172023-acid-funk%2F", plataforma: "mixcloud" },
         { año: 2022, categoria: "JAZZTABUENO", titulo: "Programa 1", url: "https://archive.org/download/jazztabueno-programa-1-2022/Jazztabueno%20Programa%201-2022.mp3" },
         { año: 2022, categoria: "JAZZTABUENO", titulo: "Programa 2", url: "https://archive.org/download/jazztabueno-programa-2-2022/Jazztabueno%20Programa%202-2022.mp3" },
