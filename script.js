@@ -48,7 +48,6 @@ function render() {
         const isPlaying = idActual === p.id && !media.paused;
         const div = document.createElement('div'); div.className = 'card';
         
-        /* DISEÑO COMPLETO IMAGEN 2 */
         div.innerHTML = `
             <div class="card-cover" style="background-image: url('${p.imagenUrl}')">
                 <div class="card-overlay"><button class="btn-play-card" onclick="window.playItem('${p.id}','${p.mp3Url}','${p.titulo}','${p.imagenUrl}')">${isPlaying ? SVG_PAUSE : SVG_PLAY}</button></div>
@@ -75,7 +74,11 @@ function render() {
 window.playItem = async (id, url, tit, img) => {
     if(idActual === id) { media.paused ? media.play() : media.pause(); } 
     else {
-        idActual = id; media.src = url; media.load();
+        idActual = id; 
+        media.pause();
+        media.removeAttribute('crossorigin');
+        media.src = url; 
+        media.load();
         document.getElementById('p-title').innerText = tit;
         document.getElementById('p-vinyl').style.backgroundImage = `url('${img}')`;
         document.getElementById('global-player').style.display = 'block';
@@ -84,6 +87,7 @@ window.playItem = async (id, url, tit, img) => {
     render();
 };
 
+window.confirmarSalida = () => { if(confirm("¿Deseas detener la radio y salir?")) { media.pause(); document.getElementById('pantalla-salida').style.display='flex'; } };
 window.doToggle = () => { if(media.paused) media.play(); else media.pause(); render(); };
 window.doClose = () => { media.pause(); document.getElementById('global-player').style.display='none'; idActual=null; render(); };
 media.ontimeupdate = () => { seekBar.value = media.currentTime; };
