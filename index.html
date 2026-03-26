@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Jazztabueno</title>
     
     <link rel="icon" type="image/png" href="https://i.postimg.cc/zVD4mstP/Jazztabueno-(2).png">
@@ -237,7 +237,7 @@
 </div>
 
 <div id="global-player">
-    <audio id="main-media" crossorigin="anonymous" playsinline webkit-playsinline></audio>
+    <audio id="main-media" playsinline webkit-playsinline></audio>
     <div style="display:flex; align-items:center; gap:15px; margin-bottom:5px;">
         <div id="p-vinyl" class="p-vinyl" style="background-image: url('https://i.postimg.cc/zVD4mstP/Jazztabueno-(2).png');"></div>
         <div style="flex:1; overflow:hidden;">
@@ -602,11 +602,18 @@
         }
     }
     
+    // 🔥 CORRECCIÓN 3: REPRODUCTOR MAESTRO 🔥
     window.playItem = async (id, url, tit, img) => {
         if(idActual === id) { 
             window.doToggle(); 
         } else {
-            idActual = id; window.castUrl = url; window.castTitle = tit; window.castCover = img; media.src = url; 
+            idActual = id; window.castUrl = url; window.castTitle = tit; window.castCover = img; 
+            
+            // RESET Y CARGA LIMPIA PARA EVITAR BLOQUEOS
+            media.pause();
+            media.removeAttribute('crossorigin');
+            media.src = url; 
+            media.load();
             
             document.getElementById('p-title').innerText = tit;
             document.getElementById('p-vinyl').style.backgroundImage = `url('${img}')`;
@@ -621,7 +628,7 @@
                 }).catch(e => {
                     const btn = document.getElementById('p-play-btn');
                     if(btn) btn.innerHTML = SVG_PLAY;
-                    alert("🎟️ ¡Tu Pase VIP está listo!\n\nPor reglas de seguridad de tu navegador, presiona el botón de PLAY (▶️) en la barra inferior para escuchar.");
+                    alert("🎟️ ¡Tu Pase VIP está listo!\n\nPresiona el botón de PLAY (▶️) en la barra inferior para escuchar.");
                 });
             }
             
