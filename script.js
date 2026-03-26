@@ -48,7 +48,7 @@ function render() {
         const isPlaying = idActual === p.id && !media.paused;
         const div = document.createElement('div'); div.className = 'card';
         
-        /* DISEÑO EXACTO IMAGEN 2: Likes, Emojis, Hashtags y Botones Admin */
+        /* DISEÑO COMPLETO IMAGEN 2 */
         div.innerHTML = `
             <div class="card-cover" style="background-image: url('${p.imagenUrl}')">
                 <div class="card-overlay"><button class="btn-play-card" onclick="window.playItem('${p.id}','${p.mp3Url}','${p.titulo}','${p.imagenUrl}')">${isPlaying ? SVG_PAUSE : SVG_PLAY}</button></div>
@@ -65,10 +65,7 @@ function render() {
                     <button class="btn-action">💬 CHAT</button>
                     <button class="btn-small">🔗</button>
                 </div>
-                <div class="admin-row">
-                    <button class="btn-edit">🖋️ EDITAR</button>
-                    <button class="btn-delete">🗑️ BORRAR</button>
-                </div>
+                <div class="admin-row"><button class="btn-edit">🖋️ EDITAR</button><button class="btn-delete">🗑️ BORRAR</button></div>
                 <button style="background:transparent;border:none;color:#555;font-size:12px;font-weight:700;margin-top:20px;cursor:pointer;">Ver más...</button>
             </div>`;
         feed.appendChild(div);
