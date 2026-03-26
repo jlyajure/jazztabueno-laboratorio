@@ -2,71 +2,73 @@
 * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none; }
 body { margin: 0; background: var(--bg); color: #ffffff; font-family: 'Plus Jakarta Sans', sans-serif; min-height: 100vh; overflow-x: hidden; }
 
-/* SCROLLBAR ORO */
+/* SCROLLBAR DORADA */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: #000; }
 ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 10px; }
 
-header { background: rgba(0,0,0,0.98); padding: 15px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #1a1a1a; position: sticky; top: 0; z-index: 100; }
+header { background: rgba(0,0,0,0.98); padding: 15px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #1a1a1a; position: sticky; top: 0; z-index: 1000; }
 .brand-title { color: var(--gold); font-family: 'Playfair Display', serif; font-size: 14px; text-transform: uppercase; line-height: 1.2; letter-spacing: 0.5px; }
 
-.btn-boveda-container { display: flex; align-items: center; gap: 8px; cursor: pointer; background: rgba(212, 175, 55, 0.05); padding: 5px 10px; border-radius: 12px; border: 1px solid var(--gold); }
+.btn-boveda-container { display: flex; align-items: center; gap: 8px; cursor: pointer; background: rgba(166, 138, 68, 0.1); padding: 5px 10px; border-radius: 12px; border: 1px solid var(--gold); }
 .btn-boveda-header { width: 38px; height: 38px; border-radius: 6px; object-fit: cover; }
-.btn-boveda-text { color: var(--gold); font-size: 9px; font-weight: 900; text-transform: uppercase; text-align: right; }
+.btn-boveda-text { color: var(--gold); font-size: 9px; font-weight: 900; text-transform: uppercase; line-height: 1.1; text-align: right; }
+
+.btn-salir-header { background: transparent; border: 2px solid var(--gold); color: var(--gold); padding: 7px 15px; border-radius: 8px; font-size: 10px; font-weight: 900; cursor: pointer; text-transform: uppercase; }
 
 .container { max-width: 450px; margin: auto; padding: 15px; padding-bottom: 250px; }
-.channels-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 30px; }
+.channels-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 25px; padding: 10px 0; }
 .ch-item { display: flex; flex-direction: column; align-items: center; text-align: center; opacity: 0.6; cursor: pointer; }
 .ch-item.active { opacity: 1; }
-.ch-logo { width: 48px; height: 48px; border-radius: 14px; border: 2px solid #222; background: #000; object-fit: contain; }
+.ch-logo { width: 48px; height: 48px; border-radius: 14px; border: 2.3px solid #222; background: #000; object-fit: contain; }
 .active .ch-logo { border-color: var(--gold); box-shadow: 0 0 10px rgba(166, 138, 68, 0.3); }
 .ch-name { font-size: 7px; color: #fff; font-weight: 800; text-transform: uppercase; margin-top: 5px; }
 
-/* TARJETA VIP (IMAGEN 2) */
+/* DISEÑO DE TARJETA EXACTO IMAGEN 2 */
 .card { background: var(--card); border-radius: 25px; margin-bottom: 35px; border: 1px solid #1a1a1a; overflow: hidden; }
 .card-cover { width: 100%; height: 230px; background-size: cover; background-position: center; position: relative; border-bottom: 1.5px solid var(--gold); }
-.btn-play-card { background: rgba(166, 138, 68, 0.85); border: none; width: 70px; height: 70px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; backdrop-filter: blur(5px); }
-.btn-play-card svg { width: 30px; height: 30px; fill: #000; }
+.card-overlay { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
+.btn-play-card { background: rgba(166, 138, 68, 0.85); border: none; width: 70px; height: 70px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; backdrop-filter: blur(5px); transition: 0.3s; }
+.btn-play-card svg { width: 30px; height: 30px; fill: #000 !important; }
 
 .info { padding: 20px; }
 .header-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
 .ep-category { color: var(--gold); font-size: 11px; font-weight: 900; text-transform: uppercase; }
-.listeners { background: rgba(255,255,255,0.05); padding: 4px 10px; border-radius: 20px; color: var(--gold); font-size: 12px; font-weight: 800; }
+.listeners { background: rgba(255,255,255,0.05); padding: 4px 10px; border-radius: 20px; color: var(--gold); font-size: 12px; font-weight: 800; display: flex; align-items: center; gap: 5px; }
 
-.title-row { display: flex; justify-content: space-between; align-items: start; margin-bottom: 20px; }
+.title-row { display: flex; justify-content: space-between; align-items: start; margin-bottom: 15px; }
 .ep-title { margin: 0; font-size: 24px; font-weight: 800; color: #fff; line-height: 1.1; flex: 1; }
 .likes-box { text-align: center; margin-left: 15px; }
-.likes-box span { display: block; font-size: 10px; color: var(--gold); font-weight: 900; margin-top: 3px; }
+.likes-box span { display: block; font-size: 10px; color: var(--gold); font-weight: 900; margin-top: 2px; }
 
-/* HASHTAGS DORADOS */
-.tag-container { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 25px; }
-.tag { background: rgba(166, 138, 68, 0.15); color: var(--gold); padding: 5px 12px; border-radius: 20px; font-size: 11px; font-weight: 800; }
+.tag-container { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+.tag { background: rgba(166, 138, 68, 0.12); color: var(--gold); padding: 5px 12px; border-radius: 20px; font-size: 11px; font-weight: 800; border: 1px solid rgba(166, 138, 68, 0.2); }
 
-/* BOTONES ACCIÓN */
-.btn-group { display: flex; gap: 12px; margin-bottom: 25px; }
-.btn-main { background: #161616; border: 1px solid #222; color: #fff; flex: 1; padding: 12px; border-radius: 15px; font-weight: 800; font-size: 13px; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; }
-.btn-link { background: #161616; border: 1px solid #222; width: 48px; height: 48px; border-radius: 15px; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+.btn-group { display: flex; gap: 10px; margin-bottom: 20px; }
+.btn-action { background: #161616; border: 1px solid #222; color: #fff; flex: 1; padding: 12px; border-radius: 15px; font-weight: 800; font-size: 12px; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; }
+.btn-small { background: #161616; border: 1px solid #222; width: 45px; height: 45px; border-radius: 15px; display: flex; align-items: center; justify-content: center; cursor: pointer; }
 
-/* EDITAR Y BORRAR */
-.admin-row { display: flex; gap: 12px; border-top: 1px solid #1a1a1a; padding-top: 20px; }
-.btn-edit { flex: 1; background: transparent; border: 1.5px solid var(--gold); color: var(--gold); padding: 14px; border-radius: 12px; font-size: 13px; font-weight: 900; cursor: pointer; }
-.btn-delete { flex: 1; background: transparent; border: 1.5px solid #ff4444; color: #ff4444; padding: 14px; border-radius: 12px; font-size: 13px; font-weight: 900; cursor: pointer; }
+.admin-row { display: flex; gap: 10px; padding-top: 15px; border-top: 1px solid #1a1a1a; }
+.btn-edit { flex: 1; background: transparent; border: 1.5px solid var(--gold); color: var(--gold); padding: 12px; border-radius: 12px; font-size: 13px; font-weight: 900; cursor: pointer; }
+.btn-delete { flex: 1; background: transparent; border: 1.5px solid #ff4444; color: #ff4444; padding: 12px; border-radius: 12px; font-size: 13px; font-weight: 900; cursor: pointer; }
 
-/* BÓVEDA (IMAGEN 3) */
-.jtbp-vault-bg { background: radial-gradient(circle, #222 10%, transparent 11%), #111; background-size: 10px 10px; border-top: 3px solid var(--gold); padding: 25px 10px; text-align: center; border-radius: 25px; margin-bottom: 30px; }
-.alerta-boveda { font-size: 16px !important; line-height: 1.6; margin-bottom: 30px; color: #fff; background: rgba(166, 138, 68, 0.1); padding: 20px; border-radius: 15px; border: 1.5px dashed var(--gold); }
+/* BÓVEDA ESTÉTICA VIP IMAGEN 3 */
+.jtbp-vault-bg { background: radial-gradient(circle, #222 10%, transparent 11%), #111; background-size: 10px 10px; border-top: 3px solid var(--gold); padding: 25px 10px; text-align: center; border-radius: 25px; border: 1px solid #1a1a1a; margin-bottom: 30px; }
+.alerta-boveda { font-size: 16px !important; line-height: 1.6; margin-bottom: 25px; color: #fff; background: rgba(166, 138, 68, 0.1); padding: 20px; border-radius: 15px; border: 1.5px dashed var(--gold); text-align: center; }
 
-.vault-card { background: #000; border-radius: 20px; padding: 20px; border: 1px solid #333; margin-bottom: 15px; position: relative; }
-.vault-card.card-especial-v { border: 3px solid var(--gold); box-shadow: 0 0 25px rgba(166, 138, 68, 0.4); }
+.vault-card { background: #000; border-radius: 20px; padding: 20px; border: 1px solid #333; margin-bottom: 15px; position: relative; text-align: left; }
+.vault-card.card-especial-v { border: 3.5px solid var(--gold); box-shadow: 0 0 25px rgba(166, 138, 68, 0.4); }
 
-.vintage-player { background: #111; border: 1.5px solid #222; border-left: 5px solid var(--gold); border-radius: 12px; display: flex; align-items: center; padding: 10px; margin-top: 15px; gap: 15px; }
-.vp-cover { width: 55px; height: 55px; border-radius: 8px; background: #000; object-fit: contain; }
-.vp-btn { background: var(--gold); border: none; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+.vintage-player { background: #111; border: 1.5px solid #222; border-left: 5px solid var(--gold); border-radius: 12px; display: flex; align-items: center; padding: 12px; margin-top: 15px; gap: 15px; }
+.vp-cover { width: 60px; height: 60px; border-radius: 8px; background: #000; object-fit: contain; }
+.vp-btn { background: var(--gold); border: none; width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; }
 
-#global-player { position: fixed; bottom: 0; left: 0; width: 100%; background: #080808; border-top: 3px solid var(--gold); padding: 15px 20px; display: none; z-index: 1000; box-shadow: 0 -10px 40px rgba(0,0,0,0.9); }
-.p-vinyl { width: 50px; height: 50px; border-radius: 50%; border: 2px solid var(--gold); background-size: cover; animation: rot 4s linear infinite; animation-play-state: paused; }
+#global-player { position: fixed; bottom: 0; left: 0; width: 100%; background: #080808; border-top: 3px solid var(--gold); padding: 15px 20px; display: none; z-index: 2000; box-shadow: 0 -10px 40px rgba(0,0,0,0.9); }
+.p-vinyl { width: 55px; height: 55px; border-radius: 50%; border: 2.5px solid var(--gold); background-size: cover; animation: rot 4s linear infinite; animation-play-state: paused; }
 .playing .p-vinyl { animation-play-state: running; }
 @keyframes rot { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-#seek-bar { width: 100%; margin: 10px 0; -webkit-appearance: none; background: #333; height: 4px; border-radius: 2px; }
+#seek-bar { width: 100%; margin: 12px 0; -webkit-appearance: none; background: #333; height: 4px; border-radius: 2px; }
 #seek-bar::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; background: var(--gold); border-radius: 50%; }
+
+#pantalla-salida { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:#050505; z-index:99999; flex-direction:column; align-items:center; justify-content:center; padding:20px; text-align:center; }
