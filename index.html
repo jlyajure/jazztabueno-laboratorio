@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Jazztabueno Productions</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="https://widget.mixcloud.com/media/js/widgetApi.js"></script>
+    <script src="https://www.gstatic.com/cv/js/sender/v1/cast_sender.js?loadCastFramework=1"></script>
 </head>
 <body>
     <header>
@@ -17,38 +19,44 @@
                 <div class="btn-boveda-text">BÓVEDA DEL<br>LEGADO</div>
                 <img src="https://i.postimg.cc/KjW3X8Gj/baul-ok.png" class="btn-boveda-header">
             </div>
-            <button onclick="location.reload()" class="btn-header-salir">SALIR</button>
+            <button onclick="location.reload()" style="background:transparent;border:2px solid #a68a44;color:#a68a44;padding:7px 15px;border-radius:8px;font-size:10px;font-weight:900;cursor:pointer;">SALIR</button>
         </div>
     </header>
 
     <div id="main-view" class="container">
         <div class="channels-grid">
-            <div class="ch-item active" onclick="window.setFilter('Todo', this)"><img src="https://i.postimg.cc/8c7Smws4/logos-programas-jtbp.jpg" class="ch-logo"><span class="ch-name">Todo</span></div>
-            <div class="ch-item" onclick="window.setFilter('JAZZTABUENO', this)"><img src="https://i.postimg.cc/zVD4mstP/Jazztabueno-(2).png" class="ch-logo"><span class="ch-name">Jazz</span></div>
-            <div class="ch-item" onclick="window.setFilter('STUDIO 79', this)"><img src="https://i.postimg.cc/NKMDbYJB/S79.png" class="ch-logo"><span class="ch-name">Studio</span></div>
+            <div class="ch-item active"><img src="https://i.postimg.cc/8c7Smws4/logos-programas-jtbp.jpg" class="ch-logo"><span class="ch-name">Todo</span></div>
+            <div class="ch-item"><img src="https://i.postimg.cc/zVD4mstP/Jazztabueno-(2).png" class="ch-logo"><span class="ch-name">Jazz</span></div>
+            <div class="ch-item"><img src="https://i.postimg.cc/NKMDbYJB/S79.png" class="ch-logo"><span class="ch-name">Studio</span></div>
+            <div class="ch-item"><img src="https://i.postimg.cc/75fchgyt/Salsa-Brava.png" class="ch-logo"><span class="ch-name">Salsa</span></div>
+            <div class="ch-item"><img src="https://i.postimg.cc/jwQ3mczC/Old-School-Radio.png" class="ch-logo"><span class="ch-name">Old</span></div>
         </div>
         <div id="feed"></div>
     </div>
 
     <div id="vault-view" class="container" style="display:none;">
         <section class="jtbp-vault-bg">
-            <h2 style="color:var(--gold); text-transform:uppercase;">Bóveda del Legado</h2>
+            <h2 style="color:#a68a44; text-transform:uppercase;">Bóveda del Legado</h2>
             <div class="alerta-boveda">
                 <p>⚠️ <strong>Aviso:</strong> Presiona únicamente el botón <strong>▶ PLAY</strong>.</p>
                 <p>⭐ <strong>Nota:</strong> Los programas iluminados son <strong>Especiales</strong>.</p>
             </div>
-            <button onclick="window.closeVault()" class="btn-header-salir">⬅ VOLVER</button>
+            <button onclick="window.closeVault()" style="background:#111;border:1px solid #a68a44;color:#a68a44;padding:8px 15px;border-radius:8px;font-weight:bold;margin-bottom:20px;cursor:pointer;">⬅ VOLVER</button>
             <div id="grid-archivos"></div>
         </section>
     </div>
 
     <div id="global-player">
         <audio id="main-media" playsinline></audio>
-        <div style="display:flex; align-items:center; gap:15px;">
-            <div id="p-vinyl" class="p-vinyl"></div>
-            <div style="flex:1;"><h4 id="p-title" style="margin:0; font-size:14px;">...</h4></div>
+        <div style="display:flex; align-items:center; gap:15px; margin-bottom:5px;">
+            <div id="p-vinyl" class="p-vinyl" style="background-image: url('https://i.postimg.cc/zVD4mstP/Jazztabueno-(2).png');"></div>
+            <div style="flex:1; overflow:hidden;">
+                <h4 id="p-title" style="margin:0; font-size:14px; color:#fff; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-weight:800;">...</h4>
+            </div>
+            <button onclick="window.doToggle()" id="p-play-btn" style="background:none; border:none; cursor:pointer;"></button>
+            <button onclick="window.doClose()" style="background:none; border:none; color:#666; font-size:28px;">×</button>
         </div>
-        <input type="range" id="seek-bar" value="0" min="0" step="1">
+        <input type="range" id="seek-bar" value="0" min="0" step="1" style="width:100%;">
     </div>
 
     <script type="module" src="script.js"></script>
