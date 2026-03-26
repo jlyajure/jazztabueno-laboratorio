@@ -26,16 +26,15 @@ window.mostrarPorAño = (año) => {
         { año: 2025, categoria: "Studio 79", titulo: "Especial Studio Mix Two", url: "https://archive.org/download/studio-79-13-2025-especial-studio-mix-one/Studio79%20-%2019_2025%20_ESPECIAL%20STUDIO%20MIX%20TWO_.mp3" },
         { año: 2025, categoria: "Studio 79", titulo: "Especial Studio Mix One", url: "https://archive.org/download/studio-79-13-2025-especial-studio-mix-one/Studio79%20-%2013_2025%20_ESPECIAL%20STUDIO%20MIX%20ONE_.mp3" }
     ];
-    const filtrados = boveda.filter(i => i.año === año);
-    grid.innerHTML = filtrados.map(item => {
+    grid.innerHTML = boveda.filter(i => i.año === año).map(item => {
         const esEspecial = item.titulo.toLowerCase().includes('especial');
         return `<div class="vault-card ${esEspecial ? 'card-especial-v' : ''}">
             <span class="ep-category">${item.categoria}</span>
-            <h3 style="margin:5px 0;">${item.titulo}</h3>
+            <h3 style="margin:8px 0; font-size:18px;">${item.titulo}</h3>
             <div class="vintage-player">
                 <img src="https://i.postimg.cc/NKMDbYJB/S79.png" class="vp-cover">
                 <button class="vp-btn" onclick="window.playVault('${item.url}', '${item.titulo}')">${SVG_PLAY}</button>
-                <span style="font-size:11px; color:var(--gold); font-weight:bold;">REPRODUCTOR VIP</span>
+                <span style="font-size:10px; color:var(--gold); font-weight:800;">REPRODUCTOR VIP</span>
             </div>
         </div>`;
     }).join('');
@@ -49,7 +48,7 @@ function render() {
         const isPlaying = idActual === p.id && !media.paused;
         const div = document.createElement('div'); div.className = 'card';
         
-        /* ESTRUCTURA DE LA IMAGEN 2 COMPLETA */
+        /* DISEÑO EXACTO IMAGEN 2: Likes, Emojis, Hashtags y Botones Admin */
         div.innerHTML = `
             <div class="card-cover" style="background-image: url('${p.imagenUrl}')">
                 <div class="card-overlay"><button class="btn-play-card" onclick="window.playItem('${p.id}','${p.mp3Url}','${p.titulo}','${p.imagenUrl}')">${isPlaying ? SVG_PAUSE : SVG_PLAY}</button></div>
@@ -62,16 +61,18 @@ function render() {
                 </div>
                 <div class="tag-container"><span class="tag">#worldmusic</span><span class="tag">#podcast</span><span class="tag">#funk</span><span class="tag">#pop</span></div>
                 <div class="btn-group">
-                    <button class="btn-main">📜 INFO</button>
-                    <button class="btn-main">💬 CHAT</button>
-                    <button class="btn-link">🔗</button>
+                    <button class="btn-action" onclick="window.playItem('${p.id}','${p.mp3Url}','${p.titulo}','${p.imagenUrl}')">${isPlaying ? 'PAUSAR' : 'ESCUCHAR'}</button>
+                    <button class="btn-action">💬 CHAT</button>
+                    <button class="btn-small">🔗</button>
                 </div>
-                <div class="admin-row"><button class="btn-edit">🖋️ EDITAR</button><button class="btn-delete">🗑️ BORRAR</button></div>
-                <button style="background:transparent;border:none;color:#666;font-size:12px;font-weight:700;margin-top:15px;cursor:pointer;">Ver más...</button>
+                <div class="admin-row">
+                    <button class="btn-edit">🖋️ EDITAR</button>
+                    <button class="btn-delete">🗑️ BORRAR</button>
+                </div>
+                <button style="background:transparent;border:none;color:#555;font-size:12px;font-weight:700;margin-top:20px;cursor:pointer;">Ver más...</button>
             </div>`;
         feed.appendChild(div);
     });
-    document.getElementById('p-play-btn').innerHTML = media.paused ? SVG_PLAY : SVG_PAUSE;
 }
 
 window.playItem = async (id, url, tit, img) => {
