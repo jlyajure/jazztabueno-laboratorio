@@ -3,20 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Jazztabueno</title>
+    <title>Jazztabueno Productions</title>
     
     <link rel="icon" type="image/png" href="https://i.postimg.cc/zVD4mstP/Jazztabueno-(2).png">
     <link rel="apple-touch-icon" href="https://i.postimg.cc/zVD4mstP/Jazztabueno-(2).png">
     <meta name="theme-color" content="#050505">
     
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="Jazztabueno Productions">
-    <meta property="og:description" content="Escucha nuestros programas exclusivos de Radio.">
-    <meta property="og:image" itemprop="image" content="https://i.postimg.cc/zVD4mstP/Jazztabueno-(2).png">
-
-    <link rel="manifest" href="manifest.json">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
-    
     <script src="https://widget.mixcloud.com/media/js/widgetApi.js"></script>
     
     <style>
@@ -24,11 +17,16 @@
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none; }
         body { margin: 0; background: var(--bg); color: #ffffff; font-family: 'Plus Jakarta Sans', sans-serif; min-height: 100vh; overflow-x: hidden; }
 
+        /* SCROLLBAR DORADO PARA QUITAR EL GRIS FEO */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #080808; }
+        ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 10px; }
+
         header { background: rgba(0,0,0,0.98); padding: 12px 15px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #222; position: sticky; top: 0; z-index: 100; }
         .brand-title { color: var(--gold); font-family: 'Playfair Display', serif; font-size: 14px; text-transform: uppercase; line-height: 1.2; letter-spacing: 0.5px; }
         
         .btn-boveda-container { display: flex; align-items: center; gap: 8px; cursor: pointer; background: rgba(212, 175, 55, 0.1); padding: 5px 10px; border-radius: 12px; border: 1px solid var(--gold); transition: 0.2s; }
-        .btn-boveda-header { width: 38px; height: 38px; border-radius: 6px; object-fit: cover; }
+        .btn-boveda-header { width: 38px; height: 38px; border-radius: 6px; object-fit: cover; background: #000; }
         .btn-boveda-text { color: var(--gold); font-size: 9px; font-weight: 900; text-transform: uppercase; line-height: 1.1; text-align: right; }
 
         #btn-volver-header { background: #111; border: 1px solid var(--gold); color: var(--gold); padding: 8px 15px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 11px; display: none; }
@@ -45,7 +43,6 @@
         .card { background: var(--card); border-radius: 20px; margin-bottom: 30px; border: 1px solid #1a1a1a; overflow: hidden; }
         .card.playing { border-color: var(--gold); }
         .card-cover { width: 100%; height: 180px; background-size: cover; background-position: center; position: relative; border-bottom: 1.5px solid var(--gold); }
-        .card-overlay { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
         .btn-play { background-color: var(--gold); border: none; width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; }
         .btn-play svg { width: 28px; height: 28px; fill: #000 !important; }
         
@@ -53,23 +50,16 @@
         .ep-title { margin: 8px 0 4px 0; font-size: 19px; font-weight: 800; }
         .btn-list { background: #1a1a1a; border: 1.5px solid #333; color: #ffffff; padding: 12px; border-radius: 12px; font-size: 11px; font-weight: 800; width: 100%; cursor: pointer; margin-top:12px; }
 
-        /* BÓVEDA: ESTÉTICA ORIGINAL RECUPERADA */
-        .jtbp-vault-bg { background: radial-gradient(circle, #222 10%, transparent 11%), #111; background-size: 10px 10px; border-top: 3px solid #D4AF37; padding: 20px 10px; text-align: center; border-radius: 20px; border: 1px solid #1a1a1a; margin-bottom: 30px; }
+        /* BÓVEDA: ESTÉTICA ORIGINAL MEJORADA */
+        .jtbp-vault-bg { background: radial-gradient(circle, #222 10%, transparent 11%), #111; background-size: 10px 10px; border-top: 3px solid var(--gold); padding: 20px 10px; text-align: center; border-radius: 20px; border: 1px solid #1a1a1a; margin-bottom: 30px; }
+        .timeline-swipe { display: flex; overflow-x: auto; gap: 12px; padding: 10px 20px; margin-bottom: 20px; border-bottom: 1px solid var(--gold); padding-bottom: 15px; }
         
-        /* CORRECCIÓN: FRANJA DE DESLIZAR PROFESIONAL */
-        .timeline-swipe { display: flex; overflow-x: auto; gap: 12px; padding: 10px 20px; margin-bottom: 20px; border-bottom: 1px solid #0070f3; padding-bottom: 15px; scrollbar-width: thin; scrollbar-color: var(--gold) #1a1a1a; }
-        .timeline-swipe::-webkit-scrollbar { height: 4px; }
-        .timeline-swipe::-webkit-scrollbar-track { background: #1a1a1a; }
-        .timeline-swipe::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 10px; }
-
-        .year-btn { background: none; border: 1px solid #D4AF37; color: #D4AF37; padding: 6px 18px; border-radius: 20px; cursor: pointer; font-size: 12px; font-weight: bold; flex-shrink: 0; transition: 0.3s; }
-        .year-btn.activo { background: #D4AF37; color: #000; box-shadow: 0 0 15px rgba(212, 175, 55, 0.6); }
+        .year-btn { background: none; border: 1px solid var(--gold); color: var(--gold); padding: 6px 18px; border-radius: 20px; cursor: pointer; font-size: 12px; font-weight: bold; flex-shrink: 0; transition: 0.3s; }
+        .year-btn.activo { background: var(--gold); color: #000; box-shadow: 0 0 15px rgba(166, 138, 68, 0.5); }
 
         .vault-card { background: #000; border-radius: 15px; padding: 15px; border: 1px solid #333; margin-bottom: 15px; text-align: left; }
         .vintage-player { background: #111; border: 1.5px solid #222; border-left: 4px solid var(--gold); border-radius: 8px; display: flex; align-items: center; padding: 10px; margin-top: 10px; gap: 12px; }
-        
-        /* CORRECCIÓN: LOGO CON FONDO NEGRO PURO */
-        .vp-cover { width: 55px; height: 55px; border-radius: 6px; border: 1px solid #333; background: #000 !important; object-fit: contain; padding: 2px; }
+        .vp-cover { width: 55px; height: 55px; border-radius: 6px; border: 1px solid #333; background: #000 !important; object-fit: contain; }
         .vp-btn { background: var(--gold); border: none; width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; }
         .vp-btn svg { width: 18px; height: 18px; fill: #000 !important; }
 
@@ -90,13 +80,13 @@
 <div id="app-content">
     <header>
         <div style="display:flex; align-items:center; gap:12px; cursor:pointer;" onclick="window.triggerAdmin()">
-            <img src="logo.png" width="35" height="35" onerror="this.src='https://i.postimg.cc/zVD4mstP/Jazztabueno-(2).png'">
+            <img src="https://i.postimg.cc/zVD4mstP/Jazztabueno-(2).png" width="35" height="35">
             <div class="brand-title">JAZZTABUENO<br>PRODUCTIONS</div>
         </div>
         <div style="display:flex; align-items:center; gap:12px;">
             <div id="btn-boveda-header" class="btn-boveda-container" onclick="window.openVault()">
                 <div class="btn-boveda-text">BÓVEDA DEL<br>LEGADO</div>
-                <img src="https://i.postimg.cc/KjW3X8Gj/baul-ok.png" onerror="this.src='baul.png'" class="btn-boveda-header">
+                <img src="https://i.postimg.cc/KjW3X8Gj/baul-ok.png" class="btn-boveda-header" alt="Baúl">
             </div>
             <button id="btn-volver-header" onclick="window.closeVault()">⬅ VOLVER</button>
             <button onclick="window.confirmarSalida()" class="btn-salir" id="btn-salir">SALIR</button>
@@ -133,10 +123,10 @@
 <div id="global-player">
     <audio id="main-media" playsinline webkit-playsinline></audio>
     <div style="display:flex; align-items:center; gap:15px;">
-        <div id="p-vinyl" class="p-vinyl"></div>
+        <div id="p-vinyl" class="p-vinyl" style="background-image: url('https://i.postimg.cc/zVD4mstP/Jazztabueno-(2).png');"></div>
         <div style="flex:1; overflow:hidden;">
-            <h4 id="p-title" style="margin:0; font-size:14px; color:#fff; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-weight:800;">...</h4>
-            <div id="p-time" style="font-size:11px; color:var(--gold); font-weight:900;">00:00 / 00:00</div>
+            <h4 id="p-title" style="margin:0; font-size:14px; color:#fff; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">...</h4>
+            <div id="p-time" style="font-size:11px; color:var(--gold);">00:00 / 00:00</div>
         </div>
         <button onclick="window.doToggle()" id="p-play-btn" style="background:none; border:none; cursor:pointer;"></button>
         <button onclick="window.doClose()" style="background:none; border:none; color:#666; font-size:24px;">×</button>
@@ -147,14 +137,13 @@
 
 <div id="pantalla-salida">
     <img src="https://i.postimg.cc/zVD4mstP/Jazztabueno-(2).png" width="120">
-    <h2 style="color:white; margin-top:20px;">Música Detenida</h2>
-    <p style="color:var(--gold);">Gracias por ser parte del Legado</p>
+    <h2 style="color:white; margin-top:20px;">Radio Detenida</h2>
     <button onclick="location.reload()" style="margin-top:30px; background:var(--gold); padding:12px 25px; border-radius:30px; border:none; font-weight:bold; cursor:pointer;">VOLVER</button>
 </div>
 
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getFirestore, collection, query, orderBy, onSnapshot, doc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    import { getFirestore, collection, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
     const firebaseConfig = { apiKey: "AIzaSyBwBq4gLgv4DSfUidzUuC7Irmvj_4pCTtI", authDomain: "familia-yajure-app.firebaseapp.com", projectId: "familia-yajure-app", storageBucket: "familia-yajure-app.firebasestorage.app", messagingSenderId: "692035727386", appId: "1:692035727386:web:dfa3e39a481d56368a61a3" };
     const app = initializeApp(firebaseConfig);
@@ -167,7 +156,6 @@
     const SVG_PLAY = `<svg viewBox="0 0 24 24" width="30"><path d="M8 5v14l11-7z" fill="black"/></svg>`;
     const SVG_PAUSE = `<svg viewBox="0 0 24 24" width="30"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" fill="black"/></svg>`;
 
-    // 🔥 DATA COMPLETA RESTAURADA (42 PROGRAMAS) 🔥
     window.MIS_ARCHIVOS_BOVEDA = [
         { año: 2025, categoria: "Studio 79", titulo: "Especial Studio Mix Two", url: "https://archive.org/download/studio-79-13-2025-especial-studio-mix-one/Studio79%20-%2019_2025%20_ESPECIAL%20STUDIO%20MIX%20TWO_.mp3" },
         { año: 2025, categoria: "Studio 79", titulo: "Funky Fever", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FStudio79%2Fstudio79-182025-funky-fever%2F", plataforma: "mixcloud" },
@@ -187,6 +175,7 @@
         { año: 2025, categoria: "Salsa Brava", titulo: "No Quiero Nada Regalao", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FByJTB%2Fsalsabrava-112025-no-quiero-nada-regalao%2F", plataforma: "mixcloud" },
         { año: 2024, categoria: "STUDIO 79", titulo: "Programa 5 Clásico", url: "https://archive.org/download/studio-79-programa-5/Studio%2079%20Programa%205.mp3" },
         { año: 2023, categoria: "Old School Rock", titulo: "Slight Return", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2Foldschoolradio%2Fold-school-rock-radio-012023-slight-return%2F", plataforma: "mixcloud" },
+        { año: 2023, categoria: "Old School Rock", titulo: "Bionic Grass", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2Foldschoolradio%2Fold-school-rock-radio-052023-bionic-grass%2F", plataforma: "mixcloud" },
         { año: 2023, categoria: "JAZZTABUENO", titulo: "Acid Funk", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FJazzTaBueno%2Fjazztabueno-172023-acid-funk%2F", plataforma: "mixcloud" },
         { año: 2022, categoria: "JAZZTABUENO", titulo: "Programa 1", url: "https://archive.org/download/jazztabueno-programa-1-2022/Jazztabueno%20Programa%201-2022.mp3" },
         { año: 2022, categoria: "JAZZTABUENO", titulo: "Programa 2", url: "https://archive.org/download/jazztabueno-programa-2-2022/Jazztabueno%20Programa%202-2022.mp3" },
@@ -230,12 +219,11 @@
             if(item.plataforma === 'mixcloud') {
                 return `<div class="vault-card"><span style="color:var(--gold); font-size:9px; font-weight:bold; text-transform:uppercase;">${item.categoria}</span><h3 style="margin:5px 0;">${item.titulo}</h3><iframe width="100%" height="60" src="${item.url}" frameborder="0"></iframe></div>`;
             } else {
-                return `<div class="vault-card"><span style="color:var(--gold); font-size:9px; font-weight:bold; text-transform:uppercase;">${item.categoria}</span><h3 style="margin:5px 0;">${item.titulo}</h3><div class="vintage-player"><img src="${defaultCover}" class="vp-cover"><button class="vp-btn" id="btn-vault-${item.url.hashCode()}" onclick="window.playVault('${item.url}', '${item.titulo}')">${isThisPlaying ? SVG_PAUSE : SVG_PLAY}</button><span style="font-size:10px; color:var(--gold); font-weight:bold;">Reproductor VIP</span></div></div>`;
+                return `<div class="vault-card"><span style="color:var(--gold); font-size:9px; font-weight:bold; text-transform:uppercase;">${item.categoria}</span><h3 style="margin:5px 0;">${item.titulo}</h3><div class="vintage-player"><img src="${defaultCover}" class="vp-cover"><button class="vp-btn" onclick="window.playVault('${item.url}', '${item.titulo}')">${isThisPlaying ? SVG_PAUSE : SVG_PLAY}</button><span style="font-size:10px; color:var(--gold); font-weight:bold;">Reproductor VIP</span></div></div>`;
             }
         }).join('');
     };
 
-    // FUNCIÓN PARA QUE EL BOTÓN DE LA BÓVEDA RESPONDA AL INSTANTE
     window.playVault = (url, tit) => {
         if (idActual === url) {
             media.paused ? media.play() : media.pause();
@@ -245,7 +233,6 @@
             document.getElementById('p-title').innerText = tit;
             document.getElementById('global-player').style.display = 'block';
         }
-        // Actualizar iconos de la bóveda
         const añoActivo = document.querySelector('.year-btn.activo');
         if(añoActivo) window.mostrarPorAño(parseInt(añoActivo.innerText), añoActivo);
     };
@@ -262,20 +249,15 @@
         render();
     };
 
-    window.doToggle = () => { if(media.paused) media.play(); else media.pause(); render(); 
+    window.doToggle = () => { 
+        if(media.paused) media.play(); else media.pause(); 
+        render(); 
         const añoActivo = document.querySelector('.year-btn.activo');
         if(añoActivo) window.mostrarPorAño(parseInt(añoActivo.innerText), añoActivo);
     };
     window.doClose = () => { media.pause(); document.getElementById('global-player').style.display='none'; idActual=null; render(); };
     window.confirmarSalida = () => { if(confirm("¿Deseas detener la radio y salir?")) { media.pause(); document.getElementById('pantalla-salida').style.display='flex'; } };
     window.setFilter = (cat, el) => { filtro = cat; document.querySelectorAll('.ch-item').forEach(i => i.classList.remove('active')); el.classList.add('active'); render(); };
-
-    // Ayudante para IDs únicos de botones
-    String.prototype.hashCode = function() {
-        let hash = 0;
-        for (let i = 0; i < this.length; i++) { hash = ((hash << 5) - hash) + this.charCodeAt(i); hash |= 0; }
-        return hash;
-    };
 
     onSnapshot(query(collection(db, "radio_programas"), orderBy("fecha", "desc")), (snap) => {
         programas = []; snap.forEach(d => programas.push({id: d.id, ...d.data()}));
@@ -292,7 +274,6 @@
             feed.appendChild(div);
         });
         document.getElementById('p-play-btn').innerHTML = media.paused ? SVG_PLAY : SVG_PAUSE;
-        if(!media.paused) document.getElementById('global-player').classList.add('playing'); else document.getElementById('global-player').classList.remove('playing');
     }
 
     media.ontimeupdate = () => { 
