@@ -19,7 +19,7 @@
                 <div class="btn-boveda-text">BÓVEDA DEL<br>LEGADO</div>
                 <img src="https://i.postimg.cc/KjW3X8Gj/baul-ok.png" class="btn-boveda-header">
             </div>
-            <button onclick="location.reload()" style="background:transparent;border:2px solid #a68a44;color:#a68a44;padding:7px 15px;border-radius:8px;font-size:10px;font-weight:900;cursor:pointer;">SALIR</button>
+            <button onclick="location.reload()" class="btn-salir-header">SALIR</button>
         </div>
     </header>
 
@@ -53,8 +53,8 @@
             <div style="flex:1; overflow:hidden;">
                 <h4 id="p-title" style="margin:0; font-size:14px; color:#fff; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-weight:800;">...</h4>
             </div>
-            <button onclick="window.doToggle()" id="p-play-btn" style="background:none; border:none; cursor:pointer;"></button>
-            <button onclick="window.doClose()" style="background:none; border:none; color:#666; font-size:28px;">×</button>
+            <button onclick="window.doToggle()" id="p-play-btn" style="background:none; border:none; cursor:pointer; flex-shrink: 0;"></button>
+            <button onclick="window.doClose()" style="background:none; border:none; color:#666; font-size:28px; flex-shrink: 0;">×</button>
         </div>
         <input type="range" id="seek-bar" value="0" min="0" step="1" style="width:100%;">
     </div>
