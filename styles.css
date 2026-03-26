@@ -1,8 +1,8 @@
-:root { --gold: #a68a44; --bg: #050505; --card: #121212; --red: #ff4444; }
+:root { --gold: #a68a44; --bg: #050505; --card: #121212; --blue-tag: #0070f3; }
 * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none; }
 body { margin: 0; background: var(--bg); color: #ffffff; font-family: 'Plus Jakarta Sans', sans-serif; min-height: 100vh; overflow-x: hidden; }
 
-/* SCROLLBAR DORADA - ELIMINA EL GRIS FEO */
+/* SCROLLBAR DORADA */
 ::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: #080808; }
 ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 10px; }
@@ -10,12 +10,11 @@ body { margin: 0; background: var(--bg); color: #ffffff; font-family: 'Plus Jaka
 header { background: rgba(0,0,0,0.98); padding: 12px 15px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #222; position: sticky; top: 0; z-index: 100; }
 .brand-title { color: var(--gold); font-family: 'Playfair Display', serif; font-size: 14px; text-transform: uppercase; line-height: 1.2; letter-spacing: 0.5px; }
 
-.btn-boveda-container { display: flex; align-items: center; gap: 8px; cursor: pointer; background: rgba(212, 175, 55, 0.1); padding: 5px 10px; border-radius: 12px; border: 1px solid var(--gold); transition: 0.2s; }
-.btn-boveda-header { width: 38px; height: 38px; border-radius: 6px; object-fit: cover; background: #000; }
+.btn-boveda-container { display: flex; align-items: center; gap: 8px; cursor: pointer; background: rgba(212, 175, 55, 0.1); padding: 5px 10px; border-radius: 12px; border: 1px solid var(--gold); }
+.btn-boveda-header { width: 38px; height: 38px; border-radius: 6px; object-fit: cover; }
 .btn-boveda-text { color: var(--gold); font-size: 9px; font-weight: 900; text-transform: uppercase; line-height: 1.1; text-align: right; }
 
-#btn-volver-header { background: #111; border: 1px solid var(--gold); color: var(--gold); padding: 8px 15px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 11px; display: none; }
-.btn-header-salir { background: transparent; border: 2px solid var(--gold); color: var(--gold); padding: 7px 15px; border-radius: 8px; font-size: 10px; font-weight: 900; cursor: pointer; text-transform: uppercase; display: block !important; }
+.btn-header-salir { background: transparent; border: 2px solid var(--gold); color: var(--gold); padding: 7px 15px; border-radius: 8px; font-size: 10px; font-weight: 900; cursor: pointer; text-transform: uppercase; }
 
 .container { max-width: 450px; margin: auto; padding: 15px; padding-bottom: 250px; }
 .channels-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px; margin-bottom: 25px; padding: 10px 0; }
@@ -25,40 +24,44 @@ header { background: rgba(0,0,0,0.98); padding: 12px 15px; display: flex; justif
 .active .ch-logo { border-color: var(--gold); }
 .ch-name { font-size: 6px; color: #ffffff; font-weight: 800; text-transform: uppercase; }
 
-.card { background: var(--card); border-radius: 20px; margin-bottom: 30px; border: 1px solid #1a1a1a; overflow: hidden; }
-.card.playing { border-color: var(--gold); }
-.card-cover { width: 100%; height: 180px; background-size: cover; background-position: center; position: relative; border-bottom: 1.5px solid var(--gold); }
-.btn-play { background-color: var(--gold); border: none; width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; }
-.btn-play svg { width: 28px; height: 28px; fill: #000 !important; }
+/* TARJETA COMPLETA (IMAGEN 2) */
+.card { background: var(--card); border-radius: 20px; margin-bottom: 30px; border: 1.5px solid #1a1a1a; overflow: hidden; }
+.card-cover { width: 100%; height: 210px; background-size: cover; background-position: center; position: relative; border-bottom: 1px solid #222; }
+.card-overlay { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
+.btn-play-card { background: var(--gold); border: none; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 0 15px rgba(166, 138, 68, 0.4); }
+.btn-play-card svg { width: 25px; height: 25px; fill: #000; }
 
-.ep-title { margin: 8px 0 4px 0; font-size: 19px; font-weight: 800; }
-.btn-list { background: #1a1a1a; border: 1.5px solid #333; color: #ffffff; padding: 12px; border-radius: 12px; font-size: 11px; font-weight: 800; width: 100%; cursor: pointer; margin-top:12px; }
+.info { padding: 20px; text-align: left; }
+.ep-category { color: var(--gold); font-size: 11px; font-weight: 900; text-transform: uppercase; margin-bottom: 8px; display: block; }
+.ep-title { margin: 0 0 12px 0; font-size: 22px; font-weight: 800; color: #fff; }
 
-.jtbp-vault-bg { background: radial-gradient(circle, #222 10%, transparent 11%), #111; background-size: 10px 10px; border-top: 3px solid var(--gold); padding: 20px 10px; text-align: center; border-radius: 20px; border: 1px solid #1a1a1a; margin-bottom: 30px; }
-.timeline-swipe { display: flex; overflow-x: auto; gap: 12px; padding: 10px 20px; margin-bottom: 20px; border-bottom: 2.5px solid #D4AF37; padding-bottom: 15px; scrollbar-width: thin; scrollbar-color: var(--gold) #1a1a1a; }
-.timeline-swipe::-webkit-scrollbar { height: 4px; }
-.timeline-swipe::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 10px; }
+/* ETIQUETAS AZULES (IMAGEN 2) */
+.tag-bar { display: flex; gap: 8px; margin-bottom: 15px; flex-wrap: wrap; }
+.tag-item { background: rgba(0, 112, 243, 0.15); color: #0070f3; padding: 4px 10px; border-radius: 6px; font-size: 10px; font-weight: 800; }
 
-.year-btn { background: none; border: 1px solid #D4AF37; color: #D4AF37; padding: 6px 18px; border-radius: 20px; cursor: pointer; font-size: 12px; font-weight: bold; flex-shrink: 0; }
-.year-btn.activo { background: var(--gold); color: #000; box-shadow: 0 0 15px rgba(166, 138, 68, 0.7); }
+/* FILA DE BOTONES (IMAGEN 2) */
+.action-bar { display: flex; gap: 10px; align-items: center; margin-bottom: 15px; }
+.btn-action { background: #1a1a1a; border: 1.5px solid #333; color: #fff; padding: 10px 15px; border-radius: 10px; font-size: 11px; font-weight: 800; display: flex; align-items: center; gap: 6px; cursor: pointer; }
+.btn-icon-only { background: #1a1a1a; border: 1.5px solid #333; width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; cursor: pointer; }
 
-.alerta-boveda { font-size: 15px !important; line-height: 1.6; margin-bottom: 25px; color: #fff; background: rgba(166, 138, 68, 0.15); padding: 18px; border-radius: 15px; border: 1.5px dashed var(--gold); text-align: center; }
+/* VER MÁS (IMAGEN 2) */
+.btn-ver-mas { background: transparent; border: none; color: #666; font-size: 12px; font-weight: 700; cursor: pointer; padding: 0; }
 
-.vault-card { background: #000; border-radius: 15px; padding: 15px; border: 1px solid #333; margin-bottom: 15px; text-align: left; position: relative; }
-.vault-card.card-especial-v { border: 3px solid var(--gold) !important; box-shadow: 0 0 25px rgba(166, 138, 68, 0.4) !important; }
+/* BÓVEDA Y ESPECIALES (IMAGEN 3) */
+.jtbp-vault-bg { background: radial-gradient(circle, #222 10%, transparent 11%), #111; background-size: 10px 10px; border-top: 3px solid var(--gold); padding: 25px 10px; text-align: center; border-radius: 25px; border: 1px solid #1a1a1a; margin-bottom: 30px; }
+.alerta-boveda { font-size: 15px !important; line-height: 1.6; margin-bottom: 25px; color: #fff; background: rgba(166, 138, 68, 0.15); padding: 18px; border-radius: 15px; border: 1.5px dashed var(--gold); }
 
-.vintage-player { background: #111; border: 1.5px solid #222; border-left: 4px solid var(--gold); border-radius: 8px; display: flex; align-items: center; padding: 10px; margin-top: 10px; gap: 12px; }
-.vp-cover { width: 55px; height: 55px; border-radius: 6px; border: 1px solid #333; background: #000 !important; object-fit: contain; padding: 2px; }
-.vp-btn { background: var(--gold); border: none; width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; }
-.vp-btn svg { width: 18px; height: 18px; fill: #000 !important; }
+.vault-card { background: #000; border-radius: 20px; padding: 20px; border: 1px solid #333; margin-bottom: 15px; position: relative; }
+.vault-card.card-especial-v { border: 3px solid var(--gold); box-shadow: 0 0 25px rgba(166, 138, 68, 0.4); }
 
-#global-player { position: fixed; bottom: 0; left: 0; width: 100%; background: #080808; border-top: 3px solid var(--gold); padding: 15px 20px; display: none; z-index: 1000; box-shadow: 0 -10px 30px rgba(0,0,0,0.8); }
-.p-vinyl { width: 50px; height: 50px; border-radius: 50%; border: 2.3px solid var(--gold); background-size: cover; animation: rot 4s linear infinite; animation-play-state: paused; }
+.vintage-player { background: #111; border: 1.5px solid #222; border-left: 5px solid var(--gold); border-radius: 12px; display: flex; align-items: center; padding: 10px; margin-top: 15px; gap: 15px; }
+.vp-cover { width: 55px; height: 55px; border-radius: 8px; background: #000; object-fit: contain; }
+.vp-btn { background: var(--gold); border: none; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+
+#global-player { position: fixed; bottom: 0; left: 0; width: 100%; background: #080808; border-top: 3px solid var(--gold); padding: 15px 20px; display: none; z-index: 1000; box-shadow: 0 -10px 40px rgba(0,0,0,0.9); }
+.p-vinyl { width: 50px; height: 50px; border-radius: 50%; border: 2px solid var(--gold); background-size: cover; animation: rot 4s linear infinite; animation-play-state: paused; }
 .playing .p-vinyl { animation-play-state: running; }
 @keyframes rot { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-#visualizador { width: 100%; height: 35px; background: transparent; margin-top: 5px; }
 #seek-bar { width: 100%; margin: 10px 0; -webkit-appearance: none; background: #333; height: 4px; border-radius: 2px; }
 #seek-bar::-webkit-slider-thumb { -webkit-appearance: none; width: 14px; height: 14px; background: var(--gold); border-radius: 50%; }
-
-#pantalla-salida { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:#050505; z-index:99999; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:20px; }
