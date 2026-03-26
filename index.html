@@ -43,7 +43,7 @@
         .brand-title { color: var(--gold); font-family: 'Playfair Display', serif; font-size: 14px; text-transform: uppercase; line-height: 1.2; letter-spacing: 0.5px; }
         
         .btn-boveda-container { display: flex; align-items: center; gap: 8px; cursor: pointer; background: rgba(212, 175, 55, 0.1); padding: 5px 10px; border-radius: 12px; border: 1px solid var(--gold); }
-        .btn-boveda-header { width: 38px; height: 38px; border-radius: 6px; object-fit: cover; }
+        .btn-boveda-header { width: 38px; height: 38px; border-radius: 6px; object-fit: cover; box-shadow: 0 0 10px rgba(166, 138, 68, 0.3); }
         .btn-boveda-text { color: var(--gold); font-size: 9px; font-weight: 900; text-transform: uppercase; line-height: 1.1; text-align: right; }
 
         #btn-volver-header { background: #111; border: 1px solid var(--gold); color: var(--gold); padding: 8px 15px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 11px; display: none; }
@@ -53,7 +53,7 @@
         .channels-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px; margin-bottom: 25px; padding: 10px 0; }
         .ch-item { display: flex; flex-direction: column; align-items: center; text-align: center; opacity: 0.7; cursor: pointer; }
         .ch-item.active { opacity: 1; }
-        .ch-logo { width: 44px; height: 44px; border-radius: 12px; border: 2px solid #222; margin-bottom: 6px; background: #000; object-fit: contain; }
+        .ch-logo { width: 44px; height: 44px; border-radius: 12px; border: 2.5px solid #222; margin-bottom: 6px; background: #000; object-fit: contain; }
         .active .ch-logo { border-color: var(--gold); }
         .ch-name { font-size: 6px; color: #ffffff; font-weight: 800; text-transform: uppercase; }
 
@@ -103,7 +103,7 @@
         <div style="display:flex; align-items:center; gap:12px;">
             <div id="btn-boveda-header" class="btn-boveda-container" onclick="window.openVault()">
                 <div class="btn-boveda-text">BÓVEDA DEL<br>LEGADO</div>
-                <img src="https://i.postimg.cc/8P6m3YmB/baul.png" onerror="this.src='https://i.postimg.cc/zVD4mstP/Jazztabueno-(2).png'" class="btn-boveda-header">
+                <img src="https://i.postimg.cc/KjW3X8Gj/baul-ok.png" onerror="this.src='https://i.postimg.cc/zVD4mstP/Jazztabueno-(2).png'" class="btn-boveda-header">
             </div>
             <button id="btn-volver-header" onclick="window.closeVault()">⬅ VOLVER</button>
             <button onclick="window.confirmarSalida()" class="btn-salir" id="btn-salir">SALIR</button>
@@ -131,7 +131,7 @@
         <section class="jtbp-vault-bg">
             <h2 style="color:var(--gold); font-size:14px; text-transform:uppercase;">Bóveda del Legado</h2>
             <div class="timeline-swipe">
-                <button class="year-btn" id="btn-2025" onclick="window.mostrarPorAño(2025, this)">2025</button>
+                <button class="year-btnactivo" id="btn-2025" onclick="window.mostrarPorAño(2025, this)">2025</button>
                 <button class="year-btn" onclick="window.mostrarPorAño(2024, this)">2024</button>
                 <button class="year-btn" onclick="window.mostrarPorAño(2023, this)">2023</button>
                 <button class="year-btn" onclick="window.mostrarPorAño(2022, this)">2022</button>
@@ -161,8 +161,7 @@
 <div id="pantalla-salida">
     <img src="https://i.postimg.cc/zVD4mstP/Jazztabueno-(2).png" width="120">
     <h2 style="color:white; margin-top:20px;">Música Detenida</h2>
-    <p style="color:var(--gold);">Gracias por escuchar Jazztabueno</p>
-    <button onclick="location.reload()" style="margin-top:30px; background:var(--gold); padding:12px 25px; border-radius:30px; border:none; font-weight:bold; cursor:pointer;">VOLVER A LA APP</button>
+    <button onclick="location.reload()" style="margin-top:30px; background:var(--gold); padding:12px 25px; border-radius:30px; border:none; font-weight:bold;">VOLVER</button>
 </div>
 
 <script type="module">
@@ -180,15 +179,51 @@
     const SVG_PLAY = `<svg viewBox="0 0 24 24" width="30"><path d="M8 5v14l11-7z" fill="black"/></svg>`;
     const SVG_PAUSE = `<svg viewBox="0 0 24 24" width="30"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" fill="black"/></svg>`;
 
-    // 🔥 DATA DE LA BÓVEDA 🔥
+    // 🔥 DATA TOTAL DE LA BÓVEDA (RESTABLECIDA) 🔥
     window.MIS_ARCHIVOS_BOVEDA = [
         { año: 2025, categoria: "Studio 79", titulo: "Especial Studio Mix Two", url: "https://archive.org/download/studio-79-13-2025-especial-studio-mix-one/Studio79%20-%2019_2025%20_ESPECIAL%20STUDIO%20MIX%20TWO_.mp3" },
+        { año: 2025, categoria: "Studio 79", titulo: "Funky Fever", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FStudio79%2Fstudio79-182025-funky-fever%2F", plataforma: "mixcloud" },
         { año: 2025, categoria: "Studio 79", titulo: "Especial Studio Mix One", url: "https://archive.org/download/studio-79-13-2025-especial-studio-mix-one/Studio79%20-%2013_2025%20_ESPECIAL%20STUDIO%20MIX%20ONE_.mp3" },
+        { año: 2025, categoria: "Studio 79", titulo: "Disco Nights", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FStudio79%2Fstudio79-122025-disco-nights%2F", plataforma: "mixcloud" },
         { año: 2025, categoria: "Studio 79", titulo: "Rhythm & Blues", url: "https://archive.org/download/programa-11-rhythm-blues/Programa%2011%20%28Rhythm%20%26%20Blues%29.mp3" },
+        { año: 2025, categoria: "Studio 79", titulo: "Especial Music IA", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FStudio79%2Fstudio79-142025-especial-music-ia%2F", plataforma: "mixcloud" },
+        { año: 2025, categoria: "Studio 79", titulo: "Moonlight Deadline", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FStudio79%2Fstudio79-152025-moonlight-deadline%2F", plataforma: "mixcloud" },
+        { año: 2025, categoria: "Studio 79", titulo: "You Win Again", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FStudio79%2Fstudio79-172025-you-win-again%2F", plataforma: "mixcloud" },
+        { año: 2025, categoria: "Studio 79", titulo: "Be Good", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FStudio79%2Fstudio79-162025-be-good%2F", plataforma: "mixcloud" },
+        { año: 2025, categoria: "JAZZTABUENO", titulo: "Seductive Soul", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FJazzTaBueno%2Fjazztabueno-042025-seductive-soul%2F", plataforma: "mixcloud" },
+        { año: 2025, categoria: "Salsa Brava", titulo: "Traigo Salsa", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FByJTB%2Fsalsabrava-072025-traigo-salsa%2F", plataforma: "mixcloud" },
+        { año: 2025, categoria: "Salsa Brava", titulo: "Salsa 1983", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FByJTB%2Fsalsabrava-062025-1983%2F", plataforma: "mixcloud" },
+        { año: 2025, categoria: "Salsa Brava", titulo: "Palo Pa Rumba", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FByJTB%2Fsalsabrava-082025-palo-pa-rumba%2F", plataforma: "mixcloud" },
+        { año: 2025, categoria: "Salsa Brava", titulo: "La Libertad", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FByJTB%2Fsalsabrava-092025-la-libertad%2F", plataforma: "mixcloud" },
+        { año: 2025, categoria: "Salsa Brava", titulo: "Escucha El Ritmo", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FByJTB%2Fsalsabrava-102025-escucha-el-ritmo%2F", plataforma: "mixcloud" },
+        { año: 2025, categoria: "Salsa Brava", titulo: "No Quiero Nada Regalao", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FByJTB%2Fsalsabrava-112025-no-quiero-nada-regalao%2F", plataforma: "mixcloud" },
         { año: 2024, categoria: "STUDIO 79", titulo: "Programa 5 Clásico", url: "https://archive.org/download/studio-79-programa-5/Studio%2079%20Programa%205.mp3" },
+        { año: 2023, categoria: "Old School Rock", titulo: "Slight Return", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2Foldschoolradio%2Fold-school-rock-radio-012023-slight-return%2F", plataforma: "mixcloud" },
+        { año: 2023, categoria: "Old School Rock", titulo: "Bionic Grass", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2Foldschoolradio%2Fold-school-rock-radio-052023-bionic-grass%2F", plataforma: "mixcloud" },
+        { año: 2023, categoria: "Old School Rock", titulo: "Deadly Screams", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2Foldschoolradio%2Fold-school-rock-radio-092023-deadly-screams%2F", plataforma: "mixcloud" },
+        { año: 2023, categoria: "Old School Rock", titulo: "Lunatic", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2Foldschoolradio%2Fold-school-rock-radio-082023-lunatic%2F", plataforma: "mixcloud" },
+        { año: 2023, categoria: "Old School Rock", titulo: "Bonded By Blood", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2Foldschoolradio%2Fold-school-rock-radio-072023-bonded-by-blood%2F", plataforma: "mixcloud" },
+        { año: 2023, categoria: "Old School Rock", titulo: "Malcolm", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2Foldschoolradio%2Fold-school-rock-radio-062023-malcolm%2F", plataforma: "mixcloud" },
+        { año: 2023, categoria: "Old School Rock", titulo: "Grandma", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2Foldschoolradio%2Fold-school-rock-radio-042023-grandma%2F", plataforma: "mixcloud" },
+        { año: 2023, categoria: "Old School Rock", titulo: "Viking Wylde", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2Foldschoolradio%2Fold-school-rock-radio-032023-viking-wylde%2F", plataforma: "mixcloud" },
+        { año: 2023, categoria: "JAZZTABUENO", titulo: "Acid Funk", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FJazzTaBueno%2Fjazztabueno-172023-acid-funk%2F", plataforma: "mixcloud" },
+        { año: 2023, categoria: "JAZZTABUENO", titulo: "Big Band Orchestras Y Algo Jazz", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FJazzTaBueno%2Fjazztabueno-142023-big-band-orchestras-y-algo-jazz%2F", plataforma: "mixcloud" },
         { año: 2022, categoria: "JAZZTABUENO", titulo: "Programa 1", url: "https://archive.org/download/jazztabueno-programa-1-2022/Jazztabueno%20Programa%201-2022.mp3" },
+        { año: 2022, categoria: "JAZZTABUENO", titulo: "Programa 2", url: "https://archive.org/download/jazztabueno-programa-2-2022/Jazztabueno%20Programa%202-2022.mp3" },
+        { año: 2022, categoria: "JAZZTABUENO", titulo: "Programa 3", url: "https://archive.org/download/jazztabueno-programa-3-2022/Jazztabueno%20Programa%203-2022.mp3" },
+        { año: 2022, categoria: "JAZZTABUENO", titulo: "Get Lucky", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FJazzTaBueno%2Fjazztabueno-342022-get-lucky%2F", plataforma: "mixcloud" },
+        { año: 2022, categoria: "JAZZTABUENO", titulo: "Original", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FJazzTaBueno%2Fjazztabueno-072022-original%2F", plataforma: "mixcloud" },
         { año: 2021, categoria: "SALSA BRAVA", titulo: "Programa 1", url: "https://archive.org/download/salsa-brava-programa-1-2021/Salsa%20Brava%20Programa%201-2021.mp3" },
-        { año: 2020, categoria: "STUDIO 79", titulo: "Programa 4", url: "https://archive.org/download/studio-79-programa-4-2020/Studio%2079%20Programa%204-2020.mp3" }
+        { año: 2021, categoria: "SALSA BRAVA", titulo: "Programa 2", url: "https://archive.org/download/salsa-brava-programa-2-2021/Salsa%20Brava%20Programa%202-2021.mp3" },
+        { año: 2021, categoria: "JAZZTABUENO", titulo: "The Music Time", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FJazzTaBueno%2Fjazztabueno-012021-the-music-time%2F", plataforma: "mixcloud" },
+        { año: 2020, categoria: "STUDIO 79", titulo: "Programa 4", url: "https://archive.org/download/studio-79-programa-4-2020/Studio%2079%20Programa%204-2020.mp3" },
+        { año: 2020, categoria: "STUDIO 79", titulo: "Programa 5", url: "https://archive.org/download/studio-79-programa-5-2020/Studio%2079%20Programa%205-2020.mp3" },
+        { año: 2020, categoria: "STUDIO 79", titulo: "Programa 6", url: "https://archive.org/download/studio-79-programa-6-2020/Studio%2079%20Programa%206-2020.mp3" },
+        { año: 2020, categoria: "STUDIO 79", titulo: "Programa 7", url: "https://archive.org/download/studio-79-programa-7-2020/Studio%2079%20Programa%207-2020.mp3" },
+        { año: 2020, categoria: "STUDIO 79", titulo: "Programa 8", url: "https://archive.org/download/studio-79-programa-8-2020/Studio%2079%20Programa%208-2020.mp3" },
+        { año: 2020, categoria: "JAZZTABUENO", titulo: "Funky Moment", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FJazzTaBueno%2Fjazztabueno-212020-funky-moment%2F", plataforma: "mixcloud" },
+        { año: 2020, categoria: "JAZZTABUENO", titulo: "Blues", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FJazzTaBueno%2Fjazztabueno-232020-blues%2F", plataforma: "mixcloud" },
+        { año: 2020, categoria: "JAZZTABUENO", titulo: "The People", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FJazzTaBueno%2Fjazztabueno-282020-the-people%2F", plataforma: "mixcloud" }
     ];
 
     window.openVault = () => {
@@ -197,6 +232,7 @@
         document.getElementById('btn-boveda-header').style.display = 'none';
         document.getElementById('btn-volver-header').style.display = 'block';
         window.mostrarPorAño(2025, document.getElementById('btn-2025'));
+        window.scrollTo({top:0, behavior:'smooth'});
     };
 
     window.closeVault = () => {
@@ -205,6 +241,7 @@
         document.getElementById('btn-volver-header').style.display = 'none';
         document.getElementById('btn-boveda-header').style.display = 'flex';
         document.querySelectorAll('.vintage-audio').forEach(a => a.pause());
+        window.scrollTo({top:0, behavior:'smooth'});
     };
 
     window.mostrarPorAño = (año, btn) => {
@@ -212,17 +249,37 @@
         if(btn) btn.classList.add('activo');
         const grid = document.getElementById('grid-archivos');
         const filtrados = window.MIS_ARCHIVOS_BOVEDA.filter(i => i.año === año);
-        grid.innerHTML = filtrados.map((item, idx) => `
-            <div class="vault-card">
-                <span style="color:var(--gold); font-size:9px; font-weight:bold;">${item.categoria}</span>
-                <h3 style="margin:5px 0; font-size:14px;">${item.titulo}</h3>
-                <div class="vintage-player">
-                    <img src="https://i.postimg.cc/zVD4mstP/Jazztabueno-(2).png" class="vp-cover">
-                    <button class="vp-btn" onclick="window.playVault('${item.url}', '${item.titulo}', this)">${SVG_PLAY}</button>
-                    <span style="font-size:10px; color:var(--gold);">Reproductor Legacy</span>
-                </div>
-            </div>
-        `).join('');
+        
+        grid.innerHTML = filtrados.map((item, idx) => {
+            const esMixcloud = item.plataforma === 'mixcloud';
+            let defaultCover = "https://i.postimg.cc/zVD4mstP/Jazztabueno-(2).png";
+            const catUp = item.categoria.toUpperCase();
+            if(catUp.includes("STUDIO")) defaultCover = "https://i.postimg.cc/NKMDbYJB/S79.png";
+            else if(catUp.includes("SALSA")) defaultCover = "https://i.postimg.cc/75fchgyt/Salsa-Brava.png";
+            else if(catUp.includes("OLD")) defaultCover = "https://i.postimg.cc/jwQ3mczC/Old-School-Radio.png";
+
+            if(esMixcloud) {
+                return `
+                <div class="vault-card">
+                    <span style="color:var(--gold); font-size:9px; font-weight:bold; text-transform:uppercase;">${item.categoria}</span>
+                    <h3 style="margin:5px 0 10px 0; font-size:15px; font-weight:800; color:#fff;">${item.titulo}</h3>
+                    <div style="background:#000; border-radius:8px; overflow:hidden; height:60px; border:1px solid #222;">
+                        <iframe width="100%" height="60" src="${item.url}" frameborder="0"></iframe>
+                    </div>
+                </div>`;
+            } else {
+                return `
+                <div class="vault-card">
+                    <span style="color:var(--gold); font-size:9px; font-weight:bold; text-transform:uppercase;">${item.categoria}</span>
+                    <h3 style="margin:5px 0 10px 0; font-size:15px; font-weight:800; color:#fff;">${item.titulo}</h3>
+                    <div class="vintage-player">
+                        <img src="${defaultCover}" class="vp-cover">
+                        <button class="vp-btn" onclick="window.playVault('${item.url}', '${item.titulo}', this)">${SVG_PLAY}</button>
+                        <span style="font-size:10px; color:var(--gold); font-weight:bold;">Reproductor VIP</span>
+                    </div>
+                </div>`;
+            }
+        }).join('');
     };
 
     window.playVault = (url, tit, btn) => {
@@ -254,7 +311,7 @@
 
     window.doToggle = () => { if(media.paused) media.play(); else media.pause(); render(); };
     window.doClose = () => { media.pause(); document.getElementById('global-player').style.display='none'; idActual=null; render(); };
-    window.confirmarSalida = () => { if(confirm("¿Salir?")) { media.pause(); document.getElementById('pantalla-salida').style.display='flex'; } };
+    window.confirmarSalida = () => { if(confirm("¿Deseas detener la radio y salir?")) { media.pause(); document.getElementById('pantalla-salida').style.display='flex'; } };
     window.setFilter = (cat, el) => { filtro = cat; document.querySelectorAll('.ch-item').forEach(i => i.classList.remove('active')); el.classList.add('active'); render(); };
 
     onSnapshot(query(collection(db, "radio_programas"), orderBy("fecha", "desc")), (snap) => {
@@ -275,7 +332,7 @@
                 <div class="info">
                     <span style="color:var(--gold); font-size:9px; font-weight:900;">${p.programa}</span>
                     <h3 class="ep-title">${p.titulo}</h3>
-                    <button class="btn-list" onclick="window.playItem('${p.id}','${p.mp3Url}','${p.titulo}','${p.imagenUrl}')">ESCUCHAR PROGRAMA</button>
+                    <button class="btn-list" onclick="window.playItem('${p.id}','${p.mp3Url}','${p.titulo}','${p.imagenUrl}')">ESCUCHAR AHORA</button>
                 </div>`;
             feed.appendChild(div);
         });
