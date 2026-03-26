@@ -2,146 +2,80 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=no">
-    <title>Jazztabueno</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Jazztabueno Productions</title>
     
     <link rel="icon" type="image/png" href="https://i.postimg.cc/zVD4mstP/Jazztabueno-(2).png">
     <link rel="apple-touch-icon" href="https://i.postimg.cc/zVD4mstP/Jazztabueno-(2).png">
     <meta name="theme-color" content="#050505">
     
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="Jazztabueno Productions">
-    <meta property="og:description" content="Escucha nuestros programas exclusivos de Radio.">
-    <meta property="og:image" itemprop="image" content="https://i.postimg.cc/zVD4mstP/Jazztabueno-(2).png">
-    <meta property="og:site_name" content="Jazztabueno Productions">
-
-    <link rel="manifest" href="manifest.json">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
-    
     <script src="https://widget.mixcloud.com/media/js/widgetApi.js"></script>
     
-    <script>
-        window.castUrl = ""; window.castTitle = ""; window.castCover = ""; window.lastTvTime = 0;
-        window['__onGCastApiAvailable'] = function(isAvailable) {
-            if (isAvailable) {
-                const castContext = cast.framework.CastContext.getInstance();
-                castContext.setOptions({ 
-                    receiverApplicationId: chrome.cast.media.DEFAULT_MEDIA_RECEIVER_APP_ID, 
-                    autoJoinPolicy: chrome.cast.AutoJoinPolicy.ORIGIN_SCOPED 
-                });
-            }
-        };
-    </script>
-    <script src="https://www.gstatic.com/cv/js/sender/v1/cast_sender.js?loadCastFramework=1"></script>
-
     <style>
         :root { --gold: #a68a44; --bg: #050505; --card: #121212; --red: #ff4444; }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none; }
         body { margin: 0; background: var(--bg); color: #ffffff; font-family: 'Plus Jakarta Sans', sans-serif; min-height: 100vh; overflow-x: hidden; }
 
+        /* SCROLLBAR DORADO PARA QUITAR EL GRIS FEO */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #080808; }
+        ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 10px; }
+
         header { background: rgba(0,0,0,0.98); padding: 12px 15px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #222; position: sticky; top: 0; z-index: 100; }
         .brand-title { color: var(--gold); font-family: 'Playfair Display', serif; font-size: 14px; text-transform: uppercase; line-height: 1.2; letter-spacing: 0.5px; }
-        .btn-salir { background: transparent !important; border: 2px solid var(--gold) !important; color: var(--gold) !important; padding: 7px 15px !important; border-radius: 8px !important; font-size: 10px !important; font-weight: 900 !important; cursor: pointer !important; }
-
-        .btn-boveda-container { display: flex; align-items: center; gap: 8px; cursor: pointer; background: rgba(212, 175, 55, 0.1); padding: 5px 10px; border-radius: 12px; border: 1px solid var(--gold); transition: transform 0.2s; }
-        .btn-boveda-container:active { transform: scale(0.95); }
-        /* IMAGEN DEL COFRE - ENLACE ABSOLUTO CONFIABLE */
-        .btn-boveda-header { width: 38px; height: 38px; border-radius: 6px; box-shadow: 0 0 10px #0070f3; object-fit: cover; }
+        
+        .btn-boveda-container { display: flex; align-items: center; gap: 8px; cursor: pointer; background: rgba(212, 175, 55, 0.1); padding: 5px 10px; border-radius: 12px; border: 1px solid var(--gold); transition: 0.2s; }
+        .btn-boveda-header { width: 38px; height: 38px; border-radius: 6px; object-fit: cover; background: #000; }
         .btn-boveda-text { color: var(--gold); font-size: 9px; font-weight: 900; text-transform: uppercase; line-height: 1.1; text-align: right; }
 
         #btn-volver-header { background: #111; border: 1px solid var(--gold); color: var(--gold); padding: 8px 15px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 11px; display: none; }
+        .btn-header-salir { background: transparent; border: 2px solid var(--gold); color: var(--gold); padding: 7px 15px; border-radius: 8px; font-size: 10px; font-weight: 900; cursor: pointer; text-transform: uppercase; }
 
-        .container { max-width: 450px; margin: auto; padding: 15px; padding-bottom: 300px; }
-        .channels-grid { display: grid !important; grid-template-columns: repeat(5, 1fr) !important; gap: 5px; margin-bottom: 25px; padding: 10px 0; }
-        .ch-item { display: flex; flex-direction: column; align-items: center; text-align: center; opacity: 0.9; cursor: pointer; }
+        .container { max-width: 450px; margin: auto; padding: 15px; padding-bottom: 250px; }
+        .channels-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px; margin-bottom: 25px; padding: 10px 0; }
+        .ch-item { display: flex; flex-direction: column; align-items: center; text-align: center; opacity: 0.7; cursor: pointer; }
+        .ch-item.active { opacity: 1; }
         .ch-logo { width: 44px; height: 44px; border-radius: 12px; border: 2.5px solid #222; margin-bottom: 6px; background: #000; object-fit: contain; }
         .active .ch-logo { border-color: var(--gold); }
-        .ch-name { font-size: 6px; color: #ffffff; font-weight: 800; text-transform: uppercase; line-height: 1.1; width: 100%; text-align: center; }
+        .ch-name { font-size: 6px; color: #ffffff; font-weight: 800; text-transform: uppercase; }
 
         .card { background: var(--card); border-radius: 20px; margin-bottom: 30px; border: 1px solid #1a1a1a; overflow: hidden; }
         .card.playing { border-color: var(--gold); }
-        .card-cover { width: 100%; height: 180px !important; background-size: cover; background-position: center; position: relative; border: 1.5px solid var(--gold); }
-        .card-overlay { position: absolute; inset: 0; display: flex !important; align-items: center !important; justify-content: center !important; }
-        .btn-play { background-color: var(--gold) !important; border: none !important; width: 55px !important; height: 55px !important; border-radius: 50% !important; display: flex !important; align-items: center !important; justify-content: center !important; cursor: pointer; padding: 0; }
-        /* FLECHAS NEGRAS RESTAURADAS */
-        .btn-play svg { width: 28px !important; height: 28px !important; fill: black !important; }
+        .card-cover { width: 100%; height: 180px; background-size: cover; background-position: center; position: relative; border-bottom: 1.5px solid var(--gold); }
+        .card-overlay { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
+        .btn-play { background-color: var(--gold); border: none; width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+        .btn-play svg { width: 28px; height: 28px; fill: #000 !important; }
         
         .info { padding: 20px; }
-        .ep-title { margin: 8px 0 4px 0; font-size: 19px; font-weight: 800; color: #ffffff; display: flex; justify-content: space-between; align-items: start; }
-        
-        .btn-list { background: #1a1a1a !important; border: 1.5px solid #333 !important; color: #ffffff !important; padding: 12px !important; border-radius: 12px !important; font-size: 11px !important; font-weight: 800 !important; width: 100% !important; cursor: pointer; margin-top:12px; }
-        .list-box { display: none; margin-top: 15px; padding: 20px; background: #080808; border-radius: 15px; border: 1px solid #222; font-size: 14px; white-space: pre-wrap; }
+        .ep-title { margin: 8px 0 4px 0; font-size: 19px; font-weight: 800; }
+        .btn-list { background: #1a1a1a; border: 1.5px solid #333; color: #ffffff; padding: 12px; border-radius: 12px; font-size: 11px; font-weight: 800; width: 100%; cursor: pointer; margin-top:12px; }
 
         /* BÓVEDA ESTÉTICA ORIGINAL */
-        .jtbp-vault-bg { background: radial-gradient(circle, #222 10%, transparent 11%), #111; background-size: 10px 10px; border-top: 3px solid #D4AF37; padding: 20px 10px; text-align: center; border-radius: 20px; border: 1px solid #1a1a1a; margin-bottom: 30px; }
+        .jtbp-vault-bg { background: radial-gradient(circle, #222 10%, transparent 11%), #111; background-size: 10px 10px; border-top: 3px solid var(--gold); padding: 20px 10px; text-align: center; border-radius: 20px; border: 1px solid #1a1a1a; margin-bottom: 30px; }
+        .timeline-swipe { display: flex; overflow-x: auto; gap: 12px; padding: 10px 20px; margin-bottom: 20px; border-bottom: 2px solid #D4AF37; padding-bottom: 15px; scrollbar-width: thin; scrollbar-color: var(--gold) #1a1a1a; }
         
-        /* SCROLLBAR CON COLOR DORADO Y FLECHAS NEGRAS */
-        .timeline-swipe {
-            display: flex; overflow-x: auto; gap: 12px; padding: 10px 20px; 
-            justify-content: flex-start; border-bottom: 1px solid #0070f3; margin-bottom: 20px; 
-            padding-bottom: 15px; scrollbar-width: thin; scrollbar-color: var(--gold) #1a1a1a;
-            -webkit-overflow-scrolling: touch; flex-wrap: nowrap;
-        }
-        .year-btn { 
-            background: none; border: 1px solid #D4AF37; color: #D4AF37; padding: 6px 18px; 
-            border-radius: 20px; cursor: pointer; font-size: 12px; font-weight: bold; flex-shrink: 0; transition: 0.3s;
-        }
-        /* BOTONES DE AÑOS CON BRILLO AL ACTIVAR */
-        .year-btn.activo { background: #D4AF37; color: #000; box-shadow: 0 0 10px #D4AF37; }
+        .year-btn { background: none; border: 1px solid #D4AF37; color: #D4AF37; padding: 6px 18px; border-radius: 20px; cursor: pointer; font-size: 12px; font-weight: bold; flex-shrink: 0; transition: 0.3s; }
+        .year-btn.activo { background: var(--gold); color: #000; box-shadow: 0 0 15px rgba(166, 138, 68, 0.5); }
 
-        /* ESTILO PARA AVISO Y NOTA MÁS GRANDES Y DESTACADOS (image_3.png) */
-        .alerta-gala {
-            font-size: 14px;
-            font-weight: bold;
-            margin-bottom: 25px;
-            color: #ffffff;
-            background: rgba(212, 175, 55, 0.1);
-            padding: 15px;
-            border-radius: 10px;
-            border: 1px solid var(--gold);
-        }
-        .alerta-gala strong { color: var(--gold); }
+        /* AVISO Y NOTA GRANDES */
+        .alerta-boveda { font-size: 14px; line-height: 1.5; margin-bottom: 20px; color: #fff; background: rgba(255,255,255,0.05); padding: 15px; border-radius: 12px; border: 1px dashed var(--gold); }
 
-        .grid-vault { display: grid; grid-template-columns: 1fr; gap: 10px; width: 100%; text-align: left; }
-        
-        /* ESTILO PARA PROGRAMAS ESPECIALES EN LA BÓVEDA (image_3.png) */
-        .vault-card { background: #000; border-radius: 15px; padding: 15px; border: 1px solid #333; margin-bottom: 15px; text-align: left; }
-        .vault-card.card-especial-v {
-            border: 2px solid var(--gold);
-            box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
-            position: relative;
-        }
-        /* Texto "ESPECIAL" para el card especial */
-        .vault-card.card-especial-v::after {
-            content: "ESPECIAL";
-            position: absolute;
-            top: 10px;
-            right: 15px;
-            background: var(--gold);
-            color: #000;
-            font-size: 9px;
-            font-weight: 800;
-            padding: 3px 8px;
-            border-radius: 4px;
-            text-transform: uppercase;
-        }
+        /* CARDS ESPECIALES CON ORILLA DORADA */
+        .vault-card { background: #000; border-radius: 15px; padding: 15px; border: 1px solid #333; margin-bottom: 15px; text-align: left; position: relative; }
+        .vault-card.card-especial-v { border: 2.5px solid var(--gold); box-shadow: 0 0 20px rgba(166, 138, 68, 0.3); }
 
-        .vintage-player {
-            background: #111; border: 1.5px solid #222; border-left: 4px solid var(--gold); border-radius: 8px;
-            display: flex; align-items: center; padding: 10px; margin-top: 10px; gap: 12px;
-        }
-        /* FONDO NEGRO PARA LOGOS EN BÓVEDA CON UN PEQUEÑO RELLENO */
-        .vp-cover { width: 55px; height: 55px; border-radius: 6px; border: 1px solid #333; flex-shrink: 0; background-color: #000 !important; object-fit: contain; padding: 2px; }
-        /* BOTÓN DE PLAY DE LA BÓVEDA CON FLECHA NEGRA */
+        .vintage-player { background: #111; border: 1.5px solid #222; border-left: 4px solid var(--gold); border-radius: 8px; display: flex; align-items: center; padding: 10px; margin-top: 10px; gap: 12px; }
+        .vp-cover { width: 55px; height: 55px; border-radius: 6px; border: 1px solid #333; background: #000 !important; object-fit: contain; }
         .vp-btn { background: var(--gold); border: none; width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; }
         .vp-btn svg { width: 18px; height: 18px; fill: #000 !important; }
 
         #global-player { position: fixed; bottom: 0; left: 0; width: 100%; background: #080808; border-top: 3px solid var(--gold); padding: 15px 20px; display: none; z-index: 1000; box-shadow: 0 -10px 30px rgba(0,0,0,0.8); }
-        .p-vinyl { width: 55px; height: 55px; border-radius: 50%; border: 2.3px solid var(--gold); background-size: cover; animation: rot 4s linear infinite; animation-play-state: paused; flex-shrink: 0; }
+        .p-vinyl { width: 55px; height: 55px; border-radius: 50%; border: 2.3px solid var(--gold); background-size: cover; animation: rot 4s linear infinite; animation-play-state: paused; }
         .playing .p-vinyl { animation-play-state: running; }
         @keyframes rot { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
         
-        #visualizador { width: 100%; height: 35px; background: transparent; margin-top: 5px; margin-bottom: 5px; display: block; }
+        #visualizador { width: 100%; height: 35px; background: transparent; margin-top: 5px; }
         #seek-bar { width: 100%; margin: 10px 0; -webkit-appearance: none; background: #333; height: 4px; border-radius: 2px; }
         #seek-bar::-webkit-slider-thumb { -webkit-appearance: none; width: 14px; height: 14px; background: var(--gold); border-radius: 50%; }
 
@@ -152,46 +86,38 @@
 
 <div id="app-content">
     <header>
-        <div style="display:flex; align-items:center; gap:12px; cursor:pointer;" id="admin-trigger">
-            <img src="logo.png" width="35" height="35" onerror="this.src='https://i.postimg.cc/zVD4mstP/Jazztabueno-(2).png'">
+        <div style="display:flex; align-items:center; gap:12px; cursor:pointer;" onclick="window.triggerAdmin()">
+            <img src="https://i.postimg.cc/zVD4mstP/Jazztabueno-(2).png" width="35" height="35">
             <div class="brand-title">JAZZTABUENO<br>PRODUCTIONS</div>
         </div>
-        
         <div style="display:flex; align-items:center; gap:12px;">
             <div id="btn-boveda-header" class="btn-boveda-container" onclick="window.openVault()">
                 <div class="btn-boveda-text">BÓVEDA DEL<br>LEGADO</div>
-                <img src="https://i.postimg.cc/KjW3X8Gj/baul-ok.png" onerror="this.src='baul.jpg'" class="btn-boveda-header" alt="Baúl">
+                <img src="https://i.postimg.cc/KjW3X8Gj/baul-ok.png" class="btn-boveda-header" alt="Baúl">
             </div>
-            
             <button id="btn-volver-header" onclick="window.closeVault()">⬅ VOLVER</button>
-            <button onclick="window.confirmarSalida()" class="btn-salir" id="btn-salir">SALIR</button>
+            <button onclick="window.confirmarSalida()" class="btn-header-salir">SALIR</button>
         </div>
     </header>
 
     <div id="main-view" class="container">
-        <div id="admin-panel" style="display:none; background:#111; padding:25px; border-radius:25px; border:2px solid var(--gold); margin-bottom:30px;">
-            <input type="text" id="t-titulo" style="width:100%; padding:14px; background:#000; color:white; border:1px solid #333; margin-bottom:10px;" placeholder="Título">
-            <input type="text" id="t-url" style="width:100%; padding:14px; background:#000; color:white; border:1px solid #333; margin-bottom:10px;" placeholder="URL MP3">
-            <button id="btn-save" style="width:100%; background:var(--gold); padding:15px; border-radius:12px; font-weight:800; cursor:pointer;">💾 GUARDAR</button>
-        </div>
-
         <div class="channels-grid">
             <div class="ch-item active" onclick="window.setFilter('Todo', this)"><img src="https://i.postimg.cc/8c7Smws4/logos-programas-jtbp.jpg" class="ch-logo"><span class="ch-name">Todo</span></div>
-            <div class="ch-item" onclick="window.setFilter('JAZZTABUENO', this)"><img src="https://i.postimg.cc/zVD4mstP/Jazztabueno-(2).png" class="ch-logo"><span class="ch-name">Jazztabueno</span></div>
+            <div class="ch-item" onclick="window.setFilter('JAZZTABUENO', this)"><img src="https://i.postimg.cc/zVD4mstP/Jazztabueno-(2).png" class="ch-logo"><span class="ch-name">Jazz</span></div>
             <div class="ch-item" onclick="window.setFilter('STUDIO 79', this)"><img src="https://i.postimg.cc/NKMDbYJB/S79.png" class="ch-logo"><span class="ch-name">Studio 79</span></div>
-            <div class="ch-item" onclick="window.setFilter('SALSA BRAVA', this)"><img src="https://i.postimg.cc/75fchgyt/Salsa-Brava.png" class="ch-logo"><span class="ch-name">Salsa Brava</span></div>
-            <div class="ch-item" onclick="window.setFilter('OLD SCHOOL RADIO', this)"><img src="https://i.postimg.cc/jwQ3mczC/Old-School-Radio.png" class="ch-logo"><span class="ch-name">Old School Radio</span></div>
+            <div class="ch-item" onclick="window.setFilter('SALSA BRAVA', this)"><img src="https://i.postimg.cc/75fchgyt/Salsa-Brava.png" class="ch-logo"><span class="ch-name">Salsa</span></div>
+            <div class="ch-item" onclick="window.setFilter('OLD SCHOOL RADIO', this)"><img src="https://i.postimg.cc/jwQ3mczC/Old-School-Radio.png" class="ch-logo"><span class="ch-name">Old School</span></div>
         </div>
         <div id="feed"></div>
     </div>
     
     <div id="vault-view" class="container" style="display:none;">
         <section class="jtbp-vault-bg">
-            <h2 style="color:var(--gold); font-size:14px; text-transform:uppercase; margin-bottom:15px;">Bóveda del Legado</h2>
+            <h2 style="color:var(--gold); font-size:16px; text-transform:uppercase; margin-bottom:15px;">Bóveda del Legado</h2>
             
-            <div class="alerta-gala">
-                <i>⚠️ <strong>Aviso:</strong> Para escuchar, presiona únicamente el botón de <strong>▶ PLAY</strong>.</i><br><br>
-                <i>⭐ <strong>Nota:</strong> Los programas con marco iluminado son <strong>Ediciones Especiales</strong>.</i>
+            <div class="alerta-boveda">
+                <p>⚠️ <strong>Aviso:</strong> Para escuchar, presiona únicamente el botón de <strong>▶ PLAY</strong>.</p>
+                <p>⭐ <strong>Nota:</strong> Los programas con marco iluminado son <strong>Ediciones Especiales</strong>.</p>
             </div>
 
             <div class="timeline-swipe">
@@ -202,32 +128,31 @@
                 <button class="year-btn" onclick="window.mostrarPorAño(2021, this)">2021</button>
                 <button class="year-btn" onclick="window.mostrarPorAño(2020, this)">2020</button>
             </div>
-            <br>
-            <div id="grid-archivos" class="grid-vault"></div>
+            <div id="grid-archivos"></div>
         </section>
     </div>
 </div>
 
 <div id="global-player">
     <audio id="main-media" playsinline webkit-playsinline></audio>
-    <div style="display:flex; align-items:center; gap:15px; margin-bottom:5px;">
-        <div id="p-vinyl" class="p-vinyl" style="background-image: url('https://i.postimg.cc/zVD4mstP/Jazztabueno-(2).png');"></div>
+    <div style="display:flex; align-items:center; gap:15px;">
+        <div id="p-vinyl" class="p-vinyl"></div>
         <div style="flex:1; overflow:hidden;">
-            <h4 id="p-title" style="margin:0; font-size:15px; color:#ffffff; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-weight:800;">...</h4>
-            <div id="p-time" style="font-size:12px; color:var(--gold); font-weight:900; margin-top:3px;">00:00 / 00:00</div>
+            <h4 id="p-title" style="margin:0; font-size:14px; color:#fff; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-weight:800;">...</h4>
+            <div id="p-time" style="font-size:11px; color:var(--gold); font-weight:900;">00:00 / 00:00</div>
         </div>
-        <button onclick="window.doToggle()" id="p-play-btn" style="background:none; border:none; cursor:pointer; flex-shrink: 0;"></button>
-        <button onclick="window.doClose()" style="background:none; border:none; color:#666; font-size:28px; flex-shrink: 0;">×</button>
+        <button onclick="window.doToggle()" id="p-play-btn" style="background:none; border:none; cursor:pointer;"></button>
+        <button onclick="window.doClose()" style="background:none; border:none; color:#666; font-size:24px;">×</button>
     </div>
     <canvas id="visualizador"></canvas>
-    <input type="range" id="seek-bar" value="0" min="0" step="1" style="width:100%;">
+    <input type="range" id="seek-bar" value="0" min="0" step="1">
 </div>
 
 <div id="pantalla-salida">
     <img src="https://i.postimg.cc/zVD4mstP/Jazztabueno-(2).png" width="120">
     <h2 style="color:white; margin-top:20px;">Radio Detenida</h2>
     <p style="color:var(--gold);">Gracias por ser parte del Legado</p>
-    <button onclick="location.reload()" style="margin-top:30px; background:var(--gold); padding:12px 25px; border-radius:30px; border:none; font-weight:bold; cursor:pointer;">VOLVER A LA APP</button>
+    <button onclick="location.reload()" style="margin-top:30px; background:var(--gold); padding:12px 25px; border-radius:30px; border:none; font-weight:bold; cursor:pointer;">VOLVER</button>
 </div>
 
 <script type="module">
@@ -242,10 +167,9 @@
     const seekBar = document.getElementById('seek-bar');
     let programas = []; let idActual = null; let filtro = 'Todo';
 
-    const SVG_PLAY = `<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="black"/></svg>`;
-    const SVG_PAUSE = `<svg viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" fill="black"/></svg>`;
+    const SVG_PLAY = `<svg viewBox="0 0 24 24" width="30"><path d="M8 5v14l11-7z" fill="black"/></svg>`;
+    const SVG_PAUSE = `<svg viewBox="0 0 24 24" width="30"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" fill="black"/></svg>`;
 
-    // DATA DE LA BÓVEDA RESTAURADA
     window.MIS_ARCHIVOS_BOVEDA = [
         { año: 2025, categoria: "Studio 79", titulo: "Especial Studio Mix Two", url: "https://archive.org/download/studio-79-13-2025-especial-studio-mix-one/Studio79%20-%2019_2025%20_ESPECIAL%20STUDIO%20MIX%20TWO_.mp3" },
         { año: 2025, categoria: "Studio 79", titulo: "Funky Fever", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FStudio79%2Fstudio79-182025-funky-fever%2F", plataforma: "mixcloud" },
@@ -265,10 +189,23 @@
         { año: 2025, categoria: "Salsa Brava", titulo: "No Quiero Nada Regalao", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FByJTB%2Fsalsabrava-112025-no-quiero-nada-regalao%2F", plataforma: "mixcloud" },
         { año: 2024, categoria: "STUDIO 79", titulo: "Programa 5 Clásico", url: "https://archive.org/download/studio-79-programa-5/Studio%2079%20Programa%205.mp3" },
         { año: 2023, categoria: "Old School Rock", titulo: "Slight Return", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2Foldschoolradio%2Fold-school-rock-radio-012023-slight-return%2F", plataforma: "mixcloud" },
+        { año: 2023, categoria: "Old School Rock", titulo: "Bionic Grass", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2Foldschoolradio%2Fold-school-rock-radio-052023-bionic-grass%2F", plataforma: "mixcloud" },
         { año: 2023, categoria: "JAZZTABUENO", titulo: "Acid Funk", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FJazzTaBueno%2Fjazztabueno-172023-acid-funk%2F", plataforma: "mixcloud" },
         { año: 2022, categoria: "JAZZTABUENO", titulo: "Programa 1", url: "https://archive.org/download/jazztabueno-programa-1-2022/Jazztabueno%20Programa%201-2022.mp3" },
+        { año: 2022, categoria: "JAZZTABUENO", titulo: "Programa 2", url: "https://archive.org/download/jazztabueno-programa-2-2022/Jazztabueno%20Programa%202-2022.mp3" },
+        { año: 2022, categoria: "JAZZTABUENO", titulo: "Programa 3", url: "https://archive.org/download/jazztabueno-programa-3-2022/Jazztabueno%20Programa%203-2022.mp3" },
+        { año: 2022, categoria: "JAZZTABUENO", titulo: "Get Lucky", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FJazzTaBueno%2Fjazztabueno-342022-get-lucky%2F", plataforma: "mixcloud" },
+        { año: 2022, categoria: "JAZZTABUENO", titulo: "Original", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FJazzTaBueno%2Fjazztabueno-072022-original%2F", plataforma: "mixcloud" },
         { año: 2021, categoria: "SALSA BRAVA", titulo: "Programa 1", url: "https://archive.org/download/salsa-brava-programa-1-2021/Salsa%20Brava%20Programa%201-2021.mp3" },
+        { año: 2021, categoria: "SALSA BRAVA", titulo: "Programa 2", url: "https://archive.org/download/salsa-brava-programa-2-2021/Salsa%20Brava%20Programa%202-2021.mp3" },
+        { año: 2021, categoria: "JAZZTABUENO", titulo: "The Music Time", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FJazzTaBueno%2Fjazztabueno-012021-the-music-time%2F", plataforma: "mixcloud" },
         { año: 2020, categoria: "STUDIO 79", titulo: "Programa 4", url: "https://archive.org/download/studio-79-programa-4-2020/Studio%2079%20Programa%204-2020.mp3" },
+        { año: 2020, categoria: "STUDIO 79", titulo: "Programa 5", url: "https://archive.org/download/studio-79-programa-5-2020/Studio%2079%20Programa%205-2020.mp3" },
+        { año: 2020, categoria: "STUDIO 79", titulo: "Programa 6", url: "https://archive.org/download/studio-79-programa-6-2020/Studio%2079%20Programa%206-2020.mp3" },
+        { año: 2020, categoria: "STUDIO 79", titulo: "Programa 7", url: "https://archive.org/download/studio-79-programa-7-2020/Studio%2079%20Programa%207-2020.mp3" },
+        { año: 2020, categoria: "STUDIO 79", titulo: "Programa 8", url: "https://archive.org/download/studio-79-programa-8-2020/Studio%2079%20Programa%208-2020.mp3" },
+        { año: 2020, categoria: "JAZZTABUENO", titulo: "Funky Moment", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FJazzTaBueno%2Fjazztabueno-212020-funky-moment%2F", plataforma: "mixcloud" },
+        { año: 2020, categoria: "JAZZTABUENO", titulo: "Blues", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FJazzTaBueno%2Fjazztabueno-232020-blues%2F", plataforma: "mixcloud" },
         { año: 2020, categoria: "JAZZTABUENO", titulo: "The People", url: "https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2FJazzTaBueno%2Fjazztabueno-282020-the-people%2F", plataforma: "mixcloud" }
     ];
 
@@ -287,9 +224,9 @@
         document.getElementById('btn-volver-header').style.display = 'none';
         document.getElementById('btn-boveda-header').style.display = 'flex';
         idActual = null; render();
+        window.scrollTo({top:0, behavior:'smooth'});
     };
 
-    // FUNCIÓN MOSTRAR POR AÑO CORREGIDA (image_3.png y Estética)
     window.mostrarPorAño = (año, btn) => {
         document.querySelectorAll('.year-btn').forEach(b => b.classList.remove('activo'));
         if(btn) btn.classList.add('activo');
@@ -297,43 +234,31 @@
         const filtrados = window.MIS_ARCHIVOS_BOVEDA.filter(i => i.año === año);
         
         grid.innerHTML = filtrados.map(item => {
-            // ENLACE ABSOLUTO PARA LOGOS EN BÓVEDA
             let defaultCover = "https://i.postimg.cc/zVD4mstP/Jazztabueno-(2).png";
             if(item.categoria.toUpperCase().includes("STUDIO")) defaultCover = "https://i.postimg.cc/NKMDbYJB/S79.png";
             else if(item.categoria.toUpperCase().includes("SALSA")) defaultCover = "https://i.postimg.cc/75fchgyt/Salsa-Brava.png";
 
             const esEspecial = item.titulo.toLowerCase().includes('especial');
-            const claseEspecial = esEspecial ? 'card-especial-v' : '';
-            
-            // FLECHA NEGRA POR DEFECTO, SE ACTUALIZA POR JS
             const esEste = idActual === item.url;
             const icon = (esEste && !media.paused) ? SVG_PAUSE : SVG_PLAY;
 
             if(item.plataforma === 'mixcloud') {
                 return `<div class="vault-card"><span style="color:var(--gold); font-size:9px; font-weight:bold;">${item.categoria}</span><h3 style="margin:5px 0;">${item.titulo}</h3><iframe width="100%" height="60" src="${item.url}" frameborder="0"></iframe></div>`;
             } else {
-                // AGREGAR LA CLASE ESPECIAL AL CARD
-                return `<div class="vault-card ${claseEspecial}"><span style="color:var(--gold); font-size:9px; font-weight:bold;">${item.categoria}</span><h3 style="margin:5px 0;">${item.titulo}</h3><div class="vintage-player"><img src="${defaultCover}" class="vp-cover"><button class="vp-btn" onclick="window.playVault('${item.url}', '${item.titulo}')">${icon}</button><span style="font-size:10px; color:var(--gold); font-weight:bold;">Reproductor VIP</span></div></div>`;
+                return `<div class="vault-card ${esEspecial ? 'card-especial-v' : ''}"><span style="color:var(--gold); font-size:9px; font-weight:bold;">${item.categoria}</span><h3 style="margin:5px 0;">${item.titulo}</h3><div class="vintage-player"><img src="${defaultCover}" class="vp-cover"><button class="vp-btn" onclick="window.playVault('${item.url}', '${item.titulo}')">${icon}</button><span style="font-size:10px; color:var(--gold); font-weight:bold;">Reproductor VIP</span></div></div>`;
             }
         }).join('');
     };
 
-    // FUNCIÓN REPRODUCIR BÓVEDA CORREGIDA
     window.playVault = (url, tit) => {
         if (idActual === url) {
             media.paused ? media.play() : media.pause();
         } else {
             idActual = url;
-            // ELIMINAR CUALQUIER REPRODUCCIÓN ANTERIOR
-            document.querySelectorAll('.vault-card .vp-btn').forEach(b => b.innerHTML = SVG_PLAY);
-            
-            media.pause(); media.removeAttribute('crossorigin'); media.src = url; 
-            media.load(); // BLINDAJE AUDIO iOS/ARCHIVE
-            media.play();
+            media.pause(); media.removeAttribute('crossorigin'); media.src = url; media.load(); media.play();
             document.getElementById('p-title').innerText = tit;
             document.getElementById('global-player').style.display = 'block';
         }
-        // Actualizar iconos de la bóveda de inmediato
         const a = document.querySelector('.year-btn.activo');
         if(a) window.mostrarPorAño(parseInt(a.innerText), a);
     };
@@ -353,7 +278,6 @@
     window.doToggle = () => { 
         if(media.paused) media.play(); else media.pause(); 
         render(); 
-        // Actualizar iconos de la bóveda si está abierta
         const a = document.querySelector('.year-btn.activo');
         if(a) window.mostrarPorAño(parseInt(a.innerText), a);
     };
@@ -372,7 +296,6 @@
         filtered.forEach(p => {
             const isPlaying = idActual === p.id && !media.paused;
             const div = document.createElement('div'); div.className = `card ${isPlaying ? 'playing' : ''}`;
-            // FLECHAS NEGRAS POR DEFECTO
             div.innerHTML = `<div class="card-cover" style="background-image: url('${p.imagenUrl}')"><div class="card-overlay"><button class="btn-play" onclick="window.playItem('${p.id}','${p.mp3Url}','${p.titulo}','${p.imagenUrl}')">${isPlaying ? SVG_PAUSE : SVG_PLAY}</button></div></div><div class="info"><span style="color:var(--gold); font-size:9px; font-weight:900;">${p.programa}</span><h3 class="ep-title">${p.titulo}</h3><button class="btn-list" onclick="window.playItem('${p.id}','${p.mp3Url}','${p.titulo}','${p.imagenUrl}')">ESCUCHAR AHORA</button></div>`;
             feed.appendChild(div);
         });
