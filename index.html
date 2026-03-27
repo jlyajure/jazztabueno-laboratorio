@@ -61,9 +61,7 @@
 
         header { background: rgba(0,0,0,0.98); padding: 12px 15px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #222; position: sticky; top: 0; z-index: 100; }
         .brand-title { color: var(--gold); font-family: 'Playfair Display', serif; font-size: 14px; text-transform: uppercase; line-height: 1.2; letter-spacing: 0.5px; }
-        
-        /* AQUÍ ESTÁ EL CAMBIO PARA EL BOTÓN SALIR VISIBLE */
-        .btn-salir { display: block !important; background: transparent !important; border: 2px solid var(--gold) !important; color: var(--gold) !important; padding: 7px 15px !important; border-radius: 8px !important; font-size: 10px !important; font-weight: 900 !important; cursor: pointer !important; }
+        .btn-salir { display: none; background: transparent !important; border: 2px solid var(--gold) !important; color: var(--gold) !important; padding: 7px 15px !important; border-radius: 8px !important; font-size: 10px !important; font-weight: 900 !important; cursor: pointer !important; }
 
         .btn-boveda-container { display: flex; align-items: center; gap: 8px; cursor: pointer; background: rgba(212, 175, 55, 0.1); padding: 5px 10px; border-radius: 12px; border: 1px solid var(--gold); transition: transform 0.2s; }
         .btn-boveda-container:active { transform: scale(0.95); }
@@ -179,7 +177,7 @@
             </div>
             
             <button id="btn-volver-header" onclick="window.closeVault()">⬅ VOLVER</button>
-            <button onclick="window.confirmarSalida()" class="btn-salir" id="btn-salir">SALIR</button>
+            <button onclick="window.doLogout()" class="btn-salir" id="btn-salir">SALIR</button>
         </div>
     </header>
 
@@ -239,7 +237,7 @@
 </div>
 
 <div id="global-player">
-    <audio id="main-media" playsinline webkit-playsinline></audio>
+    <audio id="main-media" crossorigin="anonymous" playsinline webkit-playsinline></audio>
     <div style="display:flex; align-items:center; gap:15px; margin-bottom:5px;">
         <div id="p-vinyl" class="p-vinyl" style="background-image: url('https://i.postimg.cc/zVD4mstP/Jazztabueno-(2).png');"></div>
         <div style="flex:1; overflow:hidden;">
@@ -260,23 +258,7 @@
     </div>
 </div>
 
-<div id="pantalla-salida" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:#050505; z-index:99999; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:20px;">
-    <img src="https://i.postimg.cc/zVD4mstP/Jazztabueno-(2).png" width="120">
-    <h2 style="color:white; margin-top:20px;">Radio Detenida</h2>
-    <p style="color:#a68a44;">Gracias por ser parte del Legado</p>
-    <button onclick="location.reload()" style="margin-top:30px; background:#a68a44; border:none; padding:12px 25px; border-radius:30px; font-weight:bold; cursor:pointer;">VOLVER</button>
-</div>
 <script>
-    // FUNCION DE SALIR AGREGADA
-    window.confirmarSalida = () => {
-        if(confirm("¿Deseas detener la radio y salir?")) {
-            const media = document.getElementById('main-media');
-            if(media) media.pause();
-            document.getElementById('app-content').style.display='none';
-            document.getElementById('pantalla-salida').style.display='flex';
-        }
-    };
-
     const SVG_PLAY = `<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="white"/></svg>`; 
     const SVG_PAUSE = `<svg viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" fill="white"/></svg>`;
 
@@ -493,6 +475,7 @@
         if(c) c.classList.remove('playing');
     };
 </script>
+
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { initializeFirestore, collection, query, orderBy, onSnapshot, addDoc, deleteDoc, doc, updateDoc, increment, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
@@ -507,14 +490,9 @@
     const media = document.getElementById('main-media');
     const seekBar = document.getElementById('seek-bar');
     let programas = []; let currentRenderedList = []; let idActual = null; let filtro = 'Todo'; let hashtagFiltro = ''; let isAdmin = false;
-    
-    /* Variables del Visualizador */
-    let isVisualizerRunning = false; 
-    const canvas = document.getElementById('visualizador'); 
-    const ctx = canvas.getContext('2d');
+    let audioCtx, analyser, source; let isVisualizerRunning = false; const canvas = document.getElementById('visualizador'); const ctx = canvas.getContext('2d');
 
-    const SVG_PLAY = `<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="black"/></svg>`; 
-    const SVG_PAUSE = `<svg viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" fill="black"/></svg>`;
+    const SVG_PLAY = `<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>`; const SVG_PAUSE = `<svg viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>`;
 
     window.actualizarUI = () => { render(); }; 
 
@@ -599,45 +577,28 @@
 
     window.borrarComentario = async (progId, comId) => { if(confirm("¿Borrar este comentario permanentemente?")) { try { await deleteDoc(doc(db, "radio_programas", progId, "comentarios", comId)); } catch(e) {} } };
 
-    /* TRAMPA HACKER: VISUALIZADOR SIMULADO PARA QUE NO MUTE EL AUDIO */
     function encenderVisualizador() {
+        if (!audioCtx) {
+            audioCtx = new (window.AudioContext || window.webkitAudioContext)(); analyser = audioCtx.createAnalyser();
+            try { source = audioCtx.createMediaElementSource(media); source.connect(analyser); analyser.connect(audioCtx.destination); } catch(e) {}
+            analyser.fftSize = 256; 
+            analyser.smoothingTimeConstant = 0.85; 
+        }
+        if (audioCtx.state === 'suspended') audioCtx.resume();
         if (!isVisualizerRunning) pintarBarras();
     }
 
     function pintarBarras() {
-        isVisualizerRunning = true; 
-        requestAnimationFrame(pintarBarras); 
-        
-        if(!canvas) return;
-        const dpr = window.devicePixelRatio || 1; 
-        const displayWidth = canvas.clientWidth; 
-        const displayHeight = canvas.clientHeight;
-        canvas.width = displayWidth * dpr; 
-        canvas.height = displayHeight * dpr; 
-        ctx.scale(dpr, dpr); 
-        ctx.clearRect(0, 0, displayWidth, displayHeight);
-        
-        const isMobile = displayWidth < 600; 
-        const barrasActivas = isMobile ? 40 : 80; 
-        const gap = isMobile ? 2 : 4; 
-        const barWidth = (displayWidth / barrasActivas) - gap; 
-        let x = gap / 2;
-
-        if (media.paused) {
-            for (let i = 0; i < barrasActivas; i++) {
-                ctx.fillStyle = '#a68a44'; 
-                ctx.fillRect(x, displayHeight - (isMobile ? 3 : 4), barWidth, (isMobile ? 3 : 4));
-                x += barWidth + gap;
-            }
-            return;
-        }
-
+        isVisualizerRunning = true; requestAnimationFrame(pintarBarras); if (!analyser) return;
+        const bufferLength = analyser.frequencyBinCount; const dataArray = new Uint8Array(bufferLength); analyser.getByteFrequencyData(dataArray);
+        const dpr = window.devicePixelRatio || 1; const displayWidth = canvas.clientWidth; const displayHeight = canvas.clientHeight;
+        canvas.width = displayWidth * dpr; canvas.height = displayHeight * dpr; ctx.scale(dpr, dpr); ctx.clearRect(0, 0, displayWidth, displayHeight);
+        const isMobile = displayWidth < 600; const barrasActivas = isMobile ? 40 : 80; const gap = isMobile ? 2 : 4; 
+        const barWidth = (displayWidth / barrasActivas) - gap; let x = gap / 2;
         for (let i = 0; i < barrasActivas; i++) {
-            let randomVal = Math.random() * 200 + 55; 
-            let barHeight = (randomVal / 255) * displayHeight * 0.9; 
-            ctx.fillStyle = '#a68a44'; 
-            const finalHeight = Math.max(barHeight, isMobile ? 3 : 4); 
-            ctx.fillRect(x, displayHeight - finalHeight, barWidth, finalHeight);
+            const dataIndex = Math.floor(i * (bufferLength / 100)); 
+            let barHeight = (dataArray[dataIndex] / 255) * displayHeight * 1.3; ctx.fillStyle = '#a68a44'; 
+            const finalHeight = Math.max(barHeight, isMobile ? 3 : 4); ctx.fillRect(x, displayHeight - finalHeight, barWidth, finalHeight);
             x += barWidth + gap;
         }
     }
@@ -646,12 +607,7 @@
         if(idActual === id) { 
             window.doToggle(); 
         } else {
-            idActual = id; window.castUrl = url; window.castTitle = tit; window.castCover = img; 
-            
-            /* BLINDAJE REAL: Sin crossorigin para Archive, y sin conectar al Web Audio API */
-            media.removeAttribute('crossorigin'); 
-            media.src = url; 
-            media.load();
+            idActual = id; window.castUrl = url; window.castTitle = tit; window.castCover = img; media.src = url; 
             
             document.getElementById('p-title').innerText = tit;
             document.getElementById('p-vinyl').style.backgroundImage = `url('${img}')`;
@@ -662,11 +618,11 @@
                 promesa.then(_ => {
                     let memoria = localStorage.getItem('jtbp_mem_' + id);
                     if(memoria && parseFloat(memoria) > 5) { media.currentTime = parseFloat(memoria); }
-                    encenderVisualizador(); 
+                    encenderVisualizador();
                 }).catch(e => {
                     const btn = document.getElementById('p-play-btn');
                     if(btn) btn.innerHTML = SVG_PLAY;
-                    alert("🎟️ Presiona el botón de PLAY (▶️) en la barra inferior para escuchar.");
+                    alert("🎟️ ¡Tu Pase VIP está listo!\n\nPor reglas de seguridad de tu navegador, presiona el botón de PLAY (▶️) en la barra inferior para escuchar.");
                 });
             }
             
