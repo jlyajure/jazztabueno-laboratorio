@@ -34,9 +34,9 @@ window['__onGCastApiAvailable'] = function(isAvailable) {
     }
 };
 
-// Iconos SVG
-const SVG_PLAY = `<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="white"/></svg>`; 
-const SVG_PAUSE = `<svg viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" fill="white"/></svg>`;
+// Íconos SVG limpios, el color lo da styles.css
+const SVG_PLAY = `<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>`; 
+const SVG_PAUSE = `<svg viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>`;
 
 // Base de datos de la Bóveda del Legado
 window.MIS_ARCHIVOS_BOVEDA = [
@@ -351,7 +351,9 @@ function encenderVisualizador() {
     if (!audioCtx) {
         audioCtx = new (window.AudioContext || window.webkitAudioContext)(); analyser = audioCtx.createAnalyser();
         try { source = audioCtx.createMediaElementSource(media); source.connect(analyser); analyser.connect(audioCtx.destination); } catch(e) {}
-        analyser.fftSize = 256; 
+        
+        // Aumentamos la resolución para detectar mejor los bajos y eliminamos los agudos sordos
+        analyser.fftSize = 512; 
         analyser.smoothingTimeConstant = 0.85; 
     }
     if (audioCtx.state === 'suspended') audioCtx.resume();
@@ -365,8 +367,14 @@ function pintarBarras() {
     canvas.width = displayWidth * dpr; canvas.height = displayHeight * dpr; ctx.scale(dpr, dpr); ctx.clearRect(0, 0, displayWidth, displayHeight);
     const isMobile = displayWidth < 600; const barrasActivas = isMobile ? 40 : 80; const gap = isMobile ? 2 : 4; 
     const barWidth = (displayWidth / barrasActivas) - gap; let x = gap / 2;
+    
+    // Mapeamos las barras para que cubran solo donde está la música viva (aprox. primeros 120 tonos)
+    const factorEnfoque = 120 / barrasActivas; 
+
     for (let i = 0; i < barrasActivas; i++) {
-        const dataIndex = Math.floor(i * (bufferLength / 100)); 
+        // Multiplicador matemático para ignorar extremos en silencio
+        const dataIndex = Math.floor(i * factorEnfoque); 
+        
         let barHeight = (dataArray[dataIndex] / 255) * displayHeight * 1.3; ctx.fillStyle = '#a68a44'; 
         const finalHeight = Math.max(barHeight, isMobile ? 3 : 4); ctx.fillRect(x, displayHeight - finalHeight, barWidth, finalHeight);
         x += barWidth + gap;
