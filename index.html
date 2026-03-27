@@ -4,97 +4,66 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <title>Jazztabueno Productions</title>
-    
     <link rel="icon" type="image/png" href="https://i.postimg.cc/zVD4mstP/Jazztabueno-(2).png">
     <link rel="apple-touch-icon" href="https://i.postimg.cc/zVD4mstP/Jazztabueno-(2).png">
-    <meta name="theme-color" content="#050505">
-    
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
-    <script src="https://widget.mixcloud.com/media/js/widgetApi.js"></script>
-    
-    <script>
-        window.castUrl = ""; window.castTitle = ""; window.castCover = ""; window.lastTvTime = 0;
-        window['__onGCastApiAvailable'] = function(isAvailable) {
-            if (isAvailable) {
-                const castContext = cast.framework.CastContext.getInstance();
-                castContext.setOptions({ 
-                    receiverApplicationId: chrome.cast.media.DEFAULT_MEDIA_RECEIVER_APP_ID, 
-                    autoJoinPolicy: chrome.cast.AutoJoinPolicy.ORIGIN_SCOPED 
-                });
-            }
-        };
-    </script>
-    <script src="https://www.gstatic.com/cv/js/sender/v1/cast_sender.js?loadCastFramework=1"></script>
-
     <style>
-        :root { --gold: #a68a44; --bg: #050505; --card: #121212; --red: #ff4444; }
+        :root { --gold: #a68a44; --bg: #050505; --card: #0d0d0d; }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none; }
         body { margin: 0; background: var(--bg); color: #ffffff; font-family: 'Plus Jakarta Sans', sans-serif; min-height: 100vh; overflow-x: hidden; }
-
-        /* SCROLLBAR DORADA */
         ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #080808; }
         ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 10px; }
 
-        header { background: rgba(0,0,0,0.98); padding: 12px 15px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #222; position: sticky; top: 0; z-index: 100; }
-        .brand-title { color: var(--gold); font-family: 'Playfair Display', serif; font-size: 14px; text-transform: uppercase; line-height: 1.2; letter-spacing: 0.5px; }
+        header { background: rgba(0,0,0,0.98); padding: 15px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #1a1a1a; position: sticky; top: 0; z-index: 1000; }
+        .brand-title { color: var(--gold); font-family: 'Playfair Display', serif; font-size: 14px; text-transform: uppercase; line-height: 1.2; }
+        .btn-salir { background: transparent; border: 2px solid var(--gold); color: var(--gold); padding: 7px 15px; border-radius: 8px; font-size: 10px; font-weight: 900; cursor: pointer; }
 
-        /* BOTÓN SALIR - AHORA VISIBLE */
-        .btn-salir { background: transparent !important; border: 2px solid var(--gold) !important; color: var(--gold) !important; padding: 7px 15px !important; border-radius: 8px !important; font-size: 10px !important; font-weight: 900 !important; cursor: pointer !important; display: block !important; }
-
-        .btn-boveda-container { display: flex; align-items: center; gap: 8px; cursor: pointer; background: rgba(212, 175, 55, 0.1); padding: 5px 10px; border-radius: 12px; border: 1px solid var(--gold); }
+        .btn-boveda-container { display: flex; align-items: center; gap: 8px; cursor: pointer; background: rgba(166, 138, 68, 0.1); padding: 5px 10px; border-radius: 12px; border: 1px solid var(--gold); }
         .btn-boveda-header { width: 38px; height: 38px; border-radius: 6px; object-fit: cover; }
         .btn-boveda-text { color: var(--gold); font-size: 9px; font-weight: 900; text-transform: uppercase; line-height: 1.1; text-align: right; }
 
-        #btn-volver-header { background: #111; border: 1px solid var(--gold); color: var(--gold); padding: 8px 15px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 11px; display: none; }
-
         .container { max-width: 450px; margin: auto; padding: 15px; padding-bottom: 300px; }
-        .channels-grid { display: grid !important; grid-template-columns: repeat(5, 1fr) !important; gap: 5px; margin-bottom: 25px; padding: 10px 0; }
-        .ch-item { display: flex; flex-direction: column; align-items: center; text-align: center; opacity: 0.7; cursor: pointer; }
+        .channels-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 25px; }
+        .ch-item { display: flex; flex-direction: column; align-items: center; text-align: center; opacity: 0.6; cursor: pointer; }
         .ch-item.active { opacity: 1; }
-        .ch-logo { width: 44px; height: 44px; border-radius: 12px; border: 2.5px solid #222; margin-bottom: 6px; background: #000; object-fit: contain; }
+        .ch-logo { width: 45px; height: 45px; border-radius: 12px; border: 2px solid #222; background: #000; object-fit: contain; }
         .active .ch-logo { border-color: var(--gold); }
-        .ch-name { font-size: 6px; color: #ffffff; font-weight: 800; text-transform: uppercase; }
+        .ch-name { font-size: 6px; color: #fff; font-weight: 800; text-transform: uppercase; margin-top: 4px; }
 
-        /* TARJETA VIP COMPLETA (IMAGEN 2) */
-        .card { background: var(--card); border-radius: 20px; margin-bottom: 30px; border: 1px solid #1a1a1a; overflow: hidden; }
-        .card.playing { border-color: var(--gold); }
-        .card-cover { width: 100%; height: 200px; background-size: cover; background-position: center; position: relative; border-bottom: 1.5px solid var(--gold); }
-        .card-overlay { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
-        .btn-play { background-color: var(--gold); border: none; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; }
-        .btn-play svg { width: 30px; height: 30px; fill: black !important; }
-        
-        .info { padding: 20px; text-align: left; }
-        .ep-title { margin: 8px 0 12px 0; font-size: 22px; font-weight: 800; color: #ffffff; line-height: 1.1; }
-        
-        .tag { background: rgba(166, 138, 68, 0.15); color: var(--gold); padding: 5px 12px; border-radius: 20px; font-size: 11px; font-weight: 800; margin-right: 5px; display: inline-block; margin-bottom: 15px; }
+        /* TARJETA VIP (IMAGEN 2) */
+        .card { background: var(--card); border-radius: 25px; margin-bottom: 35px; border: 1px solid #1a1a1a; overflow: hidden; }
+        .card-cover { width: 100%; height: 220px; background-size: cover; background-position: center; position: relative; border-bottom: 1.5px solid var(--gold); }
+        .btn-play-card { background: rgba(166, 138, 68, 0.9); border: none; width: 65px; height: 65px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+        .btn-play-card svg { width: 30px; height: 30px; fill: #000; }
 
-        .btn-group { display: flex; gap: 10px; margin-bottom: 15px; }
-        .btn-action { background: #1a1a1a; border: 1.5px solid #333; color: #fff; flex: 1; padding: 12px; border-radius: 12px; font-size: 11px; font-weight: 800; cursor: pointer; text-transform: uppercase; }
+        .info { padding: 20px; }
+        .ep-category { color: var(--gold); font-size: 11px; font-weight: 900; text-transform: uppercase; }
+        .ep-title { margin: 10px 0; font-size: 24px; font-weight: 800; color: #fff; line-height: 1.1; }
 
-        .admin-row { display: flex; gap: 10px; border-top: 1px solid #222; padding-top: 15px; }
-        .btn-edit { flex: 1; background: transparent; border: 1px solid var(--gold); color: var(--gold); padding: 10px; border-radius: 10px; font-weight: 800; font-size: 12px; cursor: pointer; }
-        .btn-delete { flex: 1; background: transparent; border: 1px solid #f44; color: #f44; padding: 10px; border-radius: 10px; font-weight: 800; font-size: 12px; cursor: pointer; }
+        .tag-container { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+        .tag { background: rgba(166, 138, 68, 0.15); color: var(--gold); padding: 5px 12px; border-radius: 20px; font-size: 11px; font-weight: 800; }
 
-        /* BÓVEDA IMAGEN 3 */
-        .jtbp-vault-bg { background: radial-gradient(circle, #222 10%, transparent 11%), #111; background-size: 10px 10px; border-top: 3px solid var(--gold); padding: 25px 10px; border-radius: 20px; margin-bottom: 30px; }
-        .vault-card { background: #000; border-radius: 15px; padding: 15px; border: 1px solid #333; margin-bottom: 15px; position: relative; }
-        .vault-card.card-especial-v { border: 2.5px solid var(--gold); box-shadow: 0 0 15px rgba(166, 138, 68, 0.4); }
+        .btn-group { display: flex; gap: 10px; margin-bottom: 20px; }
+        .btn-action { background: #161616; border: 1px solid #222; color: #fff; flex: 1; padding: 12px; border-radius: 15px; font-weight: 800; font-size: 12px; cursor: pointer; text-transform: uppercase; display: flex; align-items: center; justify-content: center; gap: 5px; }
 
-        .vintage-player { background: #111; border: 1.5px solid #222; border-left: 4px solid var(--gold); border-radius: 8px; display: flex; align-items: center; padding: 10px; margin-top: 10px; gap: 12px; }
-        .vp-cover { width: 55px; height: 55px; border-radius: 6px; background: #000; object-fit: contain; }
-        .vp-btn { background: var(--gold); border: none; width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+        .admin-row { display: flex; gap: 10px; border-top: 1px solid #1a1a1a; padding-top: 20px; }
+        .btn-edit { flex: 1; background: transparent; border: 1.5px solid var(--gold); color: var(--gold); padding: 12px; border-radius: 12px; font-size: 13px; font-weight: 900; }
+        .btn-delete { flex: 1; background: transparent; border: 1.5px solid #ff4444; color: #ff4444; padding: 12px; border-radius: 12px; font-size: 13px; font-weight: 900; }
 
-        #global-player { position: fixed; bottom: 0; left: 0; width: 100%; background: #080808; border-top: 3px solid var(--gold); padding: 15px 20px; display: none; z-index: 1000; }
-        .p-vinyl { width: 50px; height: 50px; border-radius: 50%; border: 2.3px solid var(--gold); background-size: cover; animation: rot 4s linear infinite; animation-play-state: paused; }
+        /* BÓVEDA (IMAGEN 3) */
+        .jtbp-vault-bg { background: radial-gradient(circle, #222 10%, transparent 11%), #111; background-size: 10px 10px; border-top: 3px solid var(--gold); padding: 25px 10px; text-align: center; border-radius: 25px; margin-bottom: 30px; }
+        .vault-card { background: #000; border-radius: 20px; padding: 20px; border: 1px solid #333; margin-bottom: 15px; text-align: left; }
+        .vault-card.card-especial-v { border: 3px solid var(--gold); box-shadow: 0 0 20px rgba(166, 138, 68, 0.4); }
+
+        #global-player { position: fixed; bottom: 0; left: 0; width: 100%; background: #080808; border-top: 3px solid var(--gold); padding: 15px 20px; display: none; z-index: 2000; }
+        .p-vinyl { width: 55px; height: 55px; border-radius: 50%; border: 2.5px solid var(--gold); background-size: cover; animation: rot 4s linear infinite; animation-play-state: paused; }
         .playing .p-vinyl { animation-play-state: running; }
         @keyframes rot { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-        #visualizador { width: 100%; height: 35px; background: transparent; }
-        #seek-bar { width: 100%; margin: 10px 0; -webkit-appearance: none; background: #333; height: 4px; border-radius: 2px; }
-        #seek-bar::-webkit-slider-thumb { -webkit-appearance: none; width: 14px; height: 14px; background: var(--gold); border-radius: 50%; }
+        #seek-bar { width: 100%; margin: 12px 0; -webkit-appearance: none; background: #333; height: 4px; border-radius: 2px; }
+        #seek-bar::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; background: var(--gold); border-radius: 50%; }
 
-        #pantalla-salida { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:#050505; z-index:99999; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:20px; }
+        #pantalla-salida { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:#050505; z-index:99999; flex-direction:column; align-items:center; justify-content:center; text-align:center; }
     </style>
 </head>
 <body>
@@ -104,85 +73,56 @@
             <img src="https://i.postimg.cc/zVD4mstP/Jazztabueno-(2).png" width="35" height="35">
             <div class="brand-title">JAZZTABUENO<br>PRODUCTIONS</div>
         </div>
-        <div style="display:flex; align-items:center; gap:12px;">
-            <div id="btn-boveda-header" class="btn-boveda-container" onclick="window.openVault()">
+        <div style="display:flex; align-items:center; gap:10px;">
+            <div class="btn-boveda-container" onclick="window.openVault()">
                 <div class="btn-boveda-text">BÓVEDA DEL<br>LEGADO</div>
                 <img src="https://i.postimg.cc/KjW3X8Gj/baul-ok.png" class="btn-boveda-header">
             </div>
-            <button id="btn-volver-header" onclick="window.closeVault()">⬅ VOLVER</button>
             <button onclick="window.confirmarSalida()" class="btn-salir">SALIR</button>
         </div>
     </header>
 
     <div id="main-view" class="container">
-        <div id="admin-panel" style="display:none; background:#111; padding:25px; border-radius:25px; border:2px solid var(--gold); margin-bottom:30px;">
-            <input type="hidden" id="edit-id">
-            <input type="text" id="t-titulo" style="width:100%; padding:14px; background:#000; color:white; border:1px solid #333; border-radius:10px; margin-bottom:10px;" placeholder="Título">
-            <select id="t-programa" style="width:100%; padding:14px; background:#000; color:white; border:1px solid #333; border-radius:10px; margin-bottom:10px;">
-                <option value="JAZZTABUENO">JAZZTABUENO</option>
-                <option value="STUDIO 79">STUDIO 79</option>
-                <option value="SALSA BRAVA">SALSA BRAVA</option>
-                <option value="OLD SCHOOL RADIO">OLD SCHOOL RADIO</option>
-            </select>
-            <input type="text" id="t-url" style="width:100%; padding:14px; background:#000; color:white; border:1px solid #333; border-radius:10px; margin-bottom:10px;" placeholder="URL MP3">
-            <input type="text" id="t-img" style="width:100%; padding:14px; background:#000; color:white; border:1px solid #333; border-radius:10px; margin-bottom:10px;" placeholder="URL Portada">
-            <input type="text" id="t-tags" style="width:100%; padding:14px; background:#000; color:white; border:1px solid #333; border-radius:10px; margin-bottom:10px;" placeholder="Hashtags #jazz #disco">
-            <textarea id="t-playlist" style="width:100%; height:100px; background:#000; color:white; border:1px solid #333; border-radius:10px; padding:10px; margin-bottom:15px;" placeholder="Lista de canciones..."></textarea>
-            <div style="display:flex; gap:10px;">
-                <button id="btn-save" style="flex:2; background:var(--gold); border:none; padding:15px; border-radius:12px; font-weight:800;">💾 GUARDAR</button>
-                <button onclick="window.cancelEdit()" style="flex:1; background:transparent; border:1px solid #444; color:#888; border-radius:12px;">❌</button>
-            </div>
-        </div>
-
         <div class="channels-grid">
             <div class="ch-item active" onclick="window.setFilter('Todo', this)"><img src="https://i.postimg.cc/8c7Smws4/logos-programas-jtbp.jpg" class="ch-logo"><span class="ch-name">Todo</span></div>
             <div class="ch-item" onclick="window.setFilter('JAZZTABUENO', this)"><img src="https://i.postimg.cc/zVD4mstP/Jazztabueno-(2).png" class="ch-logo"><span class="ch-name">Jazz</span></div>
-            <div class="ch-item" onclick="window.setFilter('STUDIO 79', this)"><img src="https://i.postimg.cc/NKMDbYJB/S79.png" class="ch-logo"><span class="ch-name">Studio 79</span></div>
-            <div class="ch-item" onclick="window.setFilter('SALSA BRAVA', this)"><img src="https://i.postimg.cc/75fchgyt/Salsa-Brava.png" class="ch-logo"><span class="ch-name">Salsa Brava</span></div>
+            <div class="ch-item" onclick="window.setFilter('STUDIO 79', this)"><img src="https://i.postimg.cc/NKMDbYJB/S79.png" class="ch-logo"><span class="ch-name">Studio</span></div>
+            <div class="ch-item" onclick="window.setFilter('SALSA BRAVA', this)"><img src="https://i.postimg.cc/75fchgyt/Salsa-Brava.png" class="ch-logo"><span class="ch-name">Salsa</span></div>
             <div class="ch-item" onclick="window.setFilter('OLD SCHOOL RADIO', this)"><img src="https://i.postimg.cc/jwQ3mczC/Old-School-Radio.png" class="ch-logo"><span class="ch-name">Old School</span></div>
         </div>
         <div id="feed"></div>
     </div>
-    
+
     <div id="vault-view" class="container" style="display:none;">
         <section class="jtbp-vault-bg">
-            <h2 style="color:var(--gold); font-size:16px; text-transform:uppercase; margin-bottom:20px;">Bóveda del Legado</h2>
-            <div class="timeline-swipe">
-                <button class="year-btn" id="btn-2025" onclick="window.mostrarPorAño(2025, this)">2025</button>
-                <button class="year-btn" onclick="window.mostrarPorAño(2024, this)">2024</button>
-                <button class="year-btn" onclick="window.mostrarPorAño(2023, this)">2023</button>
-                <button class="year-btn" onclick="window.mostrarPorAño(2022, this)">2022</button>
-            </div>
+            <h2 style="color:var(--gold); font-size:14px; text-transform:uppercase;">Bóveda del Legado</h2>
+            <button onclick="window.closeVault()" class="btn-salir" style="margin-bottom:20px;">⬅ VOLVER</button>
             <div id="grid-archivos"></div>
         </section>
     </div>
 </div>
 
 <div id="global-player">
-    <audio id="main-media" playsinline webkit-playsinline></audio>
-    <div style="display:flex; align-items:center; gap:15px;">
-        <div id="p-vinyl" class="p-vinyl"></div>
+    <audio id="main-media" playsinline></audio>
+    <div style="display:flex; align-items:center; gap:15px; margin-bottom:5px;">
+        <div id="p-vinyl" class="p-vinyl" style="background-image: url('https://i.postimg.cc/zVD4mstP/Jazztabueno-(2).png');"></div>
         <div style="flex:1; overflow:hidden;">
             <h4 id="p-title" style="margin:0; font-size:14px; color:#fff; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-weight:800;">...</h4>
-            <div id="p-time" style="font-size:11px; color:var(--gold);">00:00 / 00:00</div>
         </div>
         <button onclick="window.doToggle()" id="p-play-btn" style="background:none; border:none; cursor:pointer;"></button>
-        <button onclick="window.doClose()" style="background:none; border:none; color:#666; font-size:24px;">×</button>
+        <button onclick="window.doClose()" style="background:none; border:none; color:#666; font-size:28px;">×</button>
     </div>
-    <canvas id="visualizador"></canvas>
     <input type="range" id="seek-bar" value="0" min="0" step="1">
 </div>
 
 <div id="pantalla-salida">
     <img src="https://i.postimg.cc/zVD4mstP/Jazztabueno-(2).png" width="120">
     <h2 style="color:white; margin-top:20px;">Radio Detenida</h2>
-    <p style="color:var(--gold);">Gracias por ser parte del Legado</p>
-    <button onclick="location.reload()" style="margin-top:30px; background:var(--gold); padding:12px 25px; border-radius:30px; border:none; font-weight:bold; cursor:pointer;">VOLVER</button>
+    <button onclick="location.reload()" style="margin-top:30px; background:var(--gold); border:none; padding:12px 25px; border-radius:30px; font-weight:bold;">VOLVER</button>
 </div>
-
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getFirestore, collection, query, orderBy, onSnapshot, addDoc, updateDoc, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    import { getFirestore, collection, query, orderBy, onSnapshot, doc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
     const firebaseConfig = { apiKey: "AIzaSyBwBq4gLgv4DSfUidzUuC7Irmvj_4pCTtI", authDomain: "familia-yajure-app.firebaseapp.com", projectId: "familia-yajure-app", storageBucket: "familia-yajure-app.firebasestorage.app", messagingSenderId: "692035727386", appId: "1:692035727386:web:dfa3e39a481d56368a61a3" };
     const app = initializeApp(firebaseConfig);
@@ -190,43 +130,50 @@
 
     const media = document.getElementById('main-media');
     const seekBar = document.getElementById('seek-bar');
-    let programas = []; let idActual = null; let filtro = 'Todo'; let isAdmin = false;
+    let programas = []; let idActual = null; let filtro = 'Todo';
 
-    const SVG_PLAY = `<svg viewBox="0 0 24 24" width="30"><path d="M8 5v14l11-7z" fill="black"/></svg>`;
-    const SVG_PAUSE = `<svg viewBox="0 0 24 24" width="30"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" fill="black"/></svg>`;
+    const SVG_PLAY = `<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>`;
+    const SVG_PAUSE = `<svg viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>`;
 
     onSnapshot(query(collection(db, "radio_programas"), orderBy("fecha", "desc")), (snap) => {
         programas = []; snap.forEach(d => programas.push({id: d.id, ...d.data()}));
         render();
     });
 
-    window.confirmarSalida = () => { if(confirm("¿Deseas detener la radio y salir?")) { media.pause(); document.getElementById('pantalla-salida').style.display='flex'; } };
     window.setFilter = (cat, el) => { filtro = cat; document.querySelectorAll('.ch-item').forEach(i => i.classList.remove('active')); el.classList.add('active'); render(); };
+    window.confirmarSalida = () => { if(confirm("¿Detener la radio y salir?")) { media.pause(); document.getElementById('pantalla-salida').style.display='flex'; } };
+    window.openVault = () => { document.getElementById('main-view').style.display = 'none'; document.getElementById('vault-view').style.display = 'block'; window.mostrarPorAño(2025); };
+    window.closeVault = () => { document.getElementById('vault-view').style.display = 'none'; document.getElementById('main-view').style.display = 'block'; render(); };
 
     function render() {
         const feed = document.getElementById('feed'); if(!feed) return; feed.innerHTML = "";
         const filtered = (filtro === 'Todo') ? programas : programas.filter(p => p.programa === filtro);
         filtered.forEach(p => {
             const isPlaying = idActual === p.id && !media.paused;
-            const div = document.createElement('div'); div.className = `card ${isPlaying ? 'playing' : ''}`;
+            const div = document.createElement('div'); div.className = 'card';
             div.innerHTML = `
                 <div class="card-cover" style="background-image: url('${p.imagenUrl}')">
-                    <div class="card-overlay"><button class="btn-play" onclick="window.playItem('${p.id}','${p.mp3Url}','${p.titulo}','${p.imagenUrl}')">${isPlaying ? SVG_PAUSE : SVG_PLAY}</button></div>
+                    <div class="card-overlay"><button class="btn-play-card" onclick="window.playItem('${p.id}','${p.mp3Url}','${p.titulo}','${p.imagenUrl}')">${isPlaying ? SVG_PAUSE : SVG_PLAY}</button></div>
                 </div>
                 <div class="info">
-                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-                        <span style="color:var(--gold); font-size:10px; font-weight:900;">${p.programa}</span>
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <span class="ep-category">${p.programa}</span>
                         <div style="color:var(--gold); font-size:12px; font-weight:800;">🎧 34</div>
                     </div>
-                    <h3 class="ep-title">${p.titulo}</h3>
-                    <div style="margin-bottom:15px;">
-                        <span class="tag">#worldmusic</span><span class="tag">#podcast</span>
+                    <div style="display:flex; justify-content:space-between; align-items:start; margin-top:5px;">
+                        <h3 class="ep-title" style="margin:0; flex:1;">${p.titulo}</h3>
+                        <div style="text-align:center; margin-left:15px;"><span style="font-size:20px;">❤️</span><span style="display:block; font-size:10px; color:var(--gold); font-weight:900;">3</span></div>
                     </div>
+                    <div class="tag-container"><span class="tag">#worldmusic</span><span class="tag">#podcast</span><span class="tag">#jazz</span></div>
                     <div class="btn-group">
                         <button class="btn-action" onclick="window.playItem('${p.id}','${p.mp3Url}','${p.titulo}','${p.imagenUrl}')">${isPlaying ? 'PAUSAR' : 'ESCUCHAR'}</button>
                         <button class="btn-action">💬 CHAT</button>
                     </div>
-                    ${isAdmin ? `<div class="admin-row"><button class="btn-edit" onclick="window.prepEdit('${p.id}')">EDITAR</button><button class="btn-delete" onclick="window.doDel('${p.id}')">BORRAR</button></div>` : ''}
+                    <div class="admin-row">
+                        <button class="btn-edit">EDITAR</button>
+                        <button class="btn-delete">BORRAR</button>
+                    </div>
+                    <button style="background:transparent; border:none; color:#555; font-size:12px; font-weight:700; margin-top:15px;">Ver más...</button>
                 </div>`;
             feed.appendChild(div);
         });
@@ -237,8 +184,7 @@
         if(idActual === id) { if(media.paused) media.play(); else media.pause(); } 
         else {
             idActual = id; media.pause();
-            /* BLINDAJE AUDIO PARA ARCHIVE.ORG */
-            media.removeAttribute('crossorigin');
+            media.removeAttribute('crossorigin'); /* BLINDAJE AUDIO */
             media.src = url; media.load();
             document.getElementById('p-title').innerText = tit;
             document.getElementById('p-vinyl').style.backgroundImage = `url('${img}')`;
@@ -252,17 +198,6 @@
     window.doClose = () => { media.pause(); document.getElementById('global-player').style.display='none'; idActual=null; render(); };
     media.ontimeupdate = () => { seekBar.value = media.currentTime; };
     media.onloadedmetadata = () => { seekBar.max = media.duration; };
-
-    /* TRIGGER ADMIN */
-    let taps = 0, lastTap = 0;
-    document.getElementById('admin-trigger').onclick = () => {
-        const now = new Date().getTime(); if(now - lastTap > 1000) taps = 0; lastTap = now; taps++;
-        if(taps === 3) {
-            const p = prompt("Clave Cabina:");
-            if(p === "ticoadmin2026") { isAdmin = true; document.getElementById('admin-panel').style.display='block'; render(); }
-            taps = 0;
-        }
-    };
 </script>
 </body>
 </html>
