@@ -352,7 +352,7 @@ function encenderVisualizador() {
         audioCtx = new (window.AudioContext || window.webkitAudioContext)(); analyser = audioCtx.createAnalyser();
         try { source = audioCtx.createMediaElementSource(media); source.connect(analyser); analyser.connect(audioCtx.destination); } catch(e) {}
         
-        // Aumentamos la resolución para detectar mejor los bajos y eliminamos los agudos sordos
+        // Alta resolución y amortiguador para que se vean y muevan bien
         analyser.fftSize = 512; 
         analyser.smoothingTimeConstant = 0.85; 
     }
@@ -368,12 +368,11 @@ function pintarBarras() {
     const isMobile = displayWidth < 600; const barrasActivas = isMobile ? 40 : 80; const gap = isMobile ? 2 : 4; 
     const barWidth = (displayWidth / barrasActivas) - gap; let x = gap / 2;
     
-    // Mapeamos las barras para que cubran solo donde está la música viva
+    // Magia matemática: Factor de enfoque y salto de bajos sordos (las 3 barras rebeldes)
     const factorEnfoque = 120 / barrasActivas; 
-    const ignorarBajosSordos = 3; // ¡Aquí está la magia! Saltamos las primeras 3 posiciones estáticas
+    const ignorarBajosSordos = 3; 
 
     for (let i = 0; i < barrasActivas; i++) {
-        // Multiplicador matemático + ignorar el inicio plano
         const dataIndex = Math.floor(i * factorEnfoque) + ignorarBajosSordos; 
         
         let barHeight = (dataArray[dataIndex] / 255) * displayHeight * 1.3; ctx.fillStyle = '#a68a44'; 
