@@ -173,9 +173,11 @@ window.mostrarPorAño = (año, botonApretado) => {
                     <audio id="vp-audio-${idCounter}" class="vintage-audio" src="${item.url}" playsinline webkit-playsinline ontimeupdate="window.updateVintageTime('vp-audio-${idCounter}', 'vp-slider-${idCounter}', 'vp-time-${idCounter}')" onended="window.resetVintage('vp-btn-${idCounter}', 'vp-card-${idCounter}')"></audio>
                 </div>`;
             } else {
+                // TEXTO DE RESPALDO PARA DETECTAR BLOQUEADORES DE ANUNCIOS
                 contenidoHtml += `
-                <div class="mix-iframe-container">
-                    <iframe id="mix-iframe-${idCounter}" width="100%" height="60" src="${item.url}" frameborder="0" style="margin-top: -2px;"></iframe>
+                <div class="mix-iframe-container" style="position:relative;">
+                    <span style="position:absolute; width:100%; text-align:center; top:20px; color:#555; font-size:10px; z-index:1;">Cargando reproductor...<br>(Si no aparece, revisa tu bloqueador de anuncios)</span>
+                    <iframe id="mix-iframe-${idCounter}" width="100%" height="60" src="${item.url}" frameborder="0" style="margin-top: -2px; position:relative; z-index:2;"></iframe>
                 </div>`;
             }
             
