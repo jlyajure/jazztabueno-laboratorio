@@ -1,7 +1,3 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-import { initializeFirestore, collection, query, orderBy, onSnapshot, addDoc, deleteDoc, doc, updateDoc, increment, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-import { getAnalytics, logEvent } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js";
-
 // Configuración de Chromecast
 window.castUrl = ""; window.castTitle = ""; window.castCover = ""; window.lastTvTime = 0;
 window['__onGCastApiAvailable'] = function(isAvailable) {
@@ -71,10 +67,6 @@ window.closeVault = () => {
     document.getElementById('btn-volver-header').style.display = 'none';
     document.getElementById('btn-boveda-header').style.display = 'flex';
     document.getElementById('grid-archivos').innerHTML = ''; 
-    if(window.misReproductoresMixcloud) {
-        window.misReproductoresMixcloud.forEach(item => { try { item.reproductor.pause(); } catch(e){} });
-    }
-    window.misReproductoresMixcloud = [];
     document.querySelectorAll('.vintage-audio').forEach(a => { a.pause(); });
     window.scrollTo({top:0, behavior:'smooth'});
 };
@@ -98,7 +90,6 @@ window.mostrarPorAño = (año, botonApretado) => {
     if(botonApretado) botonApretado.classList.add('activo');
 
     const grid = document.getElementById('grid-archivos');
-    window.misReproductoresMixcloud = []; 
     const filtrados = window.MIS_ARCHIVOS_BOVEDA.filter(item => item.año === año);
 
     if (filtrados.length === 0) { grid.innerHTML = `<p style="color:#D4AF37; text-align: center; font-size:12px;">Puliendo diamantes...</p>`; return; }
@@ -126,7 +117,6 @@ window.mostrarPorAño = (año, botonApretado) => {
                 else if(catUp.includes("SALSA")) defaultCover = "https://i.postimg.cc/75fchgyt/Salsa-Brava.png";
                 else if(catUp.includes("OLD")) defaultCover = "https://i.postimg.cc/jwQ3mczC/Old-School-Radio.png";
                 
-                // Aquí el sistema lee si le pusiste "cover" personalizado, si no, usa el default
                 const finalCover = item.cover ? item.cover : defaultCover;
 
                 contenidoHtml += `
@@ -144,11 +134,6 @@ window.mostrarPorAño = (año, botonApretado) => {
                     </div>
                     <audio id="vp-audio-${idCounter}" class="vintage-audio" src="${item.url}" playsinline webkit-playsinline ontimeupdate="window.updateVintageTime('vp-audio-${idCounter}', 'vp-slider-${idCounter}', 'vp-time-${idCounter}')" onended="window.resetVintage('vp-btn-${idCounter}', 'vp-card-${idCounter}')"></audio>
                 </div>`;
-            } else {
-                contenidoHtml += `
-                <div class="mix-iframe-container">
-                    <iframe id="mix-iframe-${idCounter}" width="100%" height="120" src="${item.url}" frameborder="0" style="margin-top: -2px;"></iframe>
-                </div>`;
             }
             
             contenidoHtml += `</div>`;
@@ -157,26 +142,6 @@ window.mostrarPorAño = (año, botonApretado) => {
     });
 
     grid.innerHTML = contenidoHtml;
-
-    setTimeout(() => {
-        if (typeof Mixcloud === 'undefined') return; 
-        const iframes = document.querySelectorAll('.mix-iframe-container iframe');
-        iframes.forEach(iframe => {
-            try {
-                if(iframe.src.includes('mixcloud.com')) {
-                    const widget = Mixcloud.PlayerWidget(iframe);
-                    window.misReproductoresMixcloud.push({ id: iframe.id, reproductor: widget });
-                    widget.bind('play', function() {
-                        const mainMedia = document.getElementById('main-media');
-                        if(mainMedia && !mainMedia.paused) { mainMedia.pause(); if(window.actualizarUI) window.actualizarUI(); }
-                        window.misReproductoresMixcloud.forEach(item => { if (item.id !== iframe.id) { item.reproductor.pause(); } });
-                        document.querySelectorAll('.vintage-audio').forEach(a => { a.pause(); document.getElementById(a.id.replace('audio', 'btn')).innerHTML = SVG_PLAY; });
-                        document.querySelectorAll('.vintage-player').forEach(c => c.classList.remove('playing'));
-                    });
-                }
-            } catch (error) {}
-        });
-    }, 1500);
 };
 
 window.toggleVintage = (audioId, btnId, cardId) => {
@@ -186,7 +151,6 @@ window.toggleVintage = (audioId, btnId, cardId) => {
     const mainMedia = document.getElementById('main-media');
     
     if(mainMedia && !mainMedia.paused) { mainMedia.pause(); if(window.actualizarUI) window.actualizarUI(); }
-    if(window.misReproductoresMixcloud) { window.misReproductoresMixcloud.forEach(item => { try { item.reproductor.pause(); } catch(e){} }); }
 
     if (audio.paused) {
         document.querySelectorAll('.vintage-audio').forEach(a => { 
@@ -224,11 +188,28 @@ window.resetVintage = (btnId, cardId) => {
     if(c) c.classList.remove('playing');
 };
 
-const firebaseConfig = { apiKey: "AIzaSyBwBq4gLgv4DSfUidzUuC7Irmvj_4pCTtI", authDomain: "familia-yajure-app.firebaseapp.com", projectId: "familia-yajure-app", storageBucket: "familia-yajure-app.firebasestorage.app", messagingSenderId: "692035727386", appId: "1:692035727386:web:dfa3e39a481d56368a61a3", measurementId: "G-GDBL4HPE79" };
-const app = initializeApp(firebaseConfig);
-const db = initializeFirestore(app, { experimentalForceLongPolling: true });
+// Configuración de Firebase y Componentes (Versión COMPAT, no se bloquea)
+const firebaseConfig = { 
+    apiKey: "AIzaSyBwBq4gLgv4DSfUidzUuC7Irmvj_4pCTtI", 
+    authDomain: "familia-yajure-app.firebaseapp.com", 
+    projectId: "familia-yajure-app", 
+    storageBucket: "familia-yajure-app.firebasestorage.app", 
+    messagingSenderId: "692035727386", 
+    appId: "1:692035727386:web:dfa3e39a481d56368a61a3", 
+    measurementId: "G-GDBL4HPE79" 
+};
 
-let analytics; try { analytics = getAnalytics(app); logEvent(analytics, 'page_view'); } catch(e) {}
+// Inicializamos Firebase
+if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+}
+const db = firebase.firestore();
+
+let analytics; 
+try { 
+    analytics = firebase.analytics(); 
+    firebase.analytics().logEvent('page_view'); 
+} catch(e) {}
 
 const media = document.getElementById('main-media');
 const seekBar = document.getElementById('seek-bar');
@@ -247,11 +228,6 @@ window.copiarLinkVIP = (id) => {
 };
 
 media.addEventListener('play', () => {
-    if(window.misReproductoresMixcloud) {
-        window.misReproductoresMixcloud.forEach(item => {
-            try { item.reproductor.pause(); } catch(e){}
-        });
-    }
     document.querySelectorAll('.vintage-audio').forEach(a => { 
         a.pause(); 
         const btn = document.getElementById(a.id.replace('audio', 'btn'));
@@ -285,12 +261,12 @@ window.doLike = async (id, el) => {
     localStorage.setItem('jtp_like_' + id, 'true'); el.classList.add('liked');
     let countSpan = el.querySelector('.like-count'); let current = parseInt(countSpan.innerText || "0");
     el.innerHTML = `❤️ <span class="like-count">${current + 1}</span>`;
-    try { await updateDoc(doc(db, "radio_programas", id), { likes: increment(1) }); } catch(e) {}
+    try { await db.collection("radio_programas").doc(id).update({ likes: firebase.firestore.FieldValue.increment(1) }); } catch(e) {}
 };
 
 window.cargarComentarios = (id) => {
     const listDiv = document.getElementById(`clist-${id}`);
-    onSnapshot(query(collection(db, "radio_programas", id, "comentarios"), orderBy("fecha", "asc")), (snap) => {
+    db.collection("radio_programas").doc(id).collection("comentarios").orderBy("fecha", "asc").onSnapshot((snap) => {
         listDiv.innerHTML = ""; if(snap.empty) { listDiv.innerHTML = "<div style='color:#666; font-size:11px; text-align:center;'>Sé el primero en comentar.</div>"; return; }
         snap.forEach(d => {
             const c = d.data(); const div = document.createElement('div'); div.className = 'c-item';
@@ -307,16 +283,16 @@ window.enviarComentario = async (id) => {
     const userIn = document.getElementById(`cuser-${id}`); const msgIn = document.getElementById(`cmsg-${id}`); const btn = document.getElementById(`cbtn-${id}`);
     if(!userIn.value || !msgIn.value) return alert("Escribe nombre y mensaje");
     btn.disabled = true; btn.innerText = "...";
-    try { await addDoc(collection(db, "radio_programas", id, "comentarios"), { usuario: userIn.value, mensaje: msgIn.value, fecha: new Date().getTime() }); msgIn.value = ""; } catch(e) {}
+    try { await db.collection("radio_programas").doc(id).collection("comentarios").add({ usuario: userIn.value, mensaje: msgIn.value, fecha: new Date().getTime() }); msgIn.value = ""; } catch(e) {}
     btn.disabled = false; btn.innerText = "ENVIAR";
 };
 
 window.responderCom = async (progId, comId) => {
     const resp = prompt("Escribe tu respuesta oficial:");
-    if(resp) { try { await updateDoc(doc(db, "radio_programas", progId, "comentarios", comId), { respuesta: resp }); } catch(e) {} }
+    if(resp) { try { await db.collection("radio_programas").doc(progId).collection("comentarios").doc(comId).update({ respuesta: resp }); } catch(e) {} }
 };
 
-window.borrarComentario = async (progId, comId) => { if(confirm("¿Borrar este comentario permanentemente?")) { try { await deleteDoc(doc(db, "radio_programas", progId, "comentarios", comId)); } catch(e) {} } };
+window.borrarComentario = async (progId, comId) => { if(confirm("¿Borrar este comentario permanentemente?")) { try { await db.collection("radio_programas").doc(progId).collection("comentarios").doc(comId).delete(); } catch(e) {} } };
 
 function encenderVisualizador() {
     if (!audioCtx) {
@@ -380,10 +356,10 @@ window.playItem = async (id, url, tit, img) => {
             navigator.mediaSession.setActionHandler('play', function() { media.play(); encenderVisualizador(); render(); });
             navigator.mediaSession.setActionHandler('pause', function() { media.pause(); render(); });
         }
-        if(analytics) logEvent(analytics, 'play_program', { program_name: tit });
+        if(typeof firebase !== 'undefined' && firebase.analytics) firebase.analytics().logEvent('play_program', { program_name: tit });
         if(!localStorage.getItem('oyente_' + id)) {
             localStorage.setItem('oyente_' + id, 'true');
-            try { await updateDoc(doc(db, "radio_programas", id), { reproducciones: increment(1) }); } catch(e) {}
+            try { await db.collection("radio_programas").doc(id).update({ reproducciones: firebase.firestore.FieldValue.increment(1) }); } catch(e) {}
         }
     }
     render();
@@ -395,19 +371,19 @@ window.doSpeed = () => { const r = [1.0, 1.25, 1.5, 2.0]; media.playbackRate = r
 window.doMute = () => { media.muted = !media.muted; document.getElementById('btn-mute').innerText = media.muted ? "🔇 MUTE" : "🔊 VOL"; };
 window.cancelEdit = () => { document.getElementById('admin-panel').style.display='none'; document.getElementById('edit-id').value=""; };
 window.prepEdit = (id) => { const p = programas.find(x => x.id === id); document.getElementById('edit-id').value = p.id; document.getElementById('t-titulo').value = p.titulo; document.getElementById('t-programa').value = p.programa; document.getElementById('t-url').value = p.mp3Url; document.getElementById('t-img').value = p.imagenUrl; document.getElementById('t-tags').value = p.tags || ""; document.getElementById('t-playlist').value = p.playlist || ""; document.getElementById('admin-panel').style.display = 'block'; window.scrollTo({top:0, behavior:'smooth'}); };
-window.doDel = async (id) => { if(confirm("¿Borrar?")) await deleteDoc(doc(db, "radio_programas", id)); };
+window.doDel = async (id) => { if(confirm("¿Borrar?")) await db.collection("radio_programas").doc(id).delete(); };
 
 document.getElementById('btn-save').onclick = async () => {
     const id = document.getElementById('edit-id').value;
     const data = { titulo: document.getElementById('t-titulo').value, programa: document.getElementById('t-programa').value, mp3Url: document.getElementById('t-url').value, imagenUrl: document.getElementById('t-img').value || "logo.png", tags: document.getElementById('t-tags').value, playlist: document.getElementById('t-playlist').value, fecha: new Date().getTime() };
     if(!id) { data.reproducciones = 0; data.likes = 0; }
-    if(id) await updateDoc(doc(db, "radio_programas", id), data); else await addDoc(collection(db, "radio_programas"), data);
+    if(id) await db.collection("radio_programas").doc(id).update(data); else await db.collection("radio_programas").add(data);
     window.cancelEdit();
 };
 
 let paseVipUsado = false; 
 
-onSnapshot(query(collection(db, "radio_programas"), orderBy("fecha", "desc")), (snap) => { 
+db.collection("radio_programas").orderBy("fecha", "desc").onSnapshot((snap) => { 
     programas = []; 
     snap.forEach(d => programas.push({id: d.id, ...d.data()})); 
     render(); 
