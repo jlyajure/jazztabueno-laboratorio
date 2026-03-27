@@ -24,8 +24,12 @@ header { background: rgba(0,0,0,0.98); padding: 12px 15px; display: flex; justif
 .card.playing { border-color: var(--gold); }
 .card-cover { width: 100%; height: 180px !important; background-size: cover; background-position: center; position: relative; border: 1.5px solid var(--gold); }
 .card-overlay { position: absolute; inset: 0; display: flex !important; align-items: center !important; justify-content: center !important; }
+
+/* Controladores de color de los íconos de reproducción */
 .btn-play { background-color: var(--gold) !important; border: none !important; width: 55px !important; height: 55px !important; border-radius: 50% !important; display: flex !important; align-items: center !important; justify-content: center !important; cursor: pointer; padding: 0; }
-.btn-play svg { width: 28px !important; height: 28px !important; fill: black !important; }
+.btn-play svg { width: 28px !important; height: 28px !important; fill: #000 !important; }
+#p-play-btn svg { width: 28px; height: 28px; fill: #ffffff; }
+.vp-btn svg { width: 14px; height: 14px; fill: #000000; }
 
 .info { padding: 20px; }
 .ep-title { margin: 8px 0 4px 0; font-size: 19px; font-weight: 800; color: #ffffff; display: flex; justify-content: space-between; align-items: start; }
@@ -39,16 +43,8 @@ header { background: rgba(0,0,0,0.98); padding: 12px 15px; display: flex; justif
 
 .jtbp-vault-bg { background: radial-gradient(circle, #222 10%, transparent 11%), #111; background-size: 10px 10px; border-top: 3px solid #D4AF37; padding: 20px 10px; text-align: center; border-radius: 20px; border: 1px solid #1a1a1a; margin-bottom: 30px; }
 
-.timeline-swipe {
-    display: flex; overflow-x: auto; gap: 12px; padding: 10px 20px; 
-    justify-content: flex-start; border-bottom: 1px solid #0070f3; margin-bottom: 20px; 
-    padding-bottom: 15px; scrollbar-width: thin; scrollbar-color: var(--gold) #1a1a1a;
-    -webkit-overflow-scrolling: touch; flex-wrap: nowrap;
-}
-.year-btn { 
-    background: none; border: 1px solid #D4AF37; color: #D4AF37; padding: 6px 18px; 
-    border-radius: 20px; cursor: pointer; font-size: 12px; font-weight: bold; flex-shrink: 0; transition: 0.3s;
-}
+.timeline-swipe { display: flex; overflow-x: auto; gap: 12px; padding: 10px 20px; justify-content: flex-start; border-bottom: 1px solid #0070f3; margin-bottom: 20px; padding-bottom: 15px; scrollbar-width: thin; scrollbar-color: var(--gold) #1a1a1a; -webkit-overflow-scrolling: touch; flex-wrap: nowrap; }
+.year-btn { background: none; border: 1px solid #D4AF37; color: #D4AF37; padding: 6px 18px; border-radius: 20px; cursor: pointer; font-size: 12px; font-weight: bold; flex-shrink: 0; transition: 0.3s; }
 .year-btn.activo { background: #D4AF37; color: #000; box-shadow: 0 0 10px #D4AF37; }
 
 .grid-vault { display: grid; grid-template-columns: 1fr; gap: 10px; width: 100%; text-align: left; }
@@ -58,10 +54,7 @@ header { background: rgba(0,0,0,0.98); padding: 12px 15px; display: flex; justif
 .vault-card.card-especial-v { border: 2px solid #D4AF37; box-shadow: 0 0 10px rgba(212, 175, 55, 0.3); }
 .mix-iframe-container { background: #000; border-radius: 8px; overflow: hidden; height: 60px; margin-top: 10px; border: 1px solid #222; }
 
-.vintage-player {
-    background: #111; border: 1.5px solid #222; border-left: 4px solid var(--gold); border-radius: 8px;
-    display: flex; align-items: center; padding: 10px; margin-top: 10px; gap: 12px;
-}
+.vintage-player { background: #111; border: 1.5px solid #222; border-left: 4px solid var(--gold); border-radius: 8px; display: flex; align-items: center; padding: 10px; margin-top: 10px; gap: 12px; }
 .vintage-player.playing { border-color: var(--gold); }
 .vp-cover { width: 55px; height: 55px; border-radius: 6px; border: 1px solid #333; flex-shrink: 0; background-color: #000; object-fit: contain; }
 .vp-info { flex: 1; display: flex; flex-direction: column; gap: 6px; overflow: hidden; }
@@ -69,7 +62,6 @@ header { background: rgba(0,0,0,0.98); padding: 12px 15px; display: flex; justif
 .vp-controls { display: flex; align-items: center; gap: 10px; width: 100%; }
 .vp-btn { background: var(--gold); border: none; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; padding: 0; flex-shrink: 0; transition: transform 0.2s; }
 .vp-btn:active { transform: scale(0.9); }
-.vp-btn svg { width: 14px; height: 14px; fill: #000; }
 .vp-slider { flex: 1; height: 4px; -webkit-appearance: none; background: #333; border-radius: 2px; outline: none; }
 .vp-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 12px; height: 12px; background: var(--gold); border-radius: 50%; cursor: pointer; box-shadow: 0 0 5px rgba(212, 175, 55, 0.5); }
 .vp-time { color: var(--gold); font-size: 9px; font-weight: 900; min-width: 32px; text-align: right; font-family: monospace; }
