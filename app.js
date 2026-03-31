@@ -188,7 +188,7 @@ window.resetVintage = (btnId, cardId) => {
     if(c) c.classList.remove('playing');
 };
 
-// Configuración de Firebase y Componentes (Versión COMPAT, no se bloquea)
+// Configuración de Firebase y Componentes (Compat, seguro para celus)
 const firebaseConfig = { 
     apiKey: "AIzaSyBwBq4gLgv4DSfUidzUuC7Irmvj_4pCTtI", 
     authDomain: "familia-yajure-app.firebaseapp.com", 
@@ -199,12 +199,11 @@ const firebaseConfig = {
     measurementId: "G-GDBL4HPE79" 
 };
 
-// Inicializamos Firebase
+// Inicializamos Firebase de forma clásica
 if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig);
 }
 const db = firebase.firestore();
-
 let analytics; 
 try { 
     analytics = firebase.analytics(); 
@@ -369,13 +368,54 @@ window.doToggle = () => { if(media.paused) { media.play(); encenderVisualizador(
 window.doClose = () => { media.pause(); document.getElementById('global-player').style.display='none'; idActual=null; render(); };
 window.doSpeed = () => { const r = [1.0, 1.25, 1.5, 2.0]; media.playbackRate = r[(r.indexOf(media.playbackRate)+1)%r.length]; document.getElementById('btn-speed').innerText = media.playbackRate+"x"; };
 window.doMute = () => { media.muted = !media.muted; document.getElementById('btn-mute').innerText = media.muted ? "🔇 MUTE" : "🔊 VOL"; };
-window.cancelEdit = () => { document.getElementById('admin-panel').style.display='none'; document.getElementById('edit-id').value=""; };
-window.prepEdit = (id) => { const p = programas.find(x => x.id === id); document.getElementById('edit-id').value = p.id; document.getElementById('t-titulo').value = p.titulo; document.getElementById('t-programa').value = p.programa; document.getElementById('t-url').value = p.mp3Url; document.getElementById('t-img').value = p.imagenUrl; document.getElementById('t-tags').value = p.tags || ""; document.getElementById('t-playlist').value = p.playlist || ""; document.getElementById('admin-panel').style.display = 'block'; window.scrollTo({top:0, behavior:'smooth'}); };
+window.cancelEdit = () => { document.getElementById('admin-panel').style.display='none'; document.getElementById('edit-id').value=""; document.getElementById('t-estreno').value=""; };
+
+window.prepEdit = (id) => { 
+    const p = programas.find(x => x.id === id); 
+    document.getElementById('edit-id').value = p.id; 
+    document.getElementById('t-titulo').value = p.titulo; 
+    document.getElementById('t-programa').value = p.programa; 
+    document.getElementById('t-url').value = p.mp3Url; 
+    document.getElementById('t-img').value = p.imagenUrl; 
+    document.getElementById('t-tags').value = p.tags || ""; 
+    document.getElementById('t-playlist').value = p.playlist || ""; 
+    
+    if(p.fechaEstreno) {
+        const d = new Date(p.fechaEstreno);
+        const y = d.getFullYear();
+        const m = String(d.getMonth() + 1).padStart(2, '0');
+        const day = String(d.getDate()).padStart(2, '0');
+        document.getElementById('t-estreno').value = `${y}-${m}-${day}`;
+    } else {
+        document.getElementById('t-estreno').value = "";
+    }
+
+    document.getElementById('admin-panel').style.display = 'block'; 
+    window.scrollTo({top:0, behavior:'smooth'}); 
+};
+
 window.doDel = async (id) => { if(confirm("¿Borrar?")) await db.collection("radio_programas").doc(id).delete(); };
 
 document.getElementById('btn-save').onclick = async () => {
     const id = document.getElementById('edit-id').value;
-    const data = { titulo: document.getElementById('t-titulo').value, programa: document.getElementById('t-programa').value, mp3Url: document.getElementById('t-url').value, imagenUrl: document.getElementById('t-img').value || "logo.png", tags: document.getElementById('t-tags').value, playlist: document.getElementById('t-playlist').value, fecha: new Date().getTime() };
+    
+    let estrenoVal = document.getElementById('t-estreno').value;
+    let fechaEstrenoMs = null;
+    if(estrenoVal) {
+        const [y, m, d] = estrenoVal.split('-');
+        fechaEstrenoMs = new Date(y, m-1, d).getTime();
+    }
+
+    const data = { 
+        titulo: document.getElementById('t-titulo').value, 
+        programa: document.getElementById('t-programa').value, 
+        mp3Url: document.getElementById('t-url').value, 
+        imagenUrl: document.getElementById('t-img').value || "logo.png", 
+        tags: document.getElementById('t-tags').value, 
+        playlist: document.getElementById('t-playlist').value, 
+        fechaEstreno: fechaEstrenoMs,
+        fecha: new Date().getTime() 
+    };
     if(!id) { data.reproducciones = 0; data.likes = 0; }
     if(id) await db.collection("radio_programas").doc(id).update(data); else await db.collection("radio_programas").add(data);
     window.cancelEdit();
@@ -408,7 +448,15 @@ db.collection("radio_programas").orderBy("fecha", "desc").onSnapshot((snap) => {
 function render() {
     const feed = document.getElementById('feed'); if(!feed) return; feed.innerHTML = "";
     if(hashtagFiltro !== '') { feed.innerHTML = `<div style="text-align:center; margin-bottom:20px;"><span style="background:var(--gold); color:black; padding:8px 15px; border-radius:20px; font-weight:bold; font-size:12px;">Buscando: ${hashtagFiltro} <span style="margin-left:10px; cursor:pointer;" onclick="window.clearHashtag()">✖ Quitar Filtro</span></span></div>`; }
+    
+    const ahoraMs = new Date().getTime();
+
     const list = programas.filter(p => {
+        // Magia del Estreno: Si la fecha no ha llegado y NO eres admin, escóndelo.
+        if (p.fechaEstreno && p.fechaEstreno > ahoraMs && !isAdmin) {
+            return false;
+        }
+
         let matchCanal = false;
         if(filtro === 'Todo') matchCanal = true;
         else {
@@ -429,6 +477,9 @@ function render() {
         const arrayTags = (p.tags || "").split(' ').filter(t => t.trim().startsWith('#'));
         let htmlTags = arrayTags.length > 0 ? `<div style="margin-top:6px;">` + arrayTags.map(t => `<span onclick="window.setHashtagFilter('${t}')" style="color:var(--gold); background:#222; padding:4px 10px; border-radius:12px; font-size:10px; font-weight:800; margin-right:5px; cursor:pointer; display:inline-block; border: 1px solid #333;">${t}</span>`).join('') + `</div>` : "";
 
+        const esProgramado = (p.fechaEstreno && p.fechaEstreno > ahoraMs);
+        const etiquetaProgramado = esProgramado ? `<div style="background:#ff9900; color:black; font-size:10px; font-weight:bold; padding:3px 8px; border-radius:5px; display:inline-block; margin-bottom:5px;">⏳ PROGRAMADO</div>` : '';
+
         const div = document.createElement('div'); div.className = `card ${isPlaying ? 'playing' : ''}`;
         div.innerHTML = `
             <div class="card-cover" style="background-image: url('${p.imagenUrl}')">
@@ -438,12 +489,15 @@ function render() {
                 <div style="display:flex; justify-content:space-between; align-items:center;">
                     <span style="color:var(--gold); font-size:9px; font-weight:900; text-transform:uppercase;">${p.programa}</span><div class="contador-oyentes">🎧 <span>${vistas}</span></div>
                 </div>
-                <div style="display:flex; justify-content:space-between; align-items:start; margin-top:8px;">
-                     <h3 class="ep-title" style="margin:0;">${p.titulo}</h3>
-                     <button class="btn-like ${userLikedClass}" onclick="window.doLike('${p.id}', this)">${heartIcon} <span class="like-count">${likes}</span></button>
+                <div style="margin-top:8px;">
+                     ${etiquetaProgramado}
+                     <div style="display:flex; justify-content:space-between; align-items:start;">
+                         <h3 class="ep-title" style="margin:0;">${p.titulo}</h3>
+                         <button class="btn-like ${userLikedClass}" onclick="window.doLike('${p.id}', this)">${heartIcon} <span class="like-count">${likes}</span></button>
+                     </div>
                 </div>
                 ${htmlTags}
-                <div style="display:flex; gap:10px;">
+                <div style="display:flex; gap:10px; margin-top:10px;">
                     <button class="btn-list" style="flex:1" onclick="window.toggleList('${p.id}')">📋 INFO</button>
                     <button class="btn-list" style="flex:1" onclick="window.toggleComments('${p.id}')">💬 CHAT</button>
                     <button class="btn-list" style="flex:0.4; font-size: 15px !important; padding: 0 !important; display: flex; align-items: center; justify-content: center;" onclick="window.copiarLinkVIP('${p.id}')" title="Copiar link directo">🔗</button>
