@@ -36,9 +36,9 @@
         .jtbp-panel { display: none !important; width: 100%; height: 100%; }
         .jtbp-panel.active { display: block !important; }
         
-        /* Ajuste para que los reproductores de Mixcloud se vean elegantes y no en blanco */
+        /* Contenedor elegante para los reproductores de SoundCloud */
         .iframe-container { background-color: #0a0a0a; border-radius: 15px; border: 1px solid #333; padding: 10px; display: flex; align-items: center; justify-content: center;}
-        .iframe-container iframe { width: 100%; height: 350px; border: none; display: block; border-radius: 10px; }
+        .iframe-container iframe { width: 100%; height: 350px; border: none; display: block; border-radius: 10px; background-color: #000; }
     </style>
 </head>
 <body>
@@ -70,16 +70,16 @@
                     <span class="icon">🎙️</span> JTBP Orig.
                 </button>
                 <button class="channel-btn" onclick="switchInput('canal-jazz', this)">
-                    <span class="icon">🎷</span> Jazz Mix
+                    <span class="icon">🎷</span> Jazz SC
                 </button>
                 <button class="channel-btn" onclick="switchInput('canal-salsa', this)">
-                    <span class="icon">🕺</span> Salsa Mix
+                    <span class="icon">🕺</span> Salsa SC
                 </button>
                 <button class="channel-btn" onclick="switchInput('canal-retro', this)">
-                    <span class="icon">🪩</span> Retro Mix
+                    <span class="icon">🪩</span> Retro SC
                 </button>
-                <button class="channel-btn" onclick="switchInput('canal-mixcloud', this)">
-                    <span class="icon">☁️</span> Funk Mix
+                <button class="channel-btn" onclick="switchInput('canal-funk', this)">
+                    <span class="icon">🎸</span> Funk SC
                 </button>
                 <button class="channel-btn" onclick="switchInput('canal-spotify', this)">
                     <span class="icon">🎧</span> Spotify*
@@ -129,19 +129,19 @@
         </div>
 
         <div id="canal-jazz" class="jtbp-panel iframe-container">
-             <iframe src="https://www.mixcloud.com/widget/iframe/?hide_cover=1&dark=1&feed=%2Fjazz_cat%2F" frameborder="0"></iframe>
+             <iframe scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/285514666&color=%23d4af37&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=true"></iframe>
         </div>
 
         <div id="canal-salsa" class="jtbp-panel iframe-container">
-             <iframe src="https://www.mixcloud.com/widget/iframe/?hide_cover=1&dark=1&feed=%2Fdj-salsa-brava%2F" frameborder="0"></iframe>
+             <iframe scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/103632283&color=%23d4af37&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=true"></iframe>
         </div>
 
         <div id="canal-retro" class="jtbp-panel iframe-container">
-             <iframe src="https://www.mixcloud.com/widget/iframe/?hide_cover=1&dark=1&feed=%2F80s_Retro_Mix%2F" frameborder="0"></iframe>
+             <iframe scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/119934169&color=%23d4af37&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=true"></iframe>
         </div>
 
-        <div id="canal-mixcloud" class="jtbp-panel iframe-container">
-            <iframe src="https://www.mixcloud.com/widget/iframe/?hide_cover=1&dark=1&feed=%2FNTSRadio%2Fmoxie-15th-september-2021%2F" frameborder="0"></iframe>
+        <div id="canal-funk" class="jtbp-panel iframe-container">
+            <iframe scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/30528448&color=%23d4af37&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=true"></iframe>
         </div>
 
         <div id="canal-spotify" class="jtbp-panel iframe-container">
