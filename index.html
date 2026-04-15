@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JTBP V5 - MOTOR ESTABLE</title>
+    <title>JTBP V6 - RADIOS REALES</title>
     <link rel="stylesheet" href="styles.css">
     <style>
         :root {
@@ -23,9 +23,9 @@
             flex-direction: column;
             align-items: center;
         }
-        .header { text-align: center; margin-bottom: 25px; border-bottom: 2px solid #00aaff; padding-bottom: 10px; width: 100%; max-width: 500px; }
+        .header { text-align: center; margin-bottom: 25px; border-bottom: 2px solid var(--primary); padding-bottom: 10px; width: 100%; max-width: 500px; }
         .header h1 { color: var(--primary); margin: 0; font-size: 24px; text-transform: uppercase; letter-spacing: 2px; }
-        .header p { color: #00aaff; margin: 5px 0 0 0; font-weight: bold; font-size: 16px; } 
+        .header p { color: var(--text-muted); margin: 5px 0 0 0; font-size: 14px; } 
         
         .control-panel { background-color: var(--card-bg); padding: 15px; border-radius: 15px; border: 1px solid #333; box-shadow: 0 5px 15px rgba(0,0,0,0.8); width: 100%; max-width: 500px; margin-bottom: 25px; }
         .panel-title { color: var(--primary); font-size: 12px; font-weight: bold; text-align: center; margin-bottom: 10px; text-transform: uppercase; }
@@ -37,21 +37,36 @@
         .channel-btn .icon { font-size: 16px; }
         .channel-btn.active { background-color: var(--primary) !important; color: #000 !important; border-color: var(--primary) !important; }
 
-        .player-stage { width: 100%; max-width: 500px; min-height: 400px; background-color: var(--card-bg); border-radius: 15px; border: 1px solid #333; overflow: hidden; }
+        .player-stage { width: 100%; max-width: 500px; min-height: 350px; background-color: var(--card-bg); border-radius: 15px; border: 1px solid #333; overflow: hidden; display: flex; align-items: center; justify-content: center; }
         
         .jtbp-panel { display: none !important; width: 100%; height: 100%; }
         .jtbp-panel.active { display: block !important; }
         
         .jtbp-local { padding: 15px; text-align: center; }
         
-        iframe { width: 100%; height: 400px; border: none; display: block; }
+        /* DISEÑO VIP DEL RECEPTOR DE RADIO */
+        .radio-card {
+            background-color: #0a0a0a;
+            border: 2px solid var(--primary);
+            border-radius: 15px;
+            padding: 40px 20px;
+            text-align: center;
+            margin: 20px;
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
+        }
+        .radio-icon { font-size: 50px; margin-bottom: 15px; color: var(--primary); }
+        .radio-title { color: #fff; font-size: 20px; margin: 0 0 5px 0; }
+        .radio-status { color: #ff4c4c; font-size: 12px; font-weight: bold; margin-bottom: 25px; letter-spacing: 1px; }
+        audio { width: 100%; outline: none; border-radius: 30px; }
+        
+        iframe { width: 100%; height: 350px; border: none; display: block; }
     </style>
 </head>
 <body>
 
     <div class="header">
         <h1>JTBP PRODUCTIONS</h1>
-        <p>✅ VERSIÓN 5 - ESTABILIDAD ✅</p>
+        <p>📻 VERSIÓN 6 - RADIOS REALES 📻</p>
     </div>
 
     <div class="control-panel">
@@ -87,6 +102,8 @@
     <div class="player-stage">
         
         <div id="canal-jtbp" class="jtbp-panel active jtbp-local">
+             <h3 style="color: var(--primary); margin-top: 50px;">Buscando tus episodios...</h3>
+             <p style="color: var(--text-muted); font-size: 12px;">El motor JS está conectado.</p>
              </div>
 
         <div id="canal-youtube" class="jtbp-panel">
@@ -102,15 +119,39 @@
         </div>
 
         <div id="canal-jazz" class="jtbp-panel">
-             <iframe src="https://www.youtube.com/embed/neV3EPgvZ3g?rel=0" title="Jazz Mix" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+             <div class="radio-card">
+                 <div class="radio-icon">🎷</div>
+                 <h2 class="radio-title">Radio Swiss Jazz</h2>
+                 <div class="radio-status">● EN VIVO</div>
+                 <audio controls preload="none">
+                     <source src="https://stream.srg-ssr.ch/m/rsj/mp3_128" type="audio/mpeg">
+                     Tu navegador no soporta el audio.
+                 </audio>
+             </div>
         </div>
 
         <div id="canal-salsa" class="jtbp-panel">
-             <iframe src="https://www.youtube.com/embed/Gz5o0q6PZ1M?rel=0" title="Salsa Mix" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+             <div class="radio-card">
+                 <div class="radio-icon">🕺</div>
+                 <h2 class="radio-title">Salsa Brava Radio</h2>
+                 <div class="radio-status">● EN VIVO</div>
+                 <audio controls preload="none">
+                     <source src="https://stream.zeno.fm/f3y77z27t18uv" type="audio/mpeg">
+                     Tu navegador no soporta el audio.
+                 </audio>
+             </div>
         </div>
 
         <div id="canal-retro" class="jtbp-panel">
-             <iframe src="https://www.youtube.com/embed/V9o2WEuK1gM?rel=0" title="Retro Mix" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+             <div class="radio-card">
+                 <div class="radio-icon">🪩</div>
+                 <h2 class="radio-title">Retro Hits 80s</h2>
+                 <div class="radio-status">● EN VIVO</div>
+                 <audio controls preload="none">
+                     <source src="https://stream.srg-ssr.ch/m/rsc_de/mp3_128" type="audio/mpeg">
+                     Tu navegador no soporta el audio.
+                 </audio>
+             </div>
         </div>
 
     </div>
@@ -121,6 +162,12 @@
     <script>
         // MOTOR DE CAMBIO DE CANALES
         function switchInput(inputId, btnElement) {
+            
+            // Pausar las radios automáticamente al cambiar de canal
+            document.querySelectorAll('audio').forEach(function(audioElement) {
+                audioElement.pause();
+            });
+
             document.querySelectorAll('.jtbp-panel').forEach(function(el) {
                 el.classList.remove('active');
             });
