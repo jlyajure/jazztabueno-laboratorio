@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JTBP V3 - VERIFICACIÓN</title>
+    <title>JTBP V4 - BLINDADO</title>
     <link rel="stylesheet" href="styles.css">
     <style>
+        /* AISLAMIENTO VIP PARA QUE NO CHOQUE CON TU CSS VIEJO */
         :root {
             --bg-color: #050505;
             --card-bg: #151515;
@@ -23,9 +24,9 @@
             flex-direction: column;
             align-items: center;
         }
-        .header { text-align: center; margin-bottom: 25px; border-bottom: 2px solid #ff4c4c; padding-bottom: 10px; width: 100%; max-width: 500px; }
+        .header { text-align: center; margin-bottom: 25px; border-bottom: 2px solid #00ff00; padding-bottom: 10px; width: 100%; max-width: 500px; }
         .header h1 { color: var(--primary); margin: 0; font-size: 24px; text-transform: uppercase; letter-spacing: 2px; }
-        .header p { color: #ff4c4c; margin: 5px 0 0 0; font-weight: bold; font-size: 18px; } /* Texto rojo gigante para asegurar V3 */
+        .header p { color: #00ff00; margin: 5px 0 0 0; font-weight: bold; font-size: 16px; } 
         
         .control-panel {
             background-color: var(--card-bg);
@@ -60,13 +61,14 @@
             gap: 5px;
         }
         .channel-btn .icon { font-size: 16px; }
-        .channel-btn.active { background-color: var(--primary); color: #000; border-color: var(--primary); }
+        .channel-btn.active { background-color: var(--primary) !important; color: #000 !important; border-color: var(--primary) !important; }
 
         .player-stage { width: 100%; max-width: 500px; min-height: 400px; background-color: var(--card-bg); border-radius: 15px; border: 1px solid #333; overflow: hidden; }
-        .player-content { display: none; width: 100%; height: 100%; }
-        .player-content.active { display: block; }
         
-        /* Estilos simulados para tus tarjetas de JTBP */
+        /* CANDADO DE VISIBILIDAD: Asegura que solo se vea un canal a la vez */
+        .jtbp-panel { display: none !important; width: 100%; height: 100%; }
+        .jtbp-panel.active { display: block !important; }
+        
         .jtbp-local { padding: 15px; display: flex; flex-direction: column; gap: 15px; }
         .jtbp-card { background-color: #000; border: 1px solid #333; border-radius: 10px; padding: 15px; text-align: center; }
         .jtbp-card h4 { margin: 10px 0 5px; color: #fff; font-size: 16px; }
@@ -79,31 +81,31 @@
 
     <div class="header">
         <h1>JTBP PRODUCTIONS</h1>
-        <p>🚨 VERSIÓN 3 - CONFIRMACIÓN 🚨</p>
+        <p>✅ VERSIÓN 4 - MOTOR BLINDADO ✅</p>
     </div>
 
     <div class="control-panel">
         <div class="panel-title">Seleccionar Fuente de Audio</div>
         <div class="channel-grid">
-            <button class="channel-btn active" onclick="switchInput('jtbp')">
+            <button class="channel-btn active" onclick="switchInput('canal-jtbp', this)">
                 <span class="icon">🎙️</span> JTBP Orig.
             </button>
-            <button class="channel-btn" onclick="switchInput('youtube')">
+            <button class="channel-btn" onclick="switchInput('canal-youtube', this)">
                 <span class="icon">📺</span> YouTube VIP
             </button>
-            <button class="channel-btn" onclick="switchInput('mixcloud')">
+            <button class="channel-btn" onclick="switchInput('canal-mixcloud', this)">
                 <span class="icon">☁️</span> Mixcloud
             </button>
-            <button class="channel-btn" onclick="switchInput('spotify')">
+            <button class="channel-btn" onclick="switchInput('canal-spotify', this)">
                 <span class="icon">🎧</span> Spotify*
             </button>
-            <button class="channel-btn" onclick="switchInput('radio_jazz')">
+            <button class="channel-btn" onclick="switchInput('canal-jazz', this)">
                 <span class="icon">🎷</span> Radio Jazz
             </button>
-            <button class="channel-btn" onclick="switchInput('radio_salsa')">
+            <button class="channel-btn" onclick="switchInput('canal-salsa', this)">
                 <span class="icon">🕺</span> Salsa Brava
             </button>
-            <button class="channel-btn" onclick="switchInput('radio_retro')">
+            <button class="channel-btn" onclick="switchInput('canal-retro', this)">
                 <span class="icon">🪩</span> Retro 70/80/90s
             </button>
         </div>
@@ -114,7 +116,7 @@
 
     <div class="player-stage">
         
-        <div id="jtbp" class="player-content active jtbp-local">
+        <div id="canal-jtbp" class="jtbp-panel active jtbp-local">
             <div class="jtbp-card">
                 <div style="color: var(--primary); font-size: 40px;">🎷</div>
                 <h4>Programa 3-2026 (Move On)</h4>
@@ -125,41 +127,50 @@
                 <h4>Programa 3-2026 (I Just Might)</h4>
                 <div class="jtbp-tags">#funk #pop #disco #nu-disco #podcast</div>
             </div>
-            <script src="app.js"></script>
         </div>
 
-        <div id="youtube" class="player-content">
-            <iframe src="https://www.youtube.com/embed/jfKfPfyJRdk?autoplay=1" title="YouTube Lofi Jazz" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <div id="canal-youtube" class="jtbp-panel">
+            <iframe src="https://www.youtube.com/embed/qchPLHua8WE?rel=0&modestbranding=1" title="YouTube VIP" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         </div>
 
-        <div id="mixcloud" class="player-content">
+        <div id="canal-mixcloud" class="jtbp-panel">
             <iframe src="https://www.mixcloud.com/widget/iframe/?hide_cover=1&feed=%2Fdj-jazzy-jeff%2F" frameborder="0"></iframe>
         </div>
 
-        <div id="spotify" class="player-content">
+        <div id="canal-spotify" class="jtbp-panel">
             <iframe src="https://open.spotify.com/embed/playlist/37i9dQZF1DWVqfgj8NZEp1" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
         </div>
 
-        <div id="radio_jazz" class="player-content">
-             <iframe src="https://www.youtube.com/embed/dxigNqG-n0A?autoplay=1" title="Live Jazz Radio" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        <div id="canal-jazz" class="jtbp-panel">
+             <iframe src="https://www.youtube.com/embed/dxigNqG-n0A?rel=0&modestbranding=1" title="Live Jazz Radio" allow="autoplay; encrypted-media" allowfullscreen></iframe>
         </div>
 
-        <div id="radio_salsa" class="player-content">
-             <iframe src="https://www.youtube.com/embed/8B1oP142pXg?autoplay=1" title="Salsa Radio" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        <div id="canal-salsa" class="jtbp-panel">
+             <iframe src="https://www.youtube.com/embed/8B1oP142pXg?rel=0&modestbranding=1" title="Salsa Radio" allow="autoplay; encrypted-media" allowfullscreen></iframe>
         </div>
 
-        <div id="radio_retro" class="player-content">
-             <iframe src="https://www.youtube.com/embed/zQfJMpeB_Jk?autoplay=1" title="Retro Radio" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        <div id="canal-retro" class="jtbp-panel">
+             <iframe src="https://www.youtube.com/embed/zQfJMpeB_Jk?rel=0&modestbranding=1" title="Retro Radio" allow="autoplay; encrypted-media" allowfullscreen></iframe>
         </div>
 
     </div>
 
     <script>
-        function switchInput(inputId) {
-            document.querySelectorAll('.player-content').forEach(el => el.classList.remove('active'));
-            document.querySelectorAll('.channel-btn').forEach(el => el.classList.remove('active'));
+        // MOTOR DE CAMBIO DE CANALES BLINDADO
+        function switchInput(inputId, btnElement) {
+            // 1. Apaga todos los escenarios de reproducción
+            document.querySelectorAll('.jtbp-panel').forEach(function(el) {
+                el.classList.remove('active');
+            });
+            // 2. Apaga las luces de todos los botones
+            document.querySelectorAll('.channel-btn').forEach(function(el) {
+                el.classList.remove('active');
+            });
+            
+            // 3. Enciende únicamente el escenario que seleccionaste
             document.getElementById(inputId).classList.add('active');
-            event.currentTarget.classList.add('active');
+            // 4. Enciende la luz del botón que pisaste
+            btnElement.classList.add('active');
         }
     </script>
 </body>
