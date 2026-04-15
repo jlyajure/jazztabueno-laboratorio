@@ -3,10 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JTBP V4 - BLINDADO</title>
+    <title>JTBP V5 - MOTOR ESTABLE</title>
     <link rel="stylesheet" href="styles.css">
     <style>
-        /* AISLAMIENTO VIP PARA QUE NO CHOQUE CON TU CSS VIEJO */
         :root {
             --bg-color: #050505;
             --card-bg: #151515;
@@ -24,55 +23,26 @@
             flex-direction: column;
             align-items: center;
         }
-        .header { text-align: center; margin-bottom: 25px; border-bottom: 2px solid #00ff00; padding-bottom: 10px; width: 100%; max-width: 500px; }
+        .header { text-align: center; margin-bottom: 25px; border-bottom: 2px solid #00aaff; padding-bottom: 10px; width: 100%; max-width: 500px; }
         .header h1 { color: var(--primary); margin: 0; font-size: 24px; text-transform: uppercase; letter-spacing: 2px; }
-        .header p { color: #00ff00; margin: 5px 0 0 0; font-weight: bold; font-size: 16px; } 
+        .header p { color: #00aaff; margin: 5px 0 0 0; font-weight: bold; font-size: 16px; } 
         
-        .control-panel {
-            background-color: var(--card-bg);
-            padding: 15px;
-            border-radius: 15px;
-            border: 1px solid #333;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.8);
-            width: 100%;
-            max-width: 500px;
-            margin-bottom: 25px;
-        }
+        .control-panel { background-color: var(--card-bg); padding: 15px; border-radius: 15px; border: 1px solid #333; box-shadow: 0 5px 15px rgba(0,0,0,0.8); width: 100%; max-width: 500px; margin-bottom: 25px; }
         .panel-title { color: var(--primary); font-size: 12px; font-weight: bold; text-align: center; margin-bottom: 10px; text-transform: uppercase; }
         
         .channel-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
         .channel-btn:last-child { grid-column: span 3; }
 
-        .channel-btn {
-            background-color: #252525;
-            color: var(--text-main);
-            border: 1px solid #444;
-            padding: 10px 5px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 10px;
-            font-weight: bold;
-            text-transform: uppercase;
-            transition: all 0.2s ease;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 5px;
-        }
+        .channel-btn { background-color: #252525; color: var(--text-main); border: 1px solid #444; padding: 10px 5px; border-radius: 8px; cursor: pointer; font-size: 10px; font-weight: bold; text-transform: uppercase; transition: all 0.2s ease; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; }
         .channel-btn .icon { font-size: 16px; }
         .channel-btn.active { background-color: var(--primary) !important; color: #000 !important; border-color: var(--primary) !important; }
 
         .player-stage { width: 100%; max-width: 500px; min-height: 400px; background-color: var(--card-bg); border-radius: 15px; border: 1px solid #333; overflow: hidden; }
         
-        /* CANDADO DE VISIBILIDAD: Asegura que solo se vea un canal a la vez */
         .jtbp-panel { display: none !important; width: 100%; height: 100%; }
         .jtbp-panel.active { display: block !important; }
         
-        .jtbp-local { padding: 15px; display: flex; flex-direction: column; gap: 15px; }
-        .jtbp-card { background-color: #000; border: 1px solid #333; border-radius: 10px; padding: 15px; text-align: center; }
-        .jtbp-card h4 { margin: 10px 0 5px; color: #fff; font-size: 16px; }
-        .jtbp-tags { font-size: 10px; color: var(--primary); margin-bottom: 10px; }
+        .jtbp-local { padding: 15px; text-align: center; }
         
         iframe { width: 100%; height: 400px; border: none; display: block; }
     </style>
@@ -81,7 +51,7 @@
 
     <div class="header">
         <h1>JTBP PRODUCTIONS</h1>
-        <p>✅ VERSIÓN 4 - MOTOR BLINDADO ✅</p>
+        <p>✅ VERSIÓN 5 - ESTABILIDAD ✅</p>
     </div>
 
     <div class="control-panel">
@@ -106,7 +76,7 @@
                 <span class="icon">🕺</span> Salsa Brava
             </button>
             <button class="channel-btn" onclick="switchInput('canal-retro', this)">
-                <span class="icon">🪩</span> Retro 70/80/90s
+                <span class="icon">🪩</span> Retro 70s/80s
             </button>
         </div>
         <div style="font-size: 9px; color: var(--text-muted); text-align: center; margin-top: 10px;">
@@ -117,59 +87,48 @@
     <div class="player-stage">
         
         <div id="canal-jtbp" class="jtbp-panel active jtbp-local">
-            <div class="jtbp-card">
-                <div style="color: var(--primary); font-size: 40px;">🎷</div>
-                <h4>Programa 3-2026 (Move On)</h4>
-                <div class="jtbp-tags">#jazz #worldMusic #funk #nu-jazz #podcast</div>
-            </div>
-            <div class="jtbp-card">
-                <div style="color: var(--primary); font-size: 40px;">🪩</div>
-                <h4>Programa 3-2026 (I Just Might)</h4>
-                <div class="jtbp-tags">#funk #pop #disco #nu-disco #podcast</div>
-            </div>
-        </div>
+             </div>
 
         <div id="canal-youtube" class="jtbp-panel">
-            <iframe src="https://www.youtube.com/embed/qchPLHua8WE?rel=0&modestbranding=1" title="YouTube VIP" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <iframe src="https://www.youtube.com/embed/S_x8G7H0qI0?rel=0" title="Funk Mix" allow="autoplay; encrypted-media" allowfullscreen></iframe>
         </div>
 
         <div id="canal-mixcloud" class="jtbp-panel">
-            <iframe src="https://www.mixcloud.com/widget/iframe/?hide_cover=1&feed=%2Fdj-jazzy-jeff%2F" frameborder="0"></iframe>
+            <iframe src="https://www.mixcloud.com/widget/iframe/?hide_cover=1&feed=%2FNTSRadio%2Fmoxie-15th-september-2021%2F" frameborder="0"></iframe>
         </div>
 
         <div id="canal-spotify" class="jtbp-panel">
-            <iframe src="https://open.spotify.com/embed/playlist/37i9dQZF1DWVqfgj8NZEp1" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+            <iframe src="https://open.spotify.com/embed/playlist/37i9dQZF1DXcBWIGoYBM5M" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
         </div>
 
         <div id="canal-jazz" class="jtbp-panel">
-             <iframe src="https://www.youtube.com/embed/dxigNqG-n0A?rel=0&modestbranding=1" title="Live Jazz Radio" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+             <iframe src="https://www.youtube.com/embed/neV3EPgvZ3g?rel=0" title="Jazz Mix" allow="autoplay; encrypted-media" allowfullscreen></iframe>
         </div>
 
         <div id="canal-salsa" class="jtbp-panel">
-             <iframe src="https://www.youtube.com/embed/8B1oP142pXg?rel=0&modestbranding=1" title="Salsa Radio" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+             <iframe src="https://www.youtube.com/embed/Gz5o0q6PZ1M?rel=0" title="Salsa Mix" allow="autoplay; encrypted-media" allowfullscreen></iframe>
         </div>
 
         <div id="canal-retro" class="jtbp-panel">
-             <iframe src="https://www.youtube.com/embed/zQfJMpeB_Jk?rel=0&modestbranding=1" title="Retro Radio" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+             <iframe src="https://www.youtube.com/embed/V9o2WEuK1gM?rel=0" title="Retro Mix" allow="autoplay; encrypted-media" allowfullscreen></iframe>
         </div>
 
     </div>
 
+    <script src="firebase.js"></script>
+    <script src="app.js"></script>
+
     <script>
-        // MOTOR DE CAMBIO DE CANALES BLINDADO
+        // MOTOR DE CAMBIO DE CANALES
         function switchInput(inputId, btnElement) {
-            // 1. Apaga todos los escenarios de reproducción
             document.querySelectorAll('.jtbp-panel').forEach(function(el) {
                 el.classList.remove('active');
             });
-            // 2. Apaga las luces de todos los botones
             document.querySelectorAll('.channel-btn').forEach(function(el) {
                 el.classList.remove('active');
             });
             
-            // 3. Enciende únicamente el escenario que seleccionaste
             document.getElementById(inputId).classList.add('active');
-            // 4. Enciende la luz del botón que pisaste
             btnElement.classList.add('active');
         }
     </script>
