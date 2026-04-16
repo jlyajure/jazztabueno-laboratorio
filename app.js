@@ -43,6 +43,7 @@ window.MIS_ARCHIVOS_BOVEDA = [
     { año: 2022, categoria: "JAZZTABUENO", titulo: "Programa 1", url: "https://archive.org/download/jazztabueno-programa-1-2022/Jazztabueno%20Programa%201-2022.mp3", plataforma: "archive" },
     { año: 2022, categoria: "JAZZTABUENO", titulo: "Programa 2", url: "https://archive.org/download/jazztabueno-programa-2-2022/Jazztabueno%20Programa%202-2022.mp3", plataforma: "archive" },
     { año: 2022, categoria: "JAZZTABUENO", titulo: "Programa 3", url: "https://archive.org/download/jazztabueno-programa-3-2022/Jazztabueno%20Programa%203-2022.mp3", plataforma: "archive" },
+    { año: 2021, categoria: "OLD SCHOOL ROCK RADIO", titulo: "Programa 1", url: "https://archive.org/download/oldschoolrockradio-01-2021/oldschoolrockradio%2001-2021.mp3", plataforma: "archive" }, // <-- NUEVA PIEZA INSTALADA AQUÍ
     { año: 2021, categoria: "SALSA BRAVA", titulo: "Programa 1", url: "https://archive.org/download/salsa-brava-programa-1-2021/Salsa%20Brava%20Programa%201-2021.mp3", plataforma: "archive" },
     { año: 2021, categoria: "SALSA BRAVA", titulo: "Programa 2", url: "https://archive.org/download/salsa-brava-programa-2-2021/Salsa%20Brava%20Programa%202-2021.mp3", plataforma: "archive" },
     { año: 2020, categoria: "STUDIO 79", titulo: "Programa 4", url: "https://archive.org/download/studio-79-programa-4-2020/Studio%2079%20Programa%204-2020.mp3", plataforma: "archive" },
