@@ -35,17 +35,34 @@ const SVG_PAUSE = `<svg viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5
 
 // Base de datos de la Bóveda del Legado (Limpia, solo con Archive.org)
 window.MIS_ARCHIVOS_BOVEDA = [
+    // --- 2025 ---
     { año: 2025, categoria: "Studio 79", titulo: "Funky Fever", url: "https://archive.org/download/studio-79-18-2025-funky-fever/Studio79%20-%2018_2025%20_Funky%20Fever_.mp3", plataforma: "archive" },
     { año: 2025, categoria: "Studio 79", titulo: "Especial Studio Mix Two", url: "https://archive.org/download/studio-79-13-2025-especial-studio-mix-one/Studio79%20-%2019_2025%20_ESPECIAL%20STUDIO%20MIX%20TWO_.mp3", cover: "https://i.postimg.cc/zVD4mstP/Jazztabueno-(2).png", plataforma: "archive" },
     { año: 2025, categoria: "Studio 79", titulo: "Especial Studio Mix One", url: "https://archive.org/download/studio-79-13-2025-especial-studio-mix-one/Studio79%20-%2013_2025%20_ESPECIAL%20STUDIO%20MIX%20ONE_.mp3", plataforma: "archive" },
     { año: 2025, categoria: "Studio 79", titulo: "Rhythm & Blues", url: "https://archive.org/download/programa-11-rhythm-blues/Programa%2011%20%28Rhythm%20%26%20Blues%29.mp3", plataforma: "archive" }, 
+    
+    // --- 2024 ---
     { año: 2024, categoria: "STUDIO 79", titulo: "Programa 5 Clásico", url: "https://archive.org/download/studio-79-programa-5/Studio%2079%20Programa%205.mp3", plataforma: "archive" },
+    
+    // --- 2022 ---
     { año: 2022, categoria: "JAZZTABUENO", titulo: "Programa 1", url: "https://archive.org/download/jazztabueno-programa-1-2022/Jazztabueno%20Programa%201-2022.mp3", plataforma: "archive" },
     { año: 2022, categoria: "JAZZTABUENO", titulo: "Programa 2", url: "https://archive.org/download/jazztabueno-programa-2-2022/Jazztabueno%20Programa%202-2022.mp3", plataforma: "archive" },
     { año: 2022, categoria: "JAZZTABUENO", titulo: "Programa 3", url: "https://archive.org/download/jazztabueno-programa-3-2022/Jazztabueno%20Programa%203-2022.mp3", plataforma: "archive" },
-    { año: 2021, categoria: "OLD SCHOOL ROCK RADIO", titulo: "Programa 1", url: "https://archive.org/download/oldschoolrockradio-01-2021/oldschoolrockradio%2001-2021.mp3", plataforma: "archive" }, // <-- NUEVA PIEZA INSTALADA AQUÍ
+    { año: 2022, categoria: "OLD SCHOOL ROCK RADIO", titulo: "Programa 1 (Yellow Sunshine)", url: "https://archive.org/download/old-school-rock-radio-yellow-sunshine-01-2022/Old%20School%20Rock%20Radio%20Yellow%20Sunshine%2001-2022.mp3", plataforma: "archive" },
+    
+    // --- 2021 ---
+    { año: 2021, categoria: "OLD SCHOOL ROCK RADIO", titulo: "Programa 1", url: "https://archive.org/download/oldschoolrockradio-01-2021/oldschoolrockradio%2001-2021.mp3", plataforma: "archive" },
+    { año: 2021, categoria: "OLD SCHOOL ROCK RADIO", titulo: "Programa 2", url: "https://archive.org/download/old-school-rock-radio-02-2021/Old%20School%20Rock%20Radio%2002-2021.mp3", plataforma: "archive" }, 
+    { año: 2021, categoria: "OLD SCHOOL ROCK RADIO", titulo: "Programa 3", url: "https://archive.org/download/old-school-rock-radio-03-2021/Old%20School%20Rock%20Radio%2003-2021.mp3", plataforma: "archive" },
+    { año: 2021, categoria: "OLD SCHOOL ROCK RADIO", titulo: "Programa 4 (Kalimist)", url: "https://archive.org/download/old-school-rock-radio-kalimist-04-2021/Old%20School%20Rock%20Radio%20Kalimist%2004-2021.mp3", plataforma: "archive" },
+    { año: 2021, categoria: "OLD SCHOOL ROCK RADIO", titulo: "Programa 5 (Black Domina)", url: "https://archive.org/download/old-school-rock-radio-black-domina-05-2021/Old%20School%20Rock%20Radio%20Black%20Domina%2005-2021.mp3", plataforma: "archive" },
     { año: 2021, categoria: "SALSA BRAVA", titulo: "Programa 1", url: "https://archive.org/download/salsa-brava-programa-1-2021/Salsa%20Brava%20Programa%201-2021.mp3", plataforma: "archive" },
     { año: 2021, categoria: "SALSA BRAVA", titulo: "Programa 2", url: "https://archive.org/download/salsa-brava-programa-2-2021/Salsa%20Brava%20Programa%202-2021.mp3", plataforma: "archive" },
+    
+    // --- 2020 ---
+    { año: 2020, categoria: "JAZZTABUENO", titulo: "Programa 3 (Pray For The World)", url: "https://archive.org/download/jazz-ta-bueno-03-2020-pray-for-the-world/JazzTaBueno%2003-2020%20Pray%20For%20The%20World.mp3", plataforma: "archive" }, // <-- NUEVA PIEZA
+    { año: 2020, categoria: "JAZZTABUENO", titulo: "Programa 4 (Stay Home)", url: "https://archive.org/download/jazz-ta-bueno-04-2020-stay-home/JazzTaBueno%2004-2020%20Stay%20Home.mp3", plataforma: "archive" }, // <-- NUEVA PIEZA
+    { año: 2020, categoria: "JAZZTABUENO", titulo: "Programa 5 (Quarantine)", url: "https://archive.org/download/jazz-ta-bueno-05-2020-quarantine/JazzTaBueno%2005-2020%20Quarantine.mp3", plataforma: "archive" }, // <-- NUEVA PIEZA
     { año: 2020, categoria: "STUDIO 79", titulo: "Programa 4", url: "https://archive.org/download/studio-79-programa-4-2020/Studio%2079%20Programa%204-2020.mp3", plataforma: "archive" },
     { año: 2020, categoria: "STUDIO 79", titulo: "Programa 5", url: "https://archive.org/download/studio-79-programa-5-2020/Studio%2079%20Programa%205-2020.mp3", plataforma: "archive" },
     { año: 2020, categoria: "STUDIO 79", titulo: "Programa 6", url: "https://archive.org/download/studio-79-programa-6-2020/Studio%2079%20Programa%206-2020.mp3", plataforma: "archive" },
